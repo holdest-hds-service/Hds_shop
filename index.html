@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <meta name='admaven-placement' content="Bqja5pjUF">
-    <title>H.D.S SHOP - Organisation Événements & Restaurant | Marseille</title>
-    <meta name="description" content="H.D.S RESTAURANT - Restaurant et organisation d'événements à Marseille. Menus complets, brochettes, grillades, anniversaires, soirées. Livraison 24h/24.">
+    <title>H.D.S SHOP - Alimentation en ligne | Marseille</title>
+    <meta name="description" content="H.D.S SHOP - Alimentation en ligne à Marseille. Snacks, boissons, tabac, accessoires. Livraison 24h/24. Livraison GRATUITE dès 35€.">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="H.D.S RESTAURANT - Organisation Événements & Restaurant">
-    <meta property="og:description" content="Restaurant et organisation d'événements à Marseille. Menus complets, brochettes, grillades, suppléments. Service premium avec livraison.">
+    <meta property="og:title" content="H.D.S SHOP - Alimentation en ligne">
+    <meta property="og:description" content="Alimentation en ligne à Marseille. Livraison gratuite dès 35€.">
     <meta property="og:image" content="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/89a59702-cad3-dfb7-580d-22fb843f8d3f.jpeg">
     <meta property="og:url" content="https://web-site13015.github.io/H_D_S-RESTAURANT/">
     <meta property="og:type" content="website">
@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
         :root {
@@ -82,11 +83,12 @@
             padding: 20px 15px; display: flex; align-items: center; gap: 12px;
             border-bottom: 1px solid var(--border-color); position: relative;
         }
-        .logo-wrapper { width:65px; height:65px; flex-shrink:0; }
+        .logo-wrapper { width:65px; height:65px; flex-shrink:0; cursor:pointer; }
         .logo-image {
             width:100%; height:100%; border-radius:var(--radius-md);
-            border:2px solid var(--primary-yellow); object-fit:cover; cursor:pointer;
+            border:2px solid var(--primary-yellow); object-fit:cover;
             transition: transform 0.3s ease;
+            user-select: none; -webkit-user-drag: none;
         }
         .logo-image:hover { transform: scale(1.05); }
         .header-title { font-family:'Bungee Spice',cursive; font-size:22px; }
@@ -156,13 +158,13 @@
         .quick-nav-btn.active { background:rgba(255,215,0,0.15); color:var(--primary-yellow); }
         .quick-nav-btn i { font-size:18px; }
         .status-bar {
-            background:rgba(255,215,0,0.1); border:1px solid rgba(255,215,0,0.2);
+            background:rgba(76,175,80,0.15); border:1px solid rgba(76,175,80,0.4);
             border-radius:var(--radius-md); padding:12px 15px; margin:12px 15px;
-            text-align:center; color:var(--primary-yellow); font-weight:600;
-            font-size:12px; cursor:pointer; transition: all 0.2s ease;
+            text-align:center; color:var(--primary-green); font-weight:700;
+            font-size:13px; cursor:pointer; transition: all 0.2s ease;
             line-height: 1.5;
         }
-        .status-bar:hover { background:rgba(255,215,0,0.15); }
+        .status-bar:hover { background:rgba(76,175,80,0.25); }
         .location-section {
             background:linear-gradient(135deg, rgba(33,150,243,0.1), rgba(25,118,210,0.1));
             border:2px solid #2196F3; border-radius:var(--radius-lg);
@@ -398,6 +400,8 @@
         }
         .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--primary-yellow); }
         .form-textarea { min-height:80px; resize:vertical; }
+        .form-row { display:flex; gap:10px; }
+        .form-row .form-group { flex:1; }
         .radio-group { display:flex; flex-direction:column; gap:8px; margin:15px 0; }
         .radio-option {
             display:flex; align-items:center; gap:10px; padding:12px;
@@ -425,7 +429,7 @@
             position:fixed; top:20px; left:50%; transform:translateX(-50%);
             background:linear-gradient(135deg, var(--primary-yellow), var(--primary-orange));
             color:black; padding:14px 25px; border-radius:var(--radius-lg);
-            z-index:1100; display:none; align-items:center; gap:10px;
+            z-index:5000; display:none; align-items:center; gap:10px;
             font-weight:600; box-shadow:var(--shadow-lg); font-size:14px;
             animation: alertSlideIn 0.3s ease;
         }
@@ -513,13 +517,13 @@
     <div class="main-container">
         <div class="profile-container">
             <div class="app-header">
-                <div class="logo-wrapper">
-                    <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png" alt="H.D.S RESTAURANT" class="logo-image" id="logoImage">
+                <div class="logo-wrapper" id="logoWrapper">
+                    <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png" alt="H.D.S SHOP" class="logo-image" id="logoImage">
                 </div>
                 <div class="header-content">
                     <div class="header-title">🇯🇲 H.D.S 🗿</div>
-                    <div class="header-subtitle">RESTAURANT & ORGANISATION ÉVÉNEMENTS</div>
-                    <div class="header-tag">🍢 MENU BROCHETTES 11,90€</div>
+                    <div class="header-subtitle">ALIMENTATION EN LIGNE • LIVRAISON 24H/24</div>
+                    <div class="header-tag">🛒 SNACKS • BOISSONS • TABAC • ACCESSOIRES</div>
                 </div>
                 <div class="menu-button" id="menuButton" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
@@ -531,16 +535,16 @@
 
             <div class="quick-nav">
                 <button class="quick-nav-btn active" onclick="showSection('products')">
-                    <i class="fas fa-utensils"></i>
-                    <span>Menu</span>
+                    <i class="fas fa-store"></i>
+                    <span>Boutique</span>
                 </button>
                 <button class="quick-nav-btn" onclick="showSection('popular')">
                     <i class="fas fa-fire"></i>
                     <span>Populaires</span>
                 </button>
-                <button class="quick-nav-btn" onclick="showSection('events')">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Événements</span>
+                <button class="quick-nav-btn" onclick="showSection('alimentation')">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span>Alimentation</span>
                 </button>
                 <button class="quick-nav-btn" onclick="showSection('tracking')">
                     <i class="fas fa-truck"></i>
@@ -553,13 +557,13 @@
             </div>
 
             <div class="status-bar" id="statusBar" onclick="showSection('popular')">
-                <i class="fas fa-fire"></i> 🍢 MENU 11,90€<br>
-                🚚 DÈS 30€ : -25% • 40€ : -50% • 60€ : -75% • 100€ : GRATUIT
+                🚚 <strong>LIVRAISON GRATUITE DÈS 35 €</strong><br>
+                🛒 Snacks • Boissons • Tabac • Accessoires
             </div>
 
             <div id="productsSection">
                 <div class="section-title">
-                    <i class="fas fa-utensils"></i> Notre Menu
+                    <i class="fas fa-store"></i> Notre Boutique
                 </div>
                 <div class="category-tabs" id="categoryTabs">
                     <div class="category-tab active" data-category="all">Tous</div>
@@ -580,15 +584,16 @@
                 <div class="products-grid" id="popularGrid"></div>
             </div>
 
-            <div id="eventsSection" style="display:none;">
+            <div id="alimentationSection" style="display:none;">
                 <div class="section-title">
-                    <i class="fas fa-calendar-alt"></i> Organisation d'Événements
+                    <i class="fas fa-shopping-basket"></i> Alimentation en ligne
                 </div>
                 <div style="text-align:center; padding:40px 20px; color:var(--text-gray);">
-                    <i class="fas fa-calendar-check" style="font-size:48px; margin-bottom:15px; opacity:0.5;"></i>
-                    <h3 style="margin-bottom:10px; color:var(--primary-yellow);">Bientôt disponible</h3>
-                    <p>L'organisation d'événements arrive très bientôt !</p>
-                    <p style="font-size:12px; margin-top:10px;">Anniversaires • Soirées • Événements privés</p>
+                    <i class="fas fa-shopping-basket" style="font-size:48px; margin-bottom:15px; opacity:0.5;"></i>
+                    <h3 style="margin-bottom:10px; color:var(--primary-yellow);">Livraison 24h/24</h3>
+                    <p>Snacks • Boissons • Tabac • Accessoires</p>
+                    <p style="font-size:12px; margin-top:10px;">Commandez et recevez chez vous en moins d'1h</p>
+                    <p style="font-size:13px; margin-top:15px; color:var(--primary-green); font-weight:700;">🚚 Livraison GRATUITE dès 35 €</p>
                 </div>
             </div>
 
@@ -599,7 +604,7 @@
                 <div class="location-section">
                     <div class="location-title">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>LOCALISATION OBLIGATOIRE</span>
+                        <span>LOCALISATION</span>
                     </div>
                     <button class="location-button" id="locateBtn" onclick="locateUser()">
                         <i class="fas fa-location-dot"></i> 📍 ME LOCALISER
@@ -612,13 +617,9 @@
                 <div class="map-container" id="deliveryMap"></div>
                 <div class="map-legend">
                     <div class="legend-item"><span class="legend-dot legend-free"></span> Gratuit (0-2km)</div>
-                    <div class="legend-item"><span class="legend-dot legend-2km"></span> 2-3€ (2-5km)</div>
-                    <div class="legend-item"><span class="legend-dot legend-5km"></span> 4-5€ (5-10km)</div>
-                    <div class="legend-item"><span class="legend-dot legend-10km"></span> 6-8€ (10km+)</div>
-                </div>
-                <div style="margin:0 15px 15px; padding:12px; background:rgba(255,215,0,0.1); border-radius:var(--radius-md); font-size:12px; color:var(--text-gray);">
-                    <strong style="color:var(--primary-yellow);">💡 Réductions livraison :</strong><br>
-                    Dès 30€ → -25% • Dès 40€ → -50% • Dès 60€ → -75% • Dès 100€ → GRATUIT
+                    <div class="legend-item"><span class="legend-dot legend-2km"></span> 3€ (2-5km)</div>
+                    <div class="legend-item"><span class="legend-dot legend-5km"></span> 5€ (5-10km)</div>
+                    <div class="legend-item"><span class="legend-dot legend-10km"></span> 8€ (10km+)</div>
                 </div>
                 <div id="noActiveOrder" class="no-order">
                     <i class="fas fa-box-open"></i>
@@ -682,23 +683,22 @@
                             <span style="font-weight:600;">Livraison</span>
                         </div>
                         <p style="color:var(--text-gray); font-size:14px; line-height:1.6;">
+                            🚚 <strong style="color:var(--primary-green);">GRATUITE dès 35 €</strong><br><br>
+                            En dessous de 35 € :<br>
                             • 0-2 km : <strong style="color:var(--primary-green);">GRATUIT</strong><br>
                             • 2-5 km : 3€<br>
                             • 5-10 km : 5€<br>
                             • 10 km+ : 8€<br><br>
-                            <strong style="color:var(--primary-yellow);">💡 Réductions automatiques :</strong><br>
-                            • Dès 30€ d'achat : <strong>-25%</strong><br>
-                            • Dès 40€ d'achat : <strong>-50%</strong><br>
-                            • Dès 60€ d'achat : <strong>-75%</strong><br>
-                            • Dès 100€ d'achat : <strong style="color:var(--primary-green);">GRATUIT</strong>
+                            <strong style="color:var(--primary-yellow);">💡 Réductions client connecté :</strong><br>
+                            • <strong>-5%</strong> sur tout le panier
                         </p>
                     </div>
                 </div>
             </div>
 
             <div style="padding:20px; text-align:center;">
-                <div style="font-size:11px; color:var(--text-gray);">© 2024 H.D.S RESTAURANT</div>
-                <div style="font-size:10px; color:var(--text-gray);">Marseille • Restaurant • Événements</div>
+                <div style="font-size:11px; color:var(--text-gray);">© 2024 H.D.S SHOP</div>
+                <div style="font-size:10px; color:var(--text-gray);">Marseille • Alimentation en ligne • Livraison 24h/24</div>
             </div>
         </div>
     </div>
@@ -729,15 +729,10 @@
                 <span>Parrainage</span>
                 <span class="menu-item-value">5€</span>
             </div>
-            <div class="menu-item" onclick="openAdminPanel()" id="adminMenuLink" style="display:none;">
-                <i class="fas fa-shield-alt" style="color:#FF5722;"></i>
-                <span>Admin</span>
-                <span class="menu-item-value">🔒</span>
-            </div>
         </div>
     </div>
 
-    <a href="https://wa.me/33744892782?text=Bonjour%20H.D.S%20RESTAURANT%20!%20Je%20souhaite%20commander." class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/33744892782?text=Bonjour%20H.D.S%20SHOP%20!" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -767,10 +762,6 @@
                         <span>Livraison</span>
                         <span id="deliveryCost">À calculer</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; color:var(--primary-green); font-size:12px;" id="deliverySavingsRow">
-                        <span>💡 Économie livraison</span>
-                        <span id="deliverySavings">-0€</span>
-                    </div>
                 </div>
                 <div class="cart-total" id="cartTotal">Total: 0€</div>
                 <button class="checkout-button" onclick="checkout()">Commander</button>
@@ -786,15 +777,22 @@
             </div>
             <div class="modal-body">
                 <form id="orderForm" action="https://formspree.io/f/xkovrwjy" method="POST">
-                    <div class="form-group">
-                        <input type="text" name="nom" class="form-input" id="orderName" placeholder="Nom complet" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="prenom" class="form-input" id="orderFirstName" placeholder="Prénom" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="nom" class="form-input" id="orderLastName" placeholder="Nom" required>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="tel" name="telephone" class="form-input" id="orderPhone" placeholder="Téléphone" required>
                     </div>
                     <div class="form-group">
                         <textarea name="adresse" class="form-textarea" id="orderAddress" placeholder="Adresse complète" required></textarea>
-                        <small style="color:var(--primary-yellow); font-size:11px;">📍 Cliquez sur "ME LOCALISER" dans l'onglet Suivi</small>
+                        <button type="button" class="location-button" style="margin-top:8px; padding:10px; font-size:13px;" onclick="locateUser(true, 'orderAddress')">
+                            <i class="fas fa-location-dot"></i> 📍 Me localiser automatiquement
+                        </button>
                     </div>
                     <div class="radio-group">
                         <label class="radio-option">
@@ -809,9 +807,7 @@
                     <input type="hidden" name="commande" id="orderDetails">
                     <input type="hidden" name="code" id="orderCode">
                     <input type="hidden" name="total" id="orderTotal">
-                    <input type="hidden" name="client_nom" id="orderClientName">
-                    <input type="hidden" name="client_telephone" id="orderClientPhone">
-                    <input type="hidden" name="_subject" value="Nouvelle commande H.D.S RESTAURANT">
+                    <input type="hidden" name="_subject" value="Nouvelle commande H.D.S SHOP">
                     <input type="text" name="_gotcha" style="display:none">
                     <button type="button" class="checkout-button" onclick="submitOrder()">Confirmer la commande</button>
                 </form>
@@ -859,22 +855,38 @@
                         <i class="fas fa-user-circle" style="font-size:50px; color:var(--primary-yellow);"></i>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-input" id="loginCode" placeholder="Code client (4 chiffres)" maxlength="4">
+                        <input type="tel" class="form-input" id="loginPhone" placeholder="Téléphone" inputmode="tel">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" id="loginCode" placeholder="Code (4 chiffres)" maxlength="4" inputmode="numeric">
                     </div>
                     <button class="checkout-button" onclick="loginClient()">Se connecter</button>
                     <button class="checkout-button" onclick="showRegister()" style="background:var(--text-gray); color:white; margin-top:10px;">Créer un compte</button>
-                    <hr style="border-color:var(--border-color); margin:15px 0;">
-                    <button class="checkout-button" onclick="openAdminLogin()" style="background:#FF5722; color:white;">👑 Admin</button>
                 </div>
                 <div id="registerView" style="display:none;">
-                    <div class="form-group">
-                        <input type="text" class="form-input" id="regName" placeholder="Nom">
+                    <div style="text-align:center; margin-bottom:15px;">
+                        <i class="fas fa-user-plus" style="font-size:45px; color:var(--primary-green);"></i>
+                        <h3 style="margin-top:8px;">Créer un compte</h3>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" class="form-input" id="regFirstName" placeholder="Prénom" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" id="regLastName" placeholder="Nom" required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="tel" class="form-input" id="regPhone" placeholder="Téléphone">
+                        <input type="tel" class="form-input" id="regPhone" placeholder="Téléphone" inputmode="tel" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-input" id="regCode" placeholder="Code 4 chiffres" maxlength="4">
+                        <textarea class="form-textarea" id="regAddress" placeholder="Adresse complète (rue, code postal, ville)" required></textarea>
+                        <button type="button" class="location-button" style="margin-top:8px; padding:10px; font-size:13px;" onclick="locateUser(true, 'regAddress')">
+                            <i class="fas fa-location-dot"></i> 📍 Remplir automatiquement
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" id="regCode" placeholder="Choisissez un code à 4 chiffres" maxlength="4" inputmode="numeric" required>
                     </div>
                     <button class="checkout-button" onclick="registerClient()">S'inscrire</button>
                     <button class="checkout-button" onclick="showLogin()" style="background:var(--text-gray); color:white; margin-top:10px;">Retour</button>
@@ -886,8 +898,12 @@
                     </div>
                     <div style="background:rgba(76,175,80,0.1); padding:15px; border-radius:var(--radius-md); margin-bottom:15px;">
                         <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                            <span>Code:</span>
-                            <span style="font-weight:600;" id="clientCode"></span>
+                            <span>Téléphone:</span>
+                            <span style="font-weight:600;" id="clientPhoneDisplay"></span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                            <span>Adresse:</span>
+                            <span style="font-weight:600; text-align:right; max-width:60%; font-size:12px;" id="clientAddressDisplay"></span>
                         </div>
                         <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
                             <span>Points fidélité:</span>
@@ -898,18 +914,38 @@
                             <span style="font-weight:600; color:#4CAF50;">-5%</span>
                         </div>
                     </div>
-                    <button class="checkout-button" onclick="logoutClient()" style="background:var(--text-gray);">Déconnexion</button>
+                    <button class="checkout-button" onclick="editClientProfile()" style="background:var(--primary-blue);">✏️ Modifier mes infos</button>
+                    <button class="checkout-button" onclick="logoutClient()" style="background:var(--text-gray); margin-top:8px;">Déconnexion</button>
+                </div>
+                <div id="editProfileView" style="display:none;">
+                    <h3 style="margin-bottom:15px;">Modifier mes informations</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" class="form-input" id="editFirstName" placeholder="Prénom">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" id="editLastName" placeholder="Nom">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-input" id="editPhone" placeholder="Téléphone">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-textarea" id="editAddress" placeholder="Adresse complète"></textarea>
+                    </div>
+                    <button class="checkout-button" onclick="saveProfile()">💾 Enregistrer</button>
+                    <button class="checkout-button" onclick="showClientView()" style="background:var(--text-gray); margin-top:8px;">Annuler</button>
                 </div>
                 <div id="adminLoginView" style="display:none;">
                     <div style="text-align:center; margin-bottom:20px;">
                         <i class="fas fa-shield-alt" style="font-size:50px; color:#FF5722;"></i>
-                        <h3>Admin</h3>
+                        <h3>Accès sécurisé</h3>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-input" id="adminPassword" placeholder="Mot de passe admin">
+                        <input type="password" class="form-input" id="adminPassword" placeholder="Mot de passe" autocomplete="off">
                     </div>
-                    <button class="checkout-button" onclick="adminLogin()" style="background:#FF5722;">Se connecter</button>
-                    <button class="checkout-button" onclick="closeAdminLogin()" style="background:var(--text-gray); color:white; margin-top:10px;">Retour</button>
+                    <button class="checkout-button" onclick="adminLogin()" style="background:#FF5722;">Valider</button>
+                    <button class="checkout-button" onclick="closeAdminLogin()" style="background:var(--text-gray); color:white; margin-top:10px;">Annuler</button>
                 </div>
             </div>
         </div>
@@ -984,21 +1020,26 @@
                             <option value="tabac">Tabac</option>
                             <option value="accessoires">Accessoires</option>
                         </select>
-                        <label>Image du produit</label>
+                        <label>Image</label>
                         <div class="image-upload-area" onclick="document.getElementById('adminPImageFile').click()">
                             <i class="fas fa-camera"></i>
-                            <p>📸 Prendre une photo / Choisir un fichier</p>
+                            <p>📸 Photo / Fichier</p>
                         </div>
                         <input type="file" id="adminPImageFile" accept="image/*" style="display:none;" onchange="previewImage(this)">
-                        <img id="adminPImagePreview" class="image-preview" src="" alt="Aperçu">
-                        <label style="margin-top:8px;">Ou URL de l'image</label>
+                        <img id="adminPImagePreview" class="image-preview" src="">
+                        <label style="margin-top:8px;">Ou URL</label>
                         <input type="text" id="adminPImage" placeholder="https://..." oninput="previewImageUrl(this.value)">
                         <label>Description</label>
-                        <textarea id="adminPDesc" rows="2" placeholder="Description"></textarea>
+                        <textarea id="adminPDesc" rows="2"></textarea>
                         <label>Spécifications (séparées par |)</label>
                         <input type="text" id="adminPSpecs" placeholder="Ex: 3 brochettes | Manioc | Sauce">
                         <label>Populaire</label>
                         <select id="adminPPopular">
+                            <option value="false">Non</option>
+                            <option value="true">Oui</option>
+                        </select>
+                        <label>Bientôt disponible</label>
+                        <select id="adminPComingSoon">
                             <option value="false">Non</option>
                             <option value="true">Oui</option>
                         </select>
@@ -1013,12 +1054,20 @@
     </div>
 
     <script>
+        // ============================================================
+        // H.D.S SHOP V3 - ALIMENTATION EN LIGNE
+        // Livraison GRATUITE dès 35 €
+        // ============================================================
         const RESTAURANT_LOCATION = [43.3236041, 5.3870093];
         const PREPARATION_TIME = 5;
         const DELIVERY_SPEED = 30;
         const CLIENT_DISCOUNT = 5;
-        const ADMIN_PASSWORD = "admin123";
-        const FREE_DELIVERY_THRESHOLD = 100;
+        const FREE_DELIVERY_THRESHOLD = 35; // ✅ MODIFIÉ : 35 € au lieu de 100 €
+
+        const ADMIN_PASSWORD = "HDS2024Admin!";
+        const ADMIN_PASSWORD_HASH = "";
+        const MAX_ADMIN_ATTEMPTS = 3;
+        const LOCKOUT_DURATION = 5 * 60 * 1000;
 
         let cart = [];
         let currentClient = null;
@@ -1038,72 +1087,71 @@
         let uploadedImageData = null;
 
         let products = [
-            // ===== SNACKS (disponibles) =====
-            { id: 5001, name: "🍟 Chips Lay's Classic", price: 2.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/706b84b4-5f30-c111-03a3-cf0309879af0.jpg", description: "Chips Lay's saveur nature - Grand paquet", specs: ["✅ Grand paquet", "✅ Saveur nature"], popular: true },
+            { id: 5001, name: "🍟 Chips Lay's Classic", price: 2.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/706b84b4-5f30-c111-03a3-cf0309879af0.jpg", description: "Chips Lay's saveur nature", specs: ["✅ Grand paquet", "✅ Saveur nature"], popular: true },
             { id: 5002, name: "🍟 Chips Pringles Original", price: 3.00, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/2de44588-4338-b817-2b03-889d96dc3274.jpg", description: "Pringles Original 200g", specs: ["✅ 200g", "✅ Format tube"], popular: true },
-            { id: 5003, name: "🍟 Chips Doritos Nacho", price: 2.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/b7626108-9f29-e9ed-f1e2-e90460052828.jpg", description: "Doritos saveur Nacho Cheese", specs: ["✅ Saveur intense", "✅ Grand paquet"] },
-            { id: 5004, name: "🍟 Chips Curly", price: 2.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/cf0df09b-300b-bf61-7d7d-da5004980d6d.jpg", description: "Chips Curly saveur fromage", specs: ["✅ Saveur fromage", "✅ Format familial"] },
-            { id: 5005, name: "🧀 Chips Lay's Fromage", price: 2.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/3ac017f4-a484-f7e3-551e-49bca0f7cd3e.jpg", description: "Chips Lay's saveur fromage", specs: ["✅ Saveur fromage", "✅ Grand paquet"], popular: true },
-            // ✅ NOUVEAUX SNACKS AJOUTÉS
-            { id: 5101, name: "🍰 Petites Madeleines Pépites Chocolat 75g", price: 3.00, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/e0ab3302-18bd-4e0b-18b5-e82f4240c83b.jpg", description: "Petites madeleines moelleuses aux pépites de chocolat - 75g", specs: ["✅ 75g", "✅ Pépites chocolat", "✅ Moelleux"], popular: true },
-            { id: 5102, name: "🐻 Haribo Funky Tüte", price: 3.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/2794f8cd-38df-ed99-f763-8de0de864611.jpg", description: "Sachet Haribo Funky mélange de bonbons fruités", specs: ["✅ Mélange fruité", "✅ Format sachet"], popular: true },
-            { id: 5103, name: "🐻 Haribo Nostalgix", price: 3.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/c4604953-e833-6b99-efd3-2af6efecbbd3.jpg", description: "Haribo Nostalgix bonbons vintage", specs: ["✅ Recette vintage", "✅ Format sachet"], popular: true },
-            { id: 5104, name: "🍫 Kinder Bueno x2", price: 3.00, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/08883adf-d8af-0782-f281-de81f0f91c52.jpg", description: "Barres Kinder Bueno - Lot de 2", specs: ["✅ Lot de 2", "✅ Cœur noisette"], popular: true },
-            { id: 5105, name: "🐻 Haribo Supermix", price: 3.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/da4d2ee5-197a-2404-0a27-d9f06de40264.jpg", description: "Haribo Supermix mélange de bonbons", specs: ["✅ Mélange varié", "✅ Format sachet"], popular: true },
-            { id: 5106, name: "🐻 Haribo Berries", price: 3.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/14babf7b-1c60-c82f-6682-2b79aaa1f368.jpg", description: "Haribo Berries bonbons fruits rouges", specs: ["✅ Saveur fruits rouges", "✅ Format sachet"], popular: true },
+            { id: 5003, name: "🍟 Chips Doritos Nacho", price: 2.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/b7626108-9f29-e9ed-f1e2-e90460052828.jpg", description: "Doritos Nacho Cheese", specs: ["✅ Saveur intense", "✅ Grand paquet"] },
+            { id: 5004, name: "🍟 Chips Curly", price: 2.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/cf0df09b-300b-bf61-7d7d-da5004980d6d.jpg", description: "Chips Curly fromage", specs: ["✅ Saveur fromage"] },
+            { id: 5005, name: "🧀 Chips Lay's Fromage", price: 2.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/3ac017f4-a484-f7e3-551e-49bca0f7cd3e.jpg", description: "Chips Lay's fromage", specs: ["✅ Saveur fromage"], popular: true },
+            { id: 5101, name: "🍰 Madeleines Chocolat 75g", price: 3.00, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/e0ab3302-18bd-4e0b-18b5-e82f4240c83b.jpg", description: "Madeleines pépites chocolat 75g", specs: ["✅ 75g", "✅ Pépites chocolat"], popular: true },
+            { id: 5102, name: "🐻 Haribo Funky Tüte", price: 3.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/2794f8cd-38df-ed99-f763-8de0de864611.jpg", description: "Haribo Funky fruité", specs: ["✅ Mélange fruité"], popular: true },
+            { id: 5103, name: "🐻 Haribo Nostalgix", price: 3.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/c4604953-e833-6b99-efd3-2af6efecbbd3.jpg", description: "Haribo Nostalgix vintage", specs: ["✅ Recette vintage"], popular: true },
+            { id: 5104, name: "🍫 Kinder Bueno x2", price: 3.00, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/08883adf-d8af-0782-f281-de81f0f91c52.jpg", description: "Kinder Bueno - Lot de 2", specs: ["✅ Lot de 2", "✅ Cœur noisette"], popular: true },
+            { id: 5105, name: "🐻 Haribo Supermix", price: 3.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/da4d2ee5-197a-2404-0a27-d9f06de40264.jpg", description: "Haribo Supermix", specs: ["✅ Mélange varié"], popular: true },
+            { id: 5106, name: "🐻 Haribo Berries", price: 3.50, category: "snack", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/14babf7b-1c60-c82f-6682-2b79aaa1f368.jpg", description: "Haribo Berries", specs: ["✅ Fruits rouges"], popular: true },
 
-            // ===== BOISSONS (disponibles) =====
-            { id: 3, name: "Coca-Cola Canette", price: 2.00, category: "boissons", image: "https://mcusercontent.com/ecbcd3e0a3ef2c00dbcaefee8/images/6a1f1093-3c42-4461-4910-e78105e654f3.jpeg", description: "Canette Coca-Cola 33cl", specs: ["✅ 33cl", "✅ Frais garanti"], popular: true },
-            { id: 6002, name: "Fanta Orange Canette", price: 2.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9ba1223b-81e8-96bd-8440-fa61612dae33.jpg", description: "Canette Fanta Orange 33cl", specs: ["✅ 33cl", "✅ Fruité"], popular: true },
-            { id: 6004, name: "Oasis Tropical", price: 2.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9ffe1cab-cfd4-a99b-2a8c-8b647c9a2279.jpg", description: "Bouteille Oasis Tropical 50cl", specs: ["✅ 50cl", "✅ Fruits tropicaux"] },
-            { id: 6007, name: "Red Bull Normal", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/77ff38ec-5245-a015-6fd1-59cd6b285009.jpg", description: "Red Bull Energy Drink 25cl", specs: ["✅ 25cl", "✅ Énergie boost"], popular: true },
-            { id: 6008, name: "Red Bull Blue", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9597085f-343b-8d1d-5070-7807e87505e1.jpg", description: "Red Bull Blue Edition 25cl", specs: ["✅ 25cl", "✅ Saveur myrtille"] },
-            { id: 6009, name: "Red Bull Summer Edition", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9d0516f7-188f-d8ee-826a-e4aadc0f60b7.jpg", description: "Red Bull Summer Edition 25cl", specs: ["✅ 25cl", "✅ Saveur tropicale"] },
-            { id: 6010, name: "Red Bull Pink Edition", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/40878c7d-a6c7-ff3d-b4f4-08bc9f3c6d29.jpg", description: "Red Bull Pink Edition 25cl", specs: ["✅ 25cl", "✅ Saveur fruit du dragon"] },
-            { id: 6003, name: "Sprite Canette", price: 2.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/da014e93-c9a4-39b0-7660-88b808556737.jpg", description: "Canette Sprite 33cl", specs: ["✅ 33cl", "✅ Citron-citron vert"] },
-            { id: 303, name: "Lipton Ice Tea Pêche", price: 2.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/14502efe-5800-74ed-6cd0-82d817b023a1.jpg", description: "Bouteille Lipton Ice Tea Pêche 50cl", specs: ["✅ 50cl", "✅ Goût pêche"] },
-            { id: 6011, name: "🍺 Poliakov Flash", price: 8.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/2a205551-a953-3a61-c0e2-2d2e3765b739.jpg", description: "Vodka Poliakov Flash - Format 70cl", specs: ["✅ 70cl", "✅ Vodka premium"], popular: true },
-            { id: 6012, name: "🍺 Poliakov 70cl", price: 12.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/3ccf8887-238e-36b0-5f86-0a9ad4e2bf5a.jpg", description: "Vodka Poliakov - Bouteille 70cl", specs: ["✅ 70cl", "✅ Vodka classique"], popular: true },
-            { id: 6013, name: "🍺 Heineken Pack de 6", price: 8.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/a6797f9f-7a98-d47f-1fbd-29ea1fad8a0e.jpg", description: "Pack de 6 bières Heineken 33cl", specs: ["✅ 6 x 33cl", "✅ Bière premium"], popular: true },
-            { id: 6014, name: "💧 Eau Minérale", price: 1.50, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/ac103f1a-0117-f262-2ad2-087e164b9825.png", description: "Bouteille d'eau minérale naturelle 50cl", specs: ["✅ 50cl", "✅ Eau de source"], popular: false },
-            { id: 6015, name: "🥤 VODY Tropical Mix", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/1057c0c1-436e-d37f-3e02-c26cd703e87b.jpg", description: "Boisson VODY Tropical Mix", specs: ["✅ Saveur tropicale", "✅ Format canette"], popular: true },
-            { id: 6016, name: "🥤 VODY Cody's", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/a4e00b6c-0cd1-2f59-1cb7-be91525ff5ee.jpg", description: "Boisson VODY Cody's", specs: ["✅ Saveur originale", "✅ Format canette"], popular: true },
-            // ✅ NOUVEAUX JUS AJOUTÉS
-            { id: 6101, name: "🧃 Purjus Jus Multifruits 1L", price: 3.50, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/a6eab94e-e804-f582-aac7-4a7ffd2ab641.jpg", description: "Purjus Jus multifruits - Bouteille 1L", specs: ["✅ 1L", "✅ Multifruits", "✅ 100% pur jus"], popular: true },
-            { id: 6102, name: "🧃 Purjus Multifruit Exotique 1L", price: 3.50, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/e5dc85aa-f95c-7053-23a7-0459087b2edb.jpg", description: "Purjus Multifruit exotique - Bouteille 1L", specs: ["✅ 1L", "✅ Saveur exotique", "✅ 100% pur jus"], popular: true },
-            { id: 6103, name: "🧃 Joker Jus de Fruitier 1L Le Purjus", price: 3.50, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d7588623-c16a-a931-2743-5ed2c4757395.jpg", description: "Joker Jus de Fruitier Le Purjus - Bouteille 1L", specs: ["✅ 1L", "✅ Jus de fruitier", "✅ Le Purjus"], popular: true },
+            { id: 3, name: "Coca-Cola Canette", price: 2.00, category: "boissons", image: "https://mcusercontent.com/ecbcd3e0a3ef2c00dbcaefee8/images/6a1f1093-3c42-4461-4910-e78105e654f3.jpeg", description: "Coca-Cola 33cl", specs: ["✅ 33cl"], popular: true },
+            { id: 6002, name: "Fanta Orange Canette", price: 2.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9ba1223b-81e8-96bd-8440-fa61612dae33.jpg", description: "Fanta Orange 33cl", specs: ["✅ 33cl"], popular: true },
+            { id: 6004, name: "Oasis Tropical", price: 2.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9ffe1cab-cfd4-a99b-2a8c-8b647c9a2279.jpg", description: "Oasis Tropical 50cl", specs: ["✅ 50cl"] },
+            { id: 6007, name: "Red Bull Normal", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/77ff38ec-5245-a015-6fd1-59cd6b285009.jpg", description: "Red Bull 25cl", specs: ["✅ 25cl"], popular: true },
+            { id: 6008, name: "Red Bull Blue", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9597085f-343b-8d1d-5070-7807e87505e1.jpg", description: "Red Bull Blue 25cl", specs: ["✅ Myrtille"] },
+            { id: 6009, name: "Red Bull Summer Edition", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9d0516f7-188f-d8ee-826a-e4aadc0f60b7.jpg", description: "Red Bull Summer 25cl", specs: ["✅ Tropicale"] },
+            { id: 6010, name: "Red Bull Pink Edition", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/b3637290-c337-6f11-f807-51b144e7b800.jpg", description: "Red Bull Pink 25cl", specs: ["✅ Fruit du dragon"] },
+            { id: 6011, name: "Red Bull Silver Edition", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/041fac15-8edf-5355-d90a-a447269ff4f4.jpg", description: "Red Bull Silver 25cl", specs: ["✅ Édition Silver"] },
+            { id: 6020, name: "🔴 Red Bull Red Edition", price: 3.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/aadab7c1-7058-2663-f870-c572de677432.jpg", description: "Red Bull Red Edition 25cl - Saveur pastèque", specs: ["✅ 25cl", "✅ Saveur pastèque"], popular: true },
+            { id: 6003, name: "Sprite Canette", price: 2.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/da014e93-c9a4-39b0-7660-88b808556737.jpg", description: "Sprite 33cl", specs: ["✅ 33cl"] },
+            { id: 303, name: "Lipton Ice Tea Pêche", price: 2.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/14502efe-5800-74ed-6cd0-82d817b023a1.jpg", description: "Lipton 50cl", specs: ["✅ 50cl"] },
+            { id: 6012, name: "🍺 Poliakov Flash", price: 8.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/2a205551-a953-3a61-c0e2-2d2e3765b739.jpg", description: "Vodka Poliakov Flash 70cl", specs: ["✅ 70cl"], popular: true },
+            { id: 6013, name: "🍺 Poliakov 70cl", price: 15.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/3ccf8887-238e-36b0-5f86-0a9ad4e2bf5a.jpg", description: "Vodka Poliakov 70cl", specs: ["✅ 70cl"], popular: true },
+            { id: 6014, name: "🍺 Heineken Pack de 6", price: 8.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/a6797f9f-7a98-d47f-1fbd-29ea1fad8a0e.jpg", description: "Pack 6 bières Heineken", specs: ["✅ 6 x 33cl"], popular: true },
+            { id: 6015, name: "💧 Eau Minérale", price: 1.50, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/ac103f1a-0117-f262-2ad2-087e164b9825.png", description: "Eau minérale 50cl", specs: ["✅ 50cl"] },
+            { id: 6016, name: "🥤 VODY Tropical Mix", price: 7.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/1057c0c1-436e-d37f-3e02-c26cd703e87b.jpg", description: "VODY Tropical Mix", specs: ["✅ Tropicale"], popular: true },
+            { id: 6017, name: "🥤 VODY Cody's", price: 7.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/a4e00b6c-0cd1-2f59-1cb7-be91525ff5ee.jpg", description: "VODY Cody's", specs: ["✅ Originale"], popular: true },
+            { id: 6018, name: "⚡ Monster Energy", price: 5.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/99272486-c8b6-ef6a-9e56-a39247bdabb6.jpg", description: "Monster 50cl", specs: ["✅ 50cl"], popular: true },
+            { id: 6019, name: "🐯 Crazy Tiger", price: 4.50, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/8470002d-e35a-8555-927f-e7baa1e06f28.jpg", description: "Crazy Tiger", specs: ["✅ Energy boost"], popular: true },
+            { id: 6101, name: "🧃 Purjus Multifruits 1L", price: 3.50, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/a6eab94e-e804-f582-aac7-4a7ffd2ab641.jpg", description: "Purjus multifruits 1L", specs: ["✅ 1L"], popular: true },
+            { id: 6102, name: "🧃 Purjus Exotique 1L", price: 3.50, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/e5dc85aa-f95c-7053-23a7-0459087b2edb.jpg", description: "Purjus exotique 1L", specs: ["✅ 1L"], popular: true },
+            { id: 6103, name: "🧃 Joker Jus Fruitier 1L", price: 3.50, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d7588623-c16a-a931-2743-5ed2c4757395.jpg", description: "Joker Le Purjus 1L", specs: ["✅ 1L"], popular: true },
 
-            // ===== TABAC (disponibles) =====
-            { id: 7001, name: "🚬 Marlboro Red", price: 18.00, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/6e80e845-0f41-bb69-ff03-dc3507f6ac77.jpg", description: "Paquet Marlboro Red 20 cigarettes", specs: ["✅ 20 cigarettes", "✅ Rouge classique"], popular: true },
-            { id: 7002, name: "🚬 Marlboro Gold", price: 12.50, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/bb6bfff3-d3ff-8413-7f0e-cf2272758a79.jpg", description: "Paquet Marlboro Gold 20 cigarettes", specs: ["✅ 20 cigarettes", "✅ Light"] },
-            { id: 7004, name: "🚬 Winston Red", price: 11.50, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9e6c13e1-e785-6531-0daf-b14032a474b9.jpg", description: "Paquet Winston Red 20 cigarettes", specs: ["✅ 20 cigarettes", "✅ Rouge classique"] },
-            { id: 7101, name: "🌿 Marlboro Tabac à Rouler 30g", price: 15.00, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/30e764e6-8c2a-4eed-14f4-94e08d765325.jpg", description: "Sachet tabac Marlboro à rouler 30g", specs: ["✅ 30g", "✅ Tabac à rouler"], popular: true },
+            { id: 7001, name: "🚬 Marlboro Red", price: 18.00, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/6e80e845-0f41-bb69-ff03-dc3507f6ac77.jpg", description: "Marlboro Red 20 cigarettes", specs: ["✅ 20 cigarettes"], popular: true },
+            { id: 7002, name: "🚬 Marlboro Gold", price: 12.50, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/bb6bfff3-d3ff-8413-7f0e-cf2272758a79.jpg", description: "Marlboro Gold 20 cigarettes", specs: ["✅ 20 cigarettes"] },
+            { id: 7004, name: "🚬 Winston Red Long", price: 11.50, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9e6c13e1-e785-6531-0daf-b14032a474b9.jpg", description: "Winston Red Long", specs: ["✅ 20 cigarettes"], popular: true },
+            { id: 7101, name: "🌿 Marlboro Tabac à Rouler 30g", price: 20.00, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/30e764e6-8c2a-4eed-14f4-94e08d765325.jpg", description: "Marlboro à rouler 30g", specs: ["✅ 30g"], popular: true },
+            { id: 7102, name: "🌿 Camel S Tabac à Rouler 30g", price: 20.00, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/30e764e6-8c2a-4eed-14f4-94e08d765325.jpg", description: "Camel S à tuber 30g", specs: ["✅ 30g"], popular: true },
+            { id: 7103, name: "🌿 Winston S Tabac à Rouler 30g", price: 20.00, category: "tabac", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/30e764e6-8c2a-4eed-14f4-94e08d765325.jpg", description: "Winston S à tuber 30g", specs: ["✅ 30g"], popular: true },
 
-            // ===== ACCESSOIRES (disponibles) =====
-            { id: 1, name: "Creme Deluxe", price: 25.00, category: "accessoires", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9070a71a-04bb-1e34-556a-b4e32b0956a6.jpg", description: "Crème premium, texture légère", specs: ["✅ Qualité premium", "✅ 50ml"] },
-            { id: 2, name: "Fast Gaz", price: 20.00, category: "accessoires", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/7a46d980-6370-6ac4-b085-8a260cf6f291.jpg", description: "Fast Gaz qualité professionnelle", specs: ["✅ Gaz rapide", "✅ Qualité pro"], popular: true },
-            { id: 30, name: "Tank", price: 45.00, category: "accessoires", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d56d0d68-0ac4-44f4-ae99-f69f9cb27091.jpg", description: "Tank de gaz professionnel", specs: ["✅ Tank complet", "✅ Gaz professionnel"], popular: true },
-            { id: 4, name: "Briquet Bic Mini", price: 4.00, category: "accessoires", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/87143eb2-982b-db58-759d-bd628812c9b7.jpg", description: "Briquet Bic Mini - Format compact", specs: ["✅ Format mini", "✅ Bic qualité"], popular: true },
-            { id: 9, name: "OCB Slim Noir", price: 25.00, category: "accessoires", image: "https://mcusercontent.com/ecbcd3e0a3ef2c00dbcaefee8/images/d24ccf63-fd85-0b81-e6a0-a401cfb11d52.jpeg", description: "Papier à rouler premium noir", specs: ["✅ Ultra fin", "✅ 50 feuilles"], popular: true },
-            { id: 10, name: "OCB Marron", price: 25.00, category: "accessoires", image: "https://mcusercontent.com/ecbcd3e0a3ef2c00dbcaefee8/images/cce76e99-720f-a078-7a66-76e9c737abd3.jpeg", description: "Papier à rouler naturel marron", specs: ["✅ 100% naturel", "✅ 50 feuilles"], popular: true },
-            { id: 13, name: "Nike TN", price: 80.00, category: "accessoires", image: "https://mcusercontent.com/ecbcd3e0a3ef2c00dbcaefee8/images/2c645765-5df4-27c4-c8d5-798f09b5da45.jpeg", description: "Sneakers Nike TN authentiques", specs: ["✅ Authentique", "✅ Pointures 36-46"], popular: true },
+            { id: 1, name: "Creme Deluxe", price: 25.00, category: "accessoires", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/9070a71a-04bb-1e34-556a-b4e32b0956a6.jpg", description: "Crème premium", specs: ["✅ 50ml"] },
+            { id: 2, name: "Fast Gaz", price: 20.00, category: "accessoires", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/7a46d980-6370-6ac4-b085-8a260cf6f291.jpg", description: "Fast Gaz pro", specs: ["✅ Gaz rapide"], popular: true },
+            { id: 30, name: "Tank", price: 45.00, category: "accessoires", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d56d0d68-0ac4-44f4-ae99-f69f9cb27091.jpg", description: "Tank professionnel", specs: ["✅ Complet"], popular: true },
+            { id: 4, name: "Briquet Bic Mini", price: 4.00, category: "accessoires", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/87143eb2-982b-db58-759d-bd628812c9b7.jpg", description: "Bic Mini", specs: ["✅ Compact"], popular: true },
+            { id: 9, name: "OCB Slim Noir", price: 25.00, category: "accessoires", image: "https://mcusercontent.com/ecbcd3e0a3ef2c00dbcaefee8/images/d24ccf63-fd85-0b81-e6a0-a401cfb11d52.jpeg", description: "Papier noir", specs: ["✅ Ultra fin"], popular: true },
+            { id: 10, name: "OCB Marron", price: 25.00, category: "accessoires", image: "https://mcusercontent.com/ecbcd3e0a3ef2c00dbcaefee8/images/cce76e99-720f-a078-7a66-76e9c737abd3.jpeg", description: "Papier marron", specs: ["✅ 100% naturel"], popular: true },
+            { id: 13, name: "Nike TN", price: 80.00, category: "accessoires", image: "https://mcusercontent.com/ecbcd3e0a3ef2c00dbcaefee8/images/2c645765-5df4-27c4-c8d5-798f09b5da45.jpeg", description: "Sneakers Nike TN", specs: ["✅ Authentique"], popular: true },
 
-            // ============================================================
-            // ⬇️⬇️⬇️ PRODUITS "BIENTÔT DISPONIBLE" - EN BAS ⬇️⬇️⬇️
-            // ============================================================
-
-            // ===== REPAS (bientôt) =====
-            { id: 2010, name: "👑 Menu Boss", price: 12.00, category: "repas", image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400", description: "3 pilons • 1 hamburger • frites • boisson", specs: ["✅ 3 pilons", "✅ 1 hamburger", "✅ Frites", "✅ Boisson"], popular: true, comingSoon: true, supplements: [{ id: "sup1", name: "➕ Pilon supplémentaire", price: 2.50 }, { id: "sup2", name: "➕ Hamburger supplémentaire", price: 2.50 }, { id: "sup3", name: "➕ Frites supplémentaires", price: 2.00 }] },
-            { id: 2011, name: "🍗 Menu Wings", price: 11.50, category: "repas", image: "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=400", description: "5 ailes • 1 hamburger • frites • boisson", specs: ["✅ 5 ailes", "✅ 1 hamburger", "✅ Frites", "✅ Boisson"], popular: true, comingSoon: true, supplements: [{ id: "sup4", name: "➕ Aile supplémentaire", price: 2.00 }] },
-            { id: 2012, name: "🍖 Menu Thighs", price: 15.00, category: "repas", image: "https://images.unsplash.com/photo-1604909052743-94e838986d24?w=400", description: "5 cuisses • 1 hamburger • frites • boisson", specs: ["✅ 5 cuisses", "✅ 1 hamburger", "✅ Frites", "✅ Boisson"], comingSoon: true, supplements: [{ id: "sup5", name: "➕ Cuisse supplémentaire", price: 3.00 }] },
-            { id: 2013, name: "🥘 Menu Blend", price: 14.00, category: "repas", image: "https://images.unsplash.com/photo-1625944230945-1b7dd3b949ab?w=400", description: "Mélange ailes & cuisses • 1 hamburger • frites • boisson", specs: ["✅ Ailes & cuisses", "✅ 1 hamburger", "✅ Frites", "✅ Boisson"], comingSoon: true },
-            { id: 2015, name: "🍚 Menu Riz Boss", price: 13.00, category: "repas", image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400", description: "1 cuisse • riz massalé • maïs • sauce", specs: ["✅ 1 cuisse", "✅ Riz massalé", "✅ Maïs", "✅ Sauce"], comingSoon: true },
-            { id: 4001, name: "🍟 Frites Supplémentaires", price: 2.50, category: "snack", image: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=400", description: "Portion de frites maison", specs: ["✅ Portion généreuse", "✅ Maison"], comingSoon: true },
-            { id: 4002, name: "🥫 Sauce Spéciale", price: 1.00, category: "snack", image: "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=400", description: "Sauce maison signature", specs: ["✅ Recette secrète"], comingSoon: true },
-
-            // ===== RESTAURANT (bientôt) =====
-            { id: 2014, name: "🍢 Menu Brochett's", price: 11.90, category: "restaurant", image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400", description: "3 brochettes • manioc • plantain frit • sauce", specs: ["✅ 3 brochettes", "✅ Manioc", "✅ Plantain frit", "✅ Sauce"], popular: true, comingSoon: true, supplements: [{ id: "sup6", name: "➕ Brochette supplémentaire", price: 2.50 }, { id: "sup7", name: "➕ Manioc supplémentaire", price: 2.00 }, { id: "sup8", name: "➕ Plantain supplémentaire", price: 2.00 }] }
+            { id: 2010, name: "👑 Menu Boss", price: 12.00, category: "repas", image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400", description: "3 pilons • hamburger • frites • boisson", specs: ["✅ 3 pilons", "✅ Hamburger", "✅ Frites", "✅ Boisson"], popular: true, comingSoon: true, supplements: [{ id: "sup1", name: "➕ Pilon", price: 2.50 }, { id: "sup2", name: "➕ Hamburger", price: 2.50 }, { id: "sup3", name: "➕ Frites", price: 2.00 }] },
+            { id: 2011, name: "🍗 Menu Wings", price: 11.50, category: "repas", image: "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=400", description: "5 ailes • hamburger • frites • boisson", specs: ["✅ 5 ailes", "✅ Hamburger", "✅ Frites", "✅ Boisson"], popular: true, comingSoon: true, supplements: [{ id: "sup4", name: "➕ Aile", price: 2.00 }] },
+            { id: 2012, name: "🍖 Menu Thighs", price: 15.00, category: "repas", image: "https://images.unsplash.com/photo-1604909052743-94e838986d24?w=400", description: "5 cuisses • hamburger • frites • boisson", specs: ["✅ 5 cuisses", "✅ Hamburger", "✅ Frites", "✅ Boisson"], comingSoon: true },
+            { id: 2013, name: "🥘 Menu Blend", price: 14.00, category: "repas", image: "https://images.unsplash.com/photo-1625944230945-1b7dd3b949ab?w=400", description: "Ailes & cuisses • hamburger • frites • boisson", specs: ["✅ Ailes & cuisses"], comingSoon: true },
+            { id: 2015, name: "🍚 Menu Riz Boss", price: 13.00, category: "repas", image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400", description: "Cuisse • riz massalé • maïs • sauce", specs: ["✅ Cuisse", "✅ Riz massalé"], comingSoon: true },
+            { id: 4001, name: "🍟 Frites Supplémentaires", price: 2.50, category: "snack", image: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=400", description: "Portion frites", specs: ["✅ Généreuse"], comingSoon: true },
+            { id: 4002, name: "🥫 Sauce Spéciale", price: 1.00, category: "snack", image: "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=400", description: "Sauce maison", specs: ["✅ Secrète"], comingSoon: true },
+            { id: 2014, name: "🍢 Menu Brochett's", price: 11.90, category: "restaurant", image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400", description: "3 brochettes • manioc • plantain • sauce", specs: ["✅ 3 brochettes", "✅ Manioc", "✅ Plantain", "✅ Sauce"], popular: true, comingSoon: true, supplements: [{ id: "sup6", name: "➕ Brochette", price: 2.50 }, { id: "sup7", name: "➕ Manioc", price: 2.00 }, { id: "sup8", name: "➕ Plantain", price: 2.00 }] }
         ];
+
+        products.push(
+            { id: 6021, name: "⚡ Formule Flash Polia Redbull", price: 10.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/1fb73eba-23d6-32b9-2d61-e5f04708ef17.png", description: "Formule Flash Polia Redbull - La Poliakov est une Vodka 100% pure grain. Sa triple distillation lui confère une pureté unique et une fraîcheur extrême. Elle est souvent consommée avec des boissons énergisantes comme le Red Bull.", specs: ["✅ 1 Vodka Poliakov 70cl (37,5°)", "✅ 4 Red Bull 25cl"], popular: true },
+            { id: 6022, name: "🍸 Formule Vodka Poliakov", price: 33.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/38fb1a2b-460f-d505-dc4c-f98bb8920d1f.png", description: "Formule Vodka Poliakov - La Poliakov est une Vodka 100% pure grain. Sa triple distillation lui confère une pureté unique et une fraîcheur extrême.", specs: ["✅ 1 Vodka Poliakov 70cl (37,5°)"], popular: true },
+            { id: 6023, name: "🥂 Poliakov 70cl + 4 Red Bull 25cl", price: 39.00, category: "boissons", image: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/df16c1d7-497b-7665-d556-c6e390f84402.png", description: "Poliakov 70cl + 4 Red Bull 25cl - La Poliakov est une Vodka 100% pure grain. Sa triple distillation lui confère une pureté unique et une fraîcheur extrême. Elle est souvent consommée avec des boissons énergisantes comme le Red Bull.", specs: ["✅ 1 Vodka Poliakov 70cl (37,5°)", "✅ 4 Red Bull 25cl"], popular: true }
+        );
 
         document.addEventListener('DOMContentLoaded', function() {
             loadProductsFromStorage();
@@ -1118,31 +1166,99 @@
             startPeriodicChecks();
             showSection('products');
             updateAdminUI();
+            setupSecretAdminAccess();
         });
 
+        function setupSecretAdminAccess() {
+            let clickCount = 0;
+            let clickTimer = null;
+            document.getElementById('logoWrapper').addEventListener('click', function(e) {
+                e.stopPropagation();
+                clickCount++;
+                if (clickTimer) clearTimeout(clickTimer);
+                clickTimer = setTimeout(() => { clickCount = 0; }, 800);
+                if (clickCount === 3) {
+                    clickCount = 0;
+                    if (isAdmin) { openAdminPanel(); }
+                    else { openSecretAdminLogin(); }
+                }
+            });
+            document.getElementById('logoImage').addEventListener('click', function(e) {
+                if (clickCount === 0) showFullImage(this.src);
+            });
+        }
+
+        function openSecretAdminLogin() {
+            const lockUntil = parseInt(localStorage.getItem('hds_admin_lock') || '0');
+            if (Date.now() < lockUntil) {
+                const remaining = Math.ceil((lockUntil - Date.now()) / 60000);
+                showAlert(`🚫 Bloqué encore ${remaining} min`);
+                return;
+            }
+            ['loginView','registerView','clientView','editProfileView','adminLoginView'].forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById('adminLoginView').style.display = 'block';
+            document.getElementById('accountModal').classList.add('active');
+            setTimeout(() => document.getElementById('adminPassword').focus(), 300);
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('adminLoginView').style.display = 'none';
+            closeAccountModal();
+        }
+
+        function adminLogin() {
+            const pass = document.getElementById('adminPassword').value;
+            const lockUntil = parseInt(localStorage.getItem('hds_admin_lock') || '0');
+            if (Date.now() < lockUntil) { showAlert('🚫 Accès bloqué'); return; }
+            let valid = false;
+            if (ADMIN_PASSWORD_HASH && typeof CryptoJS !== 'undefined') {
+                const hash = CryptoJS.SHA256(pass).toString();
+                valid = (hash === ADMIN_PASSWORD_HASH);
+            }
+            if (!valid) valid = (pass === ADMIN_PASSWORD);
+            if (valid) {
+                isAdmin = true;
+                localStorage.setItem('hds_admin', 'true');
+                localStorage.setItem('hds_admin_session', (Date.now() + 2*60*60*1000).toString());
+                localStorage.setItem('hds_admin_attempts', '0');
+                document.getElementById('adminPassword').value = '';
+                closeAccountModal();
+                updateAdminUI();
+                showAlert('👑 Bienvenue Admin');
+                setTimeout(openAdminPanel, 300);
+            } else {
+                const attempts = parseInt(localStorage.getItem('hds_admin_attempts') || '0') + 1;
+                localStorage.setItem('hds_admin_attempts', attempts.toString());
+                if (attempts >= MAX_ADMIN_ATTEMPTS) {
+                    localStorage.setItem('hds_admin_lock', (Date.now() + LOCKOUT_DURATION).toString());
+                    localStorage.setItem('hds_admin_attempts', '0');
+                    showAlert('🚫 3 essais. Bloqué 5 min.');
+                    closeAccountModal();
+                } else {
+                    showAlert(`❌ Incorrect (${MAX_ADMIN_ATTEMPTS - attempts} restants)`);
+                }
+                document.getElementById('adminPassword').value = '';
+            }
+        }
+
         function loadProductsFromStorage() {
-            const stored = localStorage.getItem('hds_products_updated');
+            const stored = localStorage.getItem('hds_products_v2');
             if (stored) {
                 try {
                     const parsed = JSON.parse(stored);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        products = parsed;
-                        return;
-                    }
+                    if (Array.isArray(parsed) && parsed.length > 0) { products = parsed; return; }
                 } catch(e) {}
             }
             saveProductsToStorage();
         }
 
-        function saveProductsToStorage() {
-            localStorage.setItem('hds_products_updated', JSON.stringify(products));
-        }
+        function saveProductsToStorage() { localStorage.setItem('hds_products_v2', JSON.stringify(products)); }
 
         function renderProducts(category = 'all') {
             const grid = document.getElementById('productsGrid');
             if (!grid) return;
             grid.innerHTML = '';
-            let filtered = category === 'all' ? products : products.filter(p => p.category === category);
+            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
             filtered.forEach(p => grid.innerHTML += createProductCard(p));
         }
 
@@ -1151,13 +1267,6 @@
             if (!grid) return;
             grid.innerHTML = '';
             products.filter(p => p.popular).forEach(p => grid.innerHTML += createProductCard(p));
-        }
-
-        function renderEvents() {
-            const grid = document.getElementById('eventsGrid');
-            if (!grid) return;
-            grid.innerHTML = '';
-            products.filter(p => p.category === 'evenements').forEach(p => grid.innerHTML += createProductCard(p));
         }
 
         function createProductCard(product) {
@@ -1170,14 +1279,14 @@
                 <div class="${cardClass}" data-id="${product.id}">
                     ${product.popular ? '<div class="product-badge">🔥 POPULAIRE</div>' : ''}
                     <div class="product-image-container" onclick="openProductDetail(${product.id})">
-                        <img src="${product.image}" class="product-image" alt="${product.name}" onerror="this.src='https://via.placeholder.com/200?text=HDS'">
+                        <img src="${product.image}" class="product-image" alt="" onerror="this.src='https://via.placeholder.com/200?text=HDS'">
                     </div>
                     <div class="product-name">${product.name}</div>
                     <div class="product-price">
                         ${currentClient ? `<span class="original-price">${product.price.toFixed(2)}€</span><span class="discounted-price">${discounted.toFixed(2)}€</span><span class="client-badge">-${CLIENT_DISCOUNT}%</span>` : `${product.price.toFixed(2)}€`}
                     </div>
-                    ${hasSupplements ? '<div class="supplement-badge">➕ Suppléments disponibles</div>' : ''}
-                    ${isComingSoon ? '<div style="text-align:center; margin:5px 0;"><span class="coming-soon-badge"><i class="fas fa-clock"></i> Bientôt disponible</span></div>' : ''}
+                    ${hasSupplements ? '<div class="supplement-badge">➕ Suppléments</div>' : ''}
+                    ${isComingSoon ? '<div style="text-align:center; margin:5px 0;"><span class="coming-soon-badge"><i class="fas fa-clock"></i> Bientôt</span></div>' : ''}
                     <button class="product-details-btn" onclick="openProductDetail(${product.id})"><i class="fas fa-info-circle"></i> Détails</button>
                     <div class="product-actions">
                         <div class="quantity-selector">
@@ -1199,48 +1308,18 @@
         }
 
         function updateAdminUI() {
-            const adminLink = document.getElementById('adminMenuLink');
             const accountBtn = document.getElementById('accountButton');
             if (isAdmin) {
-                adminLink.style.display = 'flex';
                 accountBtn.classList.add('admin');
                 accountBtn.innerHTML = '<i class="fas fa-shield-alt"></i>';
             } else {
-                adminLink.style.display = 'none';
                 accountBtn.classList.remove('admin');
                 accountBtn.innerHTML = currentClient ? '<i class="fas fa-user-check"></i>' : '<i class="fas fa-user"></i>';
             }
         }
 
-        function openAdminLogin() {
-            document.getElementById('loginView').style.display = 'none';
-            document.getElementById('registerView').style.display = 'none';
-            document.getElementById('clientView').style.display = 'none';
-            document.getElementById('adminLoginView').style.display = 'block';
-        }
-
-        function closeAdminLogin() {
-            document.getElementById('adminLoginView').style.display = 'none';
-            showLoginView();
-        }
-
-        function adminLogin() {
-            const pass = document.getElementById('adminPassword').value;
-            if (pass === ADMIN_PASSWORD) {
-                isAdmin = true;
-                localStorage.setItem('hds_admin', 'true');
-                showAlert('👑 Bienvenue Admin !');
-                closeAccountModal();
-                updateAdminUI();
-                openAdminPanel();
-                document.getElementById('adminPassword').value = '';
-            } else {
-                showAlert('❌ Mot de passe incorrect');
-            }
-        }
-
         function openAdminPanel() {
-            if (!isAdmin) { showAlert('⛔ Accès refusé'); return; }
+            if (!isAdmin) return;
             document.getElementById('adminPanelModal').classList.add('active');
             adminLoadProducts();
         }
@@ -1253,29 +1332,26 @@
         function adminLoadProducts() {
             const list = document.getElementById('adminProductList');
             if (!list) return;
-            list.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-gray);">Chargement...</div>';
-            setTimeout(() => {
-                let html = '';
-                products.forEach(p => {
-                    html += `
-                        <div class="admin-product-item">
-                            <div class="admin-product-info">
-                                <strong>${p.name}</strong>
-                                <span style="font-size:12px; color:var(--text-gray);">${p.category} - ${p.price.toFixed(2)}€</span>
-                            </div>
-                            <div class="admin-product-actions">
-                                <button class="edit-btn" onclick="adminEditProduct(${p.id})"><i class="fas fa-edit"></i></button>
-                                <button class="delete-btn" onclick="adminDeleteProduct(${p.id})"><i class="fas fa-trash"></i></button>
-                            </div>
+            let html = '';
+            products.forEach(p => {
+                html += `
+                    <div class="admin-product-item">
+                        <div class="admin-product-info" style="flex:1;">
+                            <strong>${p.name}</strong>
+                            <span style="font-size:12px; color:var(--text-gray);">${p.category} - ${p.price.toFixed(2)}€</span>
                         </div>
-                    `;
-                });
-                list.innerHTML = html || '<div style="text-align:center; padding:20px; color:var(--text-gray);">Aucun produit</div>';
-            }, 200);
+                        <div class="admin-product-actions">
+                            <button class="edit-btn" onclick="adminEditProduct(${p.id})">✏️</button>
+                            <button class="delete-btn" onclick="adminDeleteProduct(${p.id})">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+            list.innerHTML = html || '<div style="text-align:center; padding:20px;">Aucun produit</div>';
         }
 
         function adminShowAddProduct() {
-            document.getElementById('adminFormTitle').textContent = '➕ Ajouter un produit';
+            document.getElementById('adminFormTitle').textContent = '➕ Ajouter';
             document.getElementById('adminEditId').value = '';
             document.getElementById('adminPName').value = '';
             document.getElementById('adminPPrice').value = '';
@@ -1284,6 +1360,7 @@
             document.getElementById('adminPDesc').value = '';
             document.getElementById('adminPSpecs').value = '';
             document.getElementById('adminPPopular').value = 'false';
+            document.getElementById('adminPComingSoon').value = 'false';
             document.getElementById('adminPImagePreview').style.display = 'none';
             document.getElementById('adminPImageFile').value = '';
             uploadedImageData = null;
@@ -1293,7 +1370,7 @@
         function adminEditProduct(id) {
             const p = products.find(p => p.id === id);
             if (!p) return;
-            document.getElementById('adminFormTitle').textContent = '✏️ Modifier ' + p.name;
+            document.getElementById('adminFormTitle').textContent = '✏️ Modifier';
             document.getElementById('adminEditId').value = p.id;
             document.getElementById('adminPName').value = p.name;
             document.getElementById('adminPPrice').value = p.price;
@@ -1302,13 +1379,11 @@
             document.getElementById('adminPDesc').value = p.description || '';
             document.getElementById('adminPSpecs').value = (p.specs || []).join(' | ');
             document.getElementById('adminPPopular').value = p.popular ? 'true' : 'false';
+            document.getElementById('adminPComingSoon').value = p.comingSoon ? 'true' : 'false';
             if (p.image) {
                 document.getElementById('adminPImagePreview').src = p.image;
                 document.getElementById('adminPImagePreview').style.display = 'block';
-            } else {
-                document.getElementById('adminPImagePreview').style.display = 'none';
             }
-            document.getElementById('adminPImageFile').value = '';
             uploadedImageData = null;
             document.getElementById('adminProductForm').style.display = 'block';
         }
@@ -1317,7 +1392,7 @@
             const file = input.files[0];
             if (!file) return;
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = e => {
                 uploadedImageData = e.target.result;
                 document.getElementById('adminPImagePreview').src = e.target.result;
                 document.getElementById('adminPImagePreview').style.display = 'block';
@@ -1331,8 +1406,6 @@
                 document.getElementById('adminPImagePreview').src = url;
                 document.getElementById('adminPImagePreview').style.display = 'block';
                 uploadedImageData = null;
-            } else if (!url) {
-                document.getElementById('adminPImagePreview').style.display = 'none';
             }
         }
 
@@ -1345,51 +1418,37 @@
             const description = document.getElementById('adminPDesc').value.trim();
             const specsRaw = document.getElementById('adminPSpecs').value.trim();
             const popular = document.getElementById('adminPPopular').value === 'true';
+            const comingSoon = document.getElementById('adminPComingSoon').value === 'true';
 
-            if (!name || isNaN(price) || price <= 0) {
-                showAlert('❌ Nom et prix valide requis');
-                return;
-            }
-
-            let image = uploadedImageData || imageUrl || 'https://via.placeholder.com/200?text=HDS';
+            if (!name || isNaN(price) || price <= 0) { showAlert('❌ Nom + prix requis'); return; }
+            const image = uploadedImageData || imageUrl || 'https://via.placeholder.com/200?text=HDS';
             const specs = specsRaw ? specsRaw.split('|').map(s => s.trim()).filter(s => s) : [];
 
             if (id) {
-                const index = products.findIndex(p => p.id === parseInt(id));
-                if (index !== -1) {
-                    products[index] = { ...products[index], name, price, category, image, description, specs, popular };
-                    showAlert('✅ Produit modifié');
+                const i = products.findIndex(p => p.id === parseInt(id));
+                if (i !== -1) {
+                    products[i] = { ...products[i], name, price, category, image, description, specs, popular, comingSoon };
+                    showAlert('✅ Modifié');
                 }
             } else {
-                const newId = Date.now();
-                products.push({
-                    id: newId,
-                    name, price, category, image,
-                    description: description || '',
-                    specs: specs.length ? specs : ['✅ Nouveau produit'],
-                    popular: popular,
-                    supplements: []
-                });
-                showAlert('✅ Produit ajouté');
+                products.push({ id: Date.now(), name, price, category, image, description, specs: specs.length ? specs : ['✅ Nouveau'], popular, comingSoon, supplements: [] });
+                showAlert('✅ Ajouté');
             }
-
             saveProductsToStorage();
             adminLoadProducts();
             adminCancelForm();
             renderProducts(document.querySelector('#categoryTabs .active')?.dataset.category || 'all');
             renderPopular();
-            renderEvents();
         }
 
         function adminDeleteProduct(id) {
-            if (!confirm('Supprimer ce produit définitivement ?')) return;
+            if (!confirm('Supprimer ?')) return;
             products = products.filter(p => p.id !== id);
             saveProductsToStorage();
             adminLoadProducts();
             renderProducts(document.querySelector('#categoryTabs .active')?.dataset.category || 'all');
             renderPopular();
-            renderEvents();
-            showAlert('🗑️ Produit supprimé');
+            showAlert('🗑️ Supprimé');
         }
 
         function adminCancelForm() {
@@ -1397,56 +1456,48 @@
             uploadedImageData = null;
         }
 
-        function locateUser() {
+        function locateUser(fillAddressField, targetFieldId) {
             const btn = document.getElementById('locateBtn');
-            const status = document.getElementById('locationStatus');
-            const distanceEl = document.getElementById('locationDistance');
-            const addressEl = document.getElementById('locationAddress');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Localisation...';
-            if (!navigator.geolocation) { showAlert('❌ Géolocalisation non supportée'); btn.innerHTML = '<i class="fas fa-location-dot"></i> ME LOCALISER'; btn.disabled = false; return; }
+            if (btn && !fillAddressField) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Localisation...'; }
+            if (!navigator.geolocation) {
+                showAlert('❌ Géolocalisation non supportée');
+                if (btn) { btn.innerHTML = '<i class="fas fa-location-dot"></i> ME LOCALISER'; btn.disabled = false; }
+                return;
+            }
             navigator.geolocation.getCurrentPosition(
                 function(position) {
                     const lat = position.coords.latitude, lng = position.coords.longitude;
                     userLocation = [lat, lng];
                     userDistance = calculateDistance(RESTAURANT_LOCATION[0], RESTAURANT_LOCATION[1], lat, lng);
-                    const deliveryCost = calculateDeliveryCostFromDistance(userDistance);
-                    const baseCost = getBaseDeliveryCost(userDistance);
                     fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-                        .then(response => response.json())
+                        .then(r => r.json())
                         .then(data => {
                             userAddress = data.display_name || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-                            const addressField = document.getElementById('orderAddress');
-                            if (addressField) addressField.value = userAddress;
-                            status.style.display = 'block';
-                            let discountInfo = '';
-                            if (deliveryCost < baseCost && baseCost > 0) {
-                                const savings = baseCost - deliveryCost;
-                                discountInfo = `<br><span style="color:var(--primary-green); font-size:11px;">💡 Économie : -${savings.toFixed(2)}€</span>`;
+                            const targetField = targetFieldId ? document.getElementById(targetFieldId) : null;
+                            if (targetField) targetField.value = userAddress;
+                            const orderAddr = document.getElementById('orderAddress');
+                            if (orderAddr && !orderAddr.value) orderAddr.value = userAddress;
+                            if (document.getElementById('locationStatus') && !fillAddressField) {
+                                document.getElementById('locationStatus').style.display = 'block';
+                                document.getElementById('locationDistance').innerHTML = `<strong>${userDistance.toFixed(1)} km</strong> de la boutique`;
+                                document.getElementById('locationAddress').textContent = userAddress.substring(0, 100);
                             }
-                            distanceEl.innerHTML = `<strong>${userDistance.toFixed(1)} km</strong> du restaurant<br>Frais de livraison: <strong style="color: var(--primary-yellow);">${deliveryCost === 0 ? 'GRATUIT' : deliveryCost.toFixed(2) + '€'}</strong>${discountInfo}`;
-                            addressEl.textContent = userAddress.substring(0, 100) + '...';
-                            showAlert('📍 Localisation réussie !');
+                            showAlert('📍 Localisation OK !');
                         })
                         .catch(() => {
                             userAddress = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-                            status.style.display = 'block';
-                            distanceEl.innerHTML = `<strong>${userDistance.toFixed(1)} km</strong> du restaurant<br>Frais de livraison: <strong style="color: var(--primary-yellow);">${deliveryCost === 0 ? 'GRATUIT' : deliveryCost.toFixed(2) + '€'}</strong>`;
-                            addressEl.textContent = userAddress;
+                            const targetField = targetFieldId ? document.getElementById(targetFieldId) : null;
+                            if (targetField) targetField.value = userAddress;
                         });
                     updateMapWithUserLocation(lat, lng);
-                    btn.innerHTML = '<i class="fas fa-check"></i> Localisé ✓';
-                    btn.disabled = false;
+                    if (btn) { btn.innerHTML = '<i class="fas fa-check"></i> Localisé ✓'; btn.disabled = false; }
                     if (document.getElementById('cartModal').classList.contains('active')) renderCartItems();
                 },
                 function(error) {
-                    let errorMsg = 'Erreur de localisation';
-                    if (error.code === 1) errorMsg = 'Autorisation refusée';
-                    else if (error.code === 2) errorMsg = 'Position indisponible';
-                    else if (error.code === 3) errorMsg = 'Délai dépassé';
-                    showAlert('❌ ' + errorMsg);
-                    btn.innerHTML = '<i class="fas fa-location-dot"></i> Réessayer';
-                    btn.disabled = false;
+                    let msg = 'Erreur localisation';
+                    if (error.code === 1) msg = 'Autorisation refusée';
+                    showAlert('❌ ' + msg);
+                    if (btn) { btn.innerHTML = '<i class="fas fa-location-dot"></i> Réessayer'; btn.disabled = false; }
                 },
                 { enableHighAccuracy: true, timeout: 10000 }
             );
@@ -1458,7 +1509,7 @@
             if (userCircle) deliveryMap.removeLayer(userCircle);
             userMarker = L.marker([lat, lng], {
                 icon: L.divIcon({ html: '<div style="background:#2196F3; width:20px; height:20px; border-radius:50%; border:3px solid white;"></div>', iconSize: [26, 26] })
-            }).addTo(deliveryMap).bindPopup('Vous êtes ici');
+            }).addTo(deliveryMap).bindPopup('Vous');
             userCircle = L.circle([lat, lng], { color: '#2196F3', radius: 100, fillOpacity: 0.1 }).addTo(deliveryMap);
             deliveryMap.setView([lat, lng], 13);
         }
@@ -1467,9 +1518,8 @@
             const R = 6371;
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) * Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
+            const a = Math.sin(dLat/2) ** 2 + Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) * Math.sin(dLon/2) ** 2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         }
 
         function getBaseDeliveryCost(km) {
@@ -1479,58 +1529,62 @@
             return 8;
         }
 
+        // ✅ NOUVELLE LOGIQUE : Livraison GRATUITE dès 35 €
         function calculateDeliveryCostFromDistance(km) {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const baseCost = getBaseDeliveryCost(km);
-            if (baseCost === 0) return 0;
-            if (subtotal >= 100) return 0;
-            if (subtotal >= 60) return baseCost * 0.25;
-            if (subtotal >= 40) return baseCost * 0.5;
-            if (subtotal >= 30) return baseCost * 0.75;
-            return baseCost;
+            // Livraison gratuite dès 35 €
+            if (subtotal >= FREE_DELIVERY_THRESHOLD) return 0;
+            // Sinon, frais selon la distance
+            return getBaseDeliveryCost(km);
         }
 
         function getCurrentDeliveryCost() {
             if (!userLocation) return 5;
-            const distance = calculateDistance(RESTAURANT_LOCATION[0], RESTAURANT_LOCATION[1], userLocation[0], userLocation[1]);
-            return calculateDeliveryCostFromDistance(distance);
+            const d = calculateDistance(RESTAURANT_LOCATION[0], RESTAURANT_LOCATION[1], userLocation[0], userLocation[1]);
+            return calculateDeliveryCostFromDistance(d);
         }
 
         function initMap() {
             if (!document.getElementById('deliveryMap')) return;
             deliveryMap = L.map('deliveryMap').setView(RESTAURANT_LOCATION, 12);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(deliveryMap);
-            L.marker(RESTAURANT_LOCATION).addTo(deliveryMap).bindPopup('<b>H.D.S RESTAURANT</b>').openPopup();
-            L.circle(RESTAURANT_LOCATION, { color: '#4CAF50', weight: 2, radius: 2000, fillOpacity: 0.1 }).addTo(deliveryMap).bindTooltip('Zone gratuite (0-2km)');
-            L.circle(RESTAURANT_LOCATION, { color: '#FF9800', weight: 2, radius: 5000, fillOpacity: 0.05 }).addTo(deliveryMap).bindTooltip('Zone 3€ (2-5km)');
-            L.circle(RESTAURANT_LOCATION, { color: '#FF5252', weight: 2, radius: 10000, fillOpacity: 0.02 }).addTo(deliveryMap).bindTooltip('Zone 5€ (5-10km)');
+            L.marker(RESTAURANT_LOCATION).addTo(deliveryMap).bindPopup('<b>H.D.S SHOP</b>').openPopup();
+            L.circle(RESTAURANT_LOCATION, { color: '#4CAF50', weight: 2, radius: 2000, fillOpacity: 0.1 }).addTo(deliveryMap);
+            L.circle(RESTAURANT_LOCATION, { color: '#FF9800', weight: 2, radius: 5000, fillOpacity: 0.05 }).addTo(deliveryMap);
+            L.circle(RESTAURANT_LOCATION, { color: '#FF5252', weight: 2, radius: 10000, fillOpacity: 0.02 }).addTo(deliveryMap);
         }
 
         function addToCart(productId, btn) {
             const product = products.find(p => p.id === productId);
-            if (!product) return;
-            if (product.comingSoon) { showAlert('⏳ Ce produit sera bientôt disponible !'); return; }
+            if (!product || product.comingSoon) { showAlert('⏳ Bientôt disponible'); return; }
             const card = btn.closest('.product-card');
             const qty = parseInt(card.querySelector('.quantity-input').value);
-            let price = currentClient ? product.price * (1 - CLIENT_DISCOUNT/100) : product.price;
-            const existing = cart.find(item => item.id === productId && !item.supplements);
+            const price = currentClient ? product.price * (1 - CLIENT_DISCOUNT/100) : product.price;
+            const existing = cart.find(item => item.id === productId && (!item.supplements || item.supplements.length === 0));
             if (existing) existing.quantity += qty;
             else cart.push({ id: productId, name: product.name, price, originalPrice: product.price, quantity: qty, category: product.category, supplements: [] });
             updateCartDisplay();
             saveCart();
-            showAlert(`✅ ${qty} ${product.name} ajouté(s)`);
+            showAlert(`✅ ${qty} ${product.name}`);
         }
 
         function addToCartWithSupplements(productId, qty, selectedSupps) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
-            let basePrice = currentClient ? product.price * (1 - CLIENT_DISCOUNT/100) : product.price;
+            const basePrice = currentClient ? product.price * (1 - CLIENT_DISCOUNT/100) : product.price;
             const suppTotal = selectedSupps.reduce((sum, s) => sum + s.price, 0);
-            const finalPrice = basePrice + suppTotal;
-            cart.push({ id: productId + '_' + Date.now(), name: product.name + (selectedSupps.length > 0 ? ' (+ suppléments)' : ''), price: finalPrice, originalPrice: product.price + suppTotal, quantity: qty, category: product.category, supplements: selectedSupps });
+            cart.push({
+                id: productId + '_' + Date.now(),
+                name: product.name + (selectedSupps.length ? ' (+ supp)' : ''),
+                price: basePrice + suppTotal,
+                originalPrice: product.price + suppTotal,
+                quantity: qty,
+                category: product.category,
+                supplements: selectedSupps
+            });
             updateCartDisplay();
             saveCart();
-            showAlert(`✅ ${qty} ${product.name} avec suppléments ajouté(s)`);
+            showAlert(`✅ ${qty} ${product.name}`);
         }
 
         function updateCartDisplay() {
@@ -1547,38 +1601,28 @@
                 document.getElementById('subtotal').textContent = '0€';
                 document.getElementById('discount').textContent = '0€';
                 document.getElementById('deliveryCost').textContent = 'À calculer';
-                document.getElementById('deliverySavingsRow').style.display = 'none';
                 document.getElementById('cartTotal').textContent = 'Total: 0€';
                 return;
             }
             let subtotal = 0, html = '';
-            cart.forEach((item, index) => {
+            cart.forEach((item, i) => {
                 const total = item.price * item.quantity;
                 subtotal += total;
-                let suppHtml = '';
-                if (item.supplements && item.supplements.length > 0) {
-                    suppHtml = '<div class="cart-item-supplements">' + item.supplements.map(s => s.name).join(', ') + '</div>';
-                }
-                html += `<div class="cart-item"><div class="cart-item-details"><div class="cart-item-name">${item.name}</div>${suppHtml}<div style="font-size:11px; color:var(--text-gray);">${item.quantity} x ${item.price.toFixed(2)}€</div></div><div style="display:flex; align-items:center; gap:8px;"><span style="font-weight:600;">${total.toFixed(2)}€</span><button class="cart-item-remove" onclick="removeFromCart(${index})">×</button></div></div>`;
+                const suppHtml = item.supplements?.length ? `<div class="cart-item-supplements">${item.supplements.map(s => s.name).join(', ')}</div>` : '';
+                html += `<div class="cart-item"><div class="cart-item-details"><div class="cart-item-name">${item.name}</div>${suppHtml}<div style="font-size:11px; color:var(--text-gray);">${item.quantity} x ${item.price.toFixed(2)}€</div></div><div style="display:flex; align-items:center; gap:8px;"><span style="font-weight:600;">${total.toFixed(2)}€</span><button class="cart-item-remove" onclick="removeFromCart(${i})">×</button></div></div>`;
             });
             container.innerHTML = html;
             const discount = currentClient ? subtotal * (CLIENT_DISCOUNT/100) : 0;
             const deliveryCost = getCurrentDeliveryCost();
-            const baseCost = userLocation ? getBaseDeliveryCost(userDistance) : 0;
-            const savings = baseCost - deliveryCost;
             const total = subtotal - discount + deliveryCost;
-
             document.getElementById('subtotal').textContent = subtotal.toFixed(2) + '€';
             document.getElementById('discount').textContent = '-' + discount.toFixed(2) + '€';
-            document.getElementById('deliveryCost').textContent = deliveryCost === 0 ? 'Gratuit 🎉' : deliveryCost.toFixed(2) + '€';
-
-            if (savings > 0.01) {
-                document.getElementById('deliverySavingsRow').style.display = 'flex';
-                document.getElementById('deliverySavings').textContent = '-' + savings.toFixed(2) + '€';
+            // Affichage livraison
+            if (deliveryCost === 0) {
+                document.getElementById('deliveryCost').innerHTML = '<span style="color:var(--primary-green); font-weight:700;">GRATUITE 🎉</span>';
             } else {
-                document.getElementById('deliverySavingsRow').style.display = 'none';
+                document.getElementById('deliveryCost').textContent = deliveryCost.toFixed(2) + '€';
             }
-
             document.getElementById('cartTotal').textContent = 'Total: ' + total.toFixed(2) + '€';
         }
 
@@ -1586,11 +1630,11 @@
             cart.splice(index, 1);
             updateCartDisplay();
             saveCart();
-            showAlert('🗑️ Produit retiré');
+            showAlert('🗑️ Retiré');
         }
 
         function openCart() {
-            if (!userLocation) { showAlert('📍 Veuillez d\'abord vous localiser dans l\'onglet Suivi'); showSection('tracking'); return; }
+            if (cart.length === 0) { showAlert('🛒 Panier vide'); return; }
             renderCartItems();
             document.getElementById('cartModal').classList.add('active');
         }
@@ -1613,12 +1657,12 @@
             if (product.comingSoon) {
                 document.getElementById('detailSpecs').innerHTML += '<div style="margin-top:10px; text-align:center;"><span class="coming-soon-badge"><i class="fas fa-clock"></i> Bientôt disponible</span></div>';
             }
-            if (product.supplements && product.supplements.length > 0) {
+            if (product.supplements?.length > 0) {
                 document.getElementById('supplementsContainer').style.display = 'block';
                 const suppList = document.getElementById('supplementsList');
                 suppList.innerHTML = '';
                 product.supplements.forEach(sup => {
-                    suppList.innerHTML += `<div class="supplement-item"><input type="checkbox" class="supplement-checkbox" data-id="${sup.id}" data-name="${sup.name}" data-price="${sup.price}"><span class="supplement-label">${sup.name}</span><span class="supplement-price">+${sup.price.toFixed(2)}€</span></div>`;
+                    suppList.innerHTML += `<div class="supplement-item"><input type="checkbox" class="supplement-checkbox" data-name="${sup.name}" data-price="${sup.price}"><span class="supplement-label">${sup.name}</span><span class="supplement-price">+${sup.price.toFixed(2)}€</span></div>`;
                 });
             } else {
                 document.getElementById('supplementsContainer').style.display = 'none';
@@ -1628,36 +1672,36 @@
         }
 
         function closeProductModal() { document.getElementById('productModal').classList.remove('active'); }
-        function incrementDetail() { const input = document.getElementById('detailQty'); input.value = parseInt(input.value) + 1; }
-        function decrementDetail() { const input = document.getElementById('detailQty'); if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1; }
+        function incrementDetail() { const i = document.getElementById('detailQty'); i.value = parseInt(i.value) + 1; }
+        function decrementDetail() { const i = document.getElementById('detailQty'); if (parseInt(i.value) > 1) i.value = parseInt(i.value) - 1; }
 
         function addFromDetail() {
-            if (!currentProduct) return;
-            if (currentProduct.comingSoon) { showAlert('⏳ Ce produit sera bientôt disponible !'); return; }
+            if (!currentProduct || currentProduct.comingSoon) { showAlert('⏳ Bientôt'); return; }
             const qty = parseInt(document.getElementById('detailQty').value);
             const selectedSupps = [];
             document.querySelectorAll('.supplement-checkbox:checked').forEach(cb => {
-                selectedSupps.push({ id: cb.dataset.id, name: cb.dataset.name, price: parseFloat(cb.dataset.price) });
+                selectedSupps.push({ name: cb.dataset.name, price: parseFloat(cb.dataset.price) });
             });
-            if (selectedSupps.length > 0) addToCartWithSupplements(currentProduct.id, qty, selectedSupps);
-            else {
-                let price = currentClient ? currentProduct.price * (1 - CLIENT_DISCOUNT/100) : currentProduct.price;
+            if (selectedSupps.length > 0) {
+                addToCartWithSupplements(currentProduct.id, qty, selectedSupps);
+            } else {
+                const price = currentClient ? currentProduct.price * (1 - CLIENT_DISCOUNT/100) : currentProduct.price;
                 cart.push({ id: currentProduct.id + '_' + Date.now(), name: currentProduct.name, price, originalPrice: currentProduct.price, quantity: qty, category: currentProduct.category, supplements: [] });
                 updateCartDisplay();
                 saveCart();
-                showAlert(`✅ ${qty} ${currentProduct.name} ajouté(s)`);
+                showAlert(`✅ ${qty} ${currentProduct.name}`);
             }
             closeProductModal();
         }
 
         function checkout() {
             if (cart.length === 0) { showAlert('❌ Panier vide'); return; }
-            if (!userLocation) { showAlert('📍 Veuillez d\'abord vous localiser dans l\'onglet Suivi'); showSection('tracking'); closeCart(); return; }
+            if (!userLocation) { showAlert('📍 Localisez-vous dans Suivi'); showSection('tracking'); closeCart(); return; }
             if (currentClient) {
-                document.getElementById('orderName').value = currentClient.name || '';
+                document.getElementById('orderFirstName').value = currentClient.firstName || '';
+                document.getElementById('orderLastName').value = currentClient.lastName || '';
                 document.getElementById('orderPhone').value = currentClient.phone || '';
-                document.getElementById('orderClientName').value = currentClient.name || '';
-                document.getElementById('orderClientPhone').value = currentClient.phone || '';
+                document.getElementById('orderAddress').value = currentClient.address || userAddress || '';
             }
             closeCart();
             setTimeout(() => document.getElementById('checkoutModal').classList.add('active'), 300);
@@ -1666,28 +1710,30 @@
         function closeCheckout() { document.getElementById('checkoutModal').classList.remove('active'); }
 
         function submitOrder() {
-            const name = document.getElementById('orderName').value;
-            const phone = document.getElementById('orderPhone').value;
-            const address = document.getElementById('orderAddress').value;
-            if (!name || !phone || !address) { showAlert('❓ Remplissez tous les champs'); return; }
-            if (!userLocation) { showAlert('📍 Veuillez d\'abord vous localiser'); showSection('tracking'); closeCheckout(); return; }
+            const firstName = document.getElementById('orderFirstName').value.trim();
+            const lastName = document.getElementById('orderLastName').value.trim();
+            const phone = document.getElementById('orderPhone').value.trim();
+            const address = document.getElementById('orderAddress').value.trim();
+            if (!firstName || !lastName || !phone || !address) { showAlert('❓ Remplissez tous les champs'); return; }
             const code = 'HDS' + Math.floor(1000 + Math.random() * 9000);
-            const distance = calculateDistance(RESTAURANT_LOCATION[0], RESTAURANT_LOCATION[1], userLocation[0], userLocation[1]);
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const discount = currentClient ? subtotal * (CLIENT_DISCOUNT/100) : 0;
             const deliveryCost = getCurrentDeliveryCost();
             const total = subtotal - discount + deliveryCost;
-            const orderDetails = cart.map(item => `${item.name} x${item.quantity} = ${(item.price * item.quantity).toFixed(2)}€`).join('\n');
+            const orderDetails = cart.map(i => `${i.name} x${i.quantity} = ${(i.price * i.quantity).toFixed(2)}€`).join('\n');
             document.getElementById('orderDetails').value = orderDetails;
             document.getElementById('orderCode').value = code;
             document.getElementById('orderTotal').value = total.toFixed(2) + '€';
-            document.getElementById('orderClientName').value = name;
-            document.getElementById('orderClientPhone').value = phone;
+            const distance = calculateDistance(RESTAURANT_LOCATION[0], RESTAURANT_LOCATION[1], userLocation[0], userLocation[1]);
             const deliveryTime = Math.ceil((distance / DELIVERY_SPEED) * 60);
             const totalTime = PREPARATION_TIME + deliveryTime;
-            currentOrder = { code, status: 'preparing', startTime: Date.now(), preparationEnd: Date.now() + (PREPARATION_TIME * 60 * 1000), distance, address, estimatedTime: totalTime, items: [...cart], clientName: name, clientPhone: phone };
+            currentOrder = {
+                code, status: 'preparing', startTime: Date.now(),
+                preparationEnd: Date.now() + (PREPARATION_TIME * 60 * 1000),
+                distance, address, estimatedTime: totalTime,
+                items: [...cart], clientName: firstName + ' ' + lastName, clientPhone: phone
+            };
             localStorage.setItem('hds_order', JSON.stringify(currentOrder));
-            localStorage.setItem('hds_order_active', 'true');
             cart = [];
             updateCartDisplay();
             saveCart();
@@ -1704,13 +1750,13 @@
         function trackOrder() { closeConfirmation(); showSection('tracking'); }
 
         function captureScreenshot() {
-            const element = document.getElementById('codeCapture');
-            html2canvas(element, { backgroundColor: null, scale: 2 }).then(canvas => {
+            const el = document.getElementById('codeCapture');
+            html2canvas(el, { backgroundColor: null, scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `code-${document.getElementById('confirmCode').textContent}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-                showAlert('📸 Capture d\'écran téléchargée');
+                showAlert('📸 Capture OK');
             });
         }
 
@@ -1719,33 +1765,36 @@
 
         function checkActiveOrder() {
             const saved = localStorage.getItem('hds_order');
-            if (saved) { currentOrder = JSON.parse(saved); const now = Date.now(); if (now - currentOrder.startTime > 60 * 60 * 1000) { localStorage.removeItem('hds_order'); localStorage.removeItem('hds_order_active'); currentOrder = null; } }
+            if (saved) {
+                currentOrder = JSON.parse(saved);
+                if (Date.now() - currentOrder.startTime > 60 * 60 * 1000) {
+                    localStorage.removeItem('hds_order');
+                    currentOrder = null;
+                }
+            }
             updateTrackingDisplay();
         }
 
         function updateTrackingDisplay() {
-            const noOrder = document.getElementById('noActiveOrder'), activeOrder = document.getElementById('activeOrder');
-            if (!currentOrder) { if (noOrder) noOrder.style.display = 'block'; if (activeOrder) activeOrder.style.display = 'none'; return; }
-            if (noOrder) noOrder.style.display = 'none'; if (activeOrder) activeOrder.style.display = 'block';
+            const noOrder = document.getElementById('noActiveOrder'), active = document.getElementById('activeOrder');
+            if (!currentOrder) { if (noOrder) noOrder.style.display = 'block'; if (active) active.style.display = 'none'; return; }
+            if (noOrder) noOrder.style.display = 'none'; if (active) active.style.display = 'block';
             document.getElementById('orderCode').textContent = '#' + currentOrder.code;
             document.getElementById('orderDistance').textContent = currentOrder.distance.toFixed(1) + ' km';
             const now = Date.now();
             let progress = 0;
             if (now < currentOrder.preparationEnd) {
-                const prepProgress = ((now - currentOrder.startTime) / (PREPARATION_TIME * 60 * 1000)) * 100;
-                progress = Math.min(prepProgress, 33);
+                progress = Math.min(((now - currentOrder.startTime) / (PREPARATION_TIME * 60 * 1000)) * 100, 33);
                 document.getElementById('orderStatus').textContent = '👨‍🍳 Préparation';
                 document.getElementById('driverName').textContent = 'Mohamed';
                 document.getElementById('driverInitial').textContent = 'M';
             } else {
                 const deliveryStart = currentOrder.preparationEnd;
-                const totalDeliveryTime = currentOrder.estimatedTime * 60 * 1000;
-                const deliveryProgress = ((now - deliveryStart) / totalDeliveryTime) * 100;
-                progress = 33 + Math.min(deliveryProgress, 34);
-                document.getElementById('orderStatus').textContent = '🚚 En route';
+                const totalDel = currentOrder.estimatedTime * 60 * 1000;
+                progress = 33 + Math.min(((now - deliveryStart) / totalDel) * 100, 34);
+                document.getElementById('orderStatus').textContent = progress >= 67 ? '📍 Arrivée imminente' : '🚚 En route';
                 document.getElementById('driverName').textContent = 'Karim';
                 document.getElementById('driverInitial').textContent = 'K';
-                if (progress >= 67) document.getElementById('orderStatus').textContent = '📍 Arrivée imminente';
             }
             document.getElementById('progressBar').style.width = progress + '%';
             updateSteps(progress);
@@ -1753,19 +1802,17 @@
         }
 
         function updateSteps(progress) {
-            document.querySelectorAll('#step1 .step-icon, #step2 .step-icon, #step3 .step-icon').forEach(icon => icon.classList.remove('active', 'completed'));
-            const step1 = document.querySelector('#step1 .step-icon'), step2 = document.querySelector('#step2 .step-icon'), step3 = document.querySelector('#step3 .step-icon');
-            if (progress < 33) step1.classList.add('active');
-            else if (progress < 67) { step1.classList.add('completed'); step2.classList.add('active'); }
-            else if (progress < 100) { step1.classList.add('completed'); step2.classList.add('completed'); step3.classList.add('active'); }
-            else { step1.classList.add('completed'); step2.classList.add('completed'); step3.classList.add('completed'); }
+            document.querySelectorAll('#step1 .step-icon, #step2 .step-icon, #step3 .step-icon').forEach(i => i.classList.remove('active', 'completed'));
+            const s1 = document.querySelector('#step1 .step-icon'), s2 = document.querySelector('#step2 .step-icon'), s3 = document.querySelector('#step3 .step-icon');
+            if (progress < 33) s1.classList.add('active');
+            else if (progress < 67) { s1.classList.add('completed'); s2.classList.add('active'); }
+            else if (progress < 100) { s1.classList.add('completed'); s2.classList.add('completed'); s3.classList.add('active'); }
+            else { s1.classList.add('completed'); s2.classList.add('completed'); s3.classList.add('completed'); }
         }
 
         function calculateRemainingTime() {
             if (!currentOrder) return '--';
-            const now = Date.now();
-            const endTime = currentOrder.startTime + (currentOrder.estimatedTime * 60 * 1000);
-            const remaining = Math.max(0, Math.ceil((endTime - now) / (60 * 1000)));
+            const remaining = Math.max(0, Math.ceil((currentOrder.startTime + currentOrder.estimatedTime * 60 * 1000 - Date.now()) / 60000));
             if (remaining <= 0) return 'Arrivée imminente';
             if (remaining < 60) return remaining + ' min';
             return Math.floor(remaining / 60) + 'h' + (remaining % 60) + 'min';
@@ -1779,12 +1826,7 @@
                 currentClient = JSON.parse(saved);
                 document.getElementById('accountButton').classList.add('connected');
                 document.getElementById('accountButton').innerHTML = '<i class="fas fa-user-check"></i>';
-                document.getElementById('orderName').value = currentClient.name || '';
-                document.getElementById('orderPhone').value = currentClient.phone || '';
-                document.getElementById('orderClientName').value = currentClient.name || '';
-                document.getElementById('orderClientPhone').value = currentClient.phone || '';
             }
-            if (localStorage.getItem('hds_admin') === 'true') { isAdmin = true; updateAdminUI(); }
         }
 
         function openAccountModal() {
@@ -1796,64 +1838,69 @@
         function closeAccountModal() { document.getElementById('accountModal').classList.remove('active'); }
 
         function showLoginView() {
+            ['loginView','registerView','clientView','editProfileView','adminLoginView'].forEach(id => document.getElementById(id).style.display = 'none');
             document.getElementById('loginView').style.display = 'block';
-            document.getElementById('registerView').style.display = 'none';
-            document.getElementById('clientView').style.display = 'none';
-            document.getElementById('adminLoginView').style.display = 'none';
         }
 
-        function showRegister() { document.getElementById('loginView').style.display = 'none'; document.getElementById('registerView').style.display = 'block'; document.getElementById('adminLoginView').style.display = 'none'; }
-        function showLogin() { document.getElementById('loginView').style.display = 'block'; document.getElementById('registerView').style.display = 'none'; document.getElementById('adminLoginView').style.display = 'none'; }
+        function showRegister() {
+            ['loginView','registerView','clientView','editProfileView','adminLoginView'].forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById('registerView').style.display = 'block';
+        }
+
+        function showLogin() {
+            ['loginView','registerView','clientView','editProfileView','adminLoginView'].forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById('loginView').style.display = 'block';
+        }
 
         function showClientView() {
-            document.getElementById('loginView').style.display = 'none';
-            document.getElementById('registerView').style.display = 'none';
-            document.getElementById('adminLoginView').style.display = 'none';
+            ['loginView','registerView','clientView','editProfileView','adminLoginView'].forEach(id => document.getElementById(id).style.display = 'none');
             document.getElementById('clientView').style.display = 'block';
             if (currentClient) {
-                document.getElementById('clientName').textContent = currentClient.name;
-                document.getElementById('clientCode').textContent = currentClient.code;
+                document.getElementById('clientName').textContent = (currentClient.firstName || '') + ' ' + (currentClient.lastName || '');
+                document.getElementById('clientPhoneDisplay').textContent = currentClient.phone || '-';
+                document.getElementById('clientAddressDisplay').textContent = currentClient.address || '-';
             }
             document.getElementById('clientPoints').textContent = loyaltyPoints;
         }
 
         function loginClient() {
-            const code = document.getElementById('loginCode').value;
+            const phone = document.getElementById('loginPhone').value.trim();
+            const code = document.getElementById('loginCode').value.trim();
             const saved = localStorage.getItem('hds_client');
-            if (saved) {
-                const client = JSON.parse(saved);
-                if (client.code === code) {
-                    currentClient = client;
-                    document.getElementById('accountButton').classList.add('connected');
-                    document.getElementById('accountButton').innerHTML = '<i class="fas fa-user-check"></i>';
-                    document.getElementById('orderName').value = client.name || '';
-                    document.getElementById('orderPhone').value = client.phone || '';
-                    document.getElementById('orderClientName').value = client.name || '';
-                    document.getElementById('orderClientPhone').value = client.phone || '';
-                    showClientView();
-                    showAlert(`✅ Bonjour ${client.name}`);
-                    const activeCat = document.querySelector('#categoryTabs .active')?.dataset.category || 'all';
-                    renderProducts(activeCat); renderPopular();
-                } else showAlert('❌ Code incorrect');
-            } else showAlert('❌ Aucun compte trouvé');
+            if (!saved) { showAlert('❌ Aucun compte'); return; }
+            const client = JSON.parse(saved);
+            if (client.phone === phone && client.code === code) {
+                currentClient = client;
+                document.getElementById('accountButton').classList.add('connected');
+                document.getElementById('accountButton').innerHTML = '<i class="fas fa-user-check"></i>';
+                showClientView();
+                showAlert(`✅ Bonjour ${client.firstName}`);
+                const activeCat = document.querySelector('#categoryTabs .active')?.dataset.category || 'all';
+                renderProducts(activeCat);
+                renderPopular();
+            } else showAlert('❌ Téléphone ou code incorrect');
         }
 
         function registerClient() {
-            const name = document.getElementById('regName').value, phone = document.getElementById('regPhone').value, code = document.getElementById('regCode').value;
-            if (!name || !phone || !code || code.length !== 4) { showAlert('❓ Remplissez tous les champs'); return; }
-            const client = { name, phone, code, joined: Date.now() };
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const address = document.getElementById('regAddress').value.trim();
+            const code = document.getElementById('regCode').value.trim();
+
+            if (!firstName || !lastName || !phone || !address || !code) { showAlert('❓ Tous les champs requis'); return; }
+            if (code.length !== 4 || !/^\d{4}$/.test(code)) { showAlert('❌ Code = 4 chiffres'); return; }
+
+            const client = { firstName, lastName, phone, address, code, joined: Date.now() };
             localStorage.setItem('hds_client', JSON.stringify(client));
             currentClient = client;
             document.getElementById('accountButton').classList.add('connected');
             document.getElementById('accountButton').innerHTML = '<i class="fas fa-user-check"></i>';
-            document.getElementById('orderName').value = name;
-            document.getElementById('orderPhone').value = phone;
-            document.getElementById('orderClientName').value = name;
-            document.getElementById('orderClientPhone').value = phone;
             showClientView();
-            showAlert(`✅ Bienvenue ${name}`);
+            showAlert(`✅ Bienvenue ${firstName}`);
             const activeCat = document.querySelector('#categoryTabs .active')?.dataset.category || 'all';
-            renderProducts(activeCat); renderPopular();
+            renderProducts(activeCat);
+            renderPopular();
         }
 
         function logoutClient() {
@@ -1861,14 +1908,32 @@
             localStorage.removeItem('hds_client');
             document.getElementById('accountButton').classList.remove('connected');
             document.getElementById('accountButton').innerHTML = '<i class="fas fa-user"></i>';
-            document.getElementById('orderName').value = '';
-            document.getElementById('orderPhone').value = '';
-            document.getElementById('orderClientName').value = '';
-            document.getElementById('orderClientPhone').value = '';
             showLoginView();
             const activeCat = document.querySelector('#categoryTabs .active')?.dataset.category || 'all';
-            renderProducts(activeCat); renderPopular();
+            renderProducts(activeCat);
+            renderPopular();
             showAlert('👋 Déconnecté');
+        }
+
+        function editClientProfile() {
+            if (!currentClient) return;
+            document.getElementById('editFirstName').value = currentClient.firstName || '';
+            document.getElementById('editLastName').value = currentClient.lastName || '';
+            document.getElementById('editPhone').value = currentClient.phone || '';
+            document.getElementById('editAddress').value = currentClient.address || '';
+            ['loginView','registerView','clientView','editProfileView','adminLoginView'].forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById('editProfileView').style.display = 'block';
+        }
+
+        function saveProfile() {
+            if (!currentClient) return;
+            currentClient.firstName = document.getElementById('editFirstName').value.trim();
+            currentClient.lastName = document.getElementById('editLastName').value.trim();
+            currentClient.phone = document.getElementById('editPhone').value.trim();
+            currentClient.address = document.getElementById('editAddress').value.trim();
+            localStorage.setItem('hds_client', JSON.stringify(currentClient));
+            showClientView();
+            showAlert('✅ Profil mis à jour');
         }
 
         function loadLoyalty() {
@@ -1877,29 +1942,31 @@
             document.getElementById('menuLoyaltyPoints').textContent = loyaltyPoints + ' pts';
         }
 
-        function addLoyaltyPoints(amount) {
-            loyaltyPoints += Math.floor(amount);
-            localStorage.setItem('hds_loyalty', loyaltyPoints.toString());
-            document.getElementById('menuLoyaltyPoints').textContent = loyaltyPoints + ' pts';
-        }
-
         function showLoyaltyInfo() {
-            showCustomModal('🎁 Fidélité', `<div style="text-align:center;"><div style="font-size:48px; margin:20px;">⭐</div><h3 style="margin-bottom:10px;">${loyaltyPoints} points</h3><p style="color:var(--text-gray); margin-bottom:15px;">100 points = 10€ de réduction</p><div style="background:rgba(255,215,0,0.2); height:10px; border-radius:5px; margin:15px 0;"><div style="width:${loyaltyPoints % 100}%; height:100%; background:gold; border-radius:5px;"></div></div></div>`);
+            showCustomModal('🎁 Fidélité', `<div style="text-align:center;"><div style="font-size:48px; margin:20px;">⭐</div><h3>${loyaltyPoints} points</h3><p style="color:var(--text-gray);">100 points = 10€</p></div>`);
         }
 
         function showReferralInfo() {
             const code = localStorage.getItem('hds_referral') || 'HDS' + Math.floor(100 + Math.random() * 900);
             if (!localStorage.getItem('hds_referral')) localStorage.setItem('hds_referral', code);
-            showCustomModal('🤝 Parrainage', `<div style="text-align:center;"><div style="font-size:28px; background:rgba(255,215,0,0.2); padding:20px; border-radius:10px; margin:20px 0; letter-spacing:2px; color:var(--primary-yellow); font-weight:800;">${code}</div><p style="margin-bottom:15px;">Parrainez un ami et gagnez 5€</p><button class="checkout-button" onclick="copyReferralCode('${code}')">Copier le code</button></div>`);
+            showCustomModal('🤝 Parrainage', `<div style="text-align:center;"><div style="font-size:28px; background:rgba(255,215,0,0.2); padding:20px; border-radius:10px; margin:20px 0; color:var(--primary-yellow); font-weight:800;">${code}</div><p>Parrainez un ami = 5€</p></div>`);
         }
 
-        function copyReferralCode(code) { navigator.clipboard.writeText(code).then(() => showAlert('✅ Code copié !')); }
-
-        function toggleMenu() { const menu = document.getElementById('verticalMenu'); menuOpen = !menuOpen; menu.classList.toggle('active'); document.body.style.overflow = menuOpen ? 'hidden' : 'auto'; }
+        function toggleMenu() {
+            const menu = document.getElementById('verticalMenu');
+            menuOpen = !menuOpen;
+            menu.classList.toggle('active');
+            document.body.style.overflow = menuOpen ? 'hidden' : 'auto';
+        }
 
         function initTheme() {
             const saved = localStorage.getItem('hds_theme');
-            if (saved === 'light') { isDarkMode = false; document.body.classList.add('light-mode'); document.getElementById('menuThemeIcon').className = 'fas fa-sun'; document.getElementById('menuTheme').textContent = 'Jour'; }
+            if (saved === 'light') {
+                isDarkMode = false;
+                document.body.classList.add('light-mode');
+                document.getElementById('menuThemeIcon').className = 'fas fa-sun';
+                document.getElementById('menuTheme').textContent = 'Jour';
+            }
         }
 
         function toggleTheme() {
@@ -1917,12 +1984,13 @@
         }
 
         function saveCart() { localStorage.setItem('hds_cart', JSON.stringify(cart)); }
-        function loadCart() { const saved = localStorage.getItem('hds_cart'); if (saved) { cart = JSON.parse(saved); updateCartDisplay(); } }
+        function loadCart() { const s = localStorage.getItem('hds_cart'); if (s) { cart = JSON.parse(s); updateCartDisplay(); } }
 
-        function showAlert(message) {
-            const alert = document.getElementById('alertModal'), msg = document.getElementById('alertMessage');
-            msg.textContent = message; alert.style.display = 'flex';
-            setTimeout(() => alert.style.display = 'none', 3000);
+        function showAlert(msg) {
+            const a = document.getElementById('alertModal');
+            document.getElementById('alertMessage').textContent = msg;
+            a.style.display = 'flex';
+            setTimeout(() => a.style.display = 'none', 3000);
         }
 
         function showCustomModal(title, content) {
@@ -1934,20 +2002,20 @@
         }
 
         function showSection(section) {
-            document.getElementById('productsSection').style.display = 'none';
-            document.getElementById('popularSection').style.display = 'none';
-            document.getElementById('eventsSection').style.display = 'none';
-            document.getElementById('trackingSection').style.display = 'none';
-            document.getElementById('infoSection').style.display = 'none';
+            ['productsSection','popularSection','alimentationSection','trackingSection','infoSection'].forEach(id => document.getElementById(id).style.display = 'none');
             if (section === 'products') { document.getElementById('productsSection').style.display = 'block'; updateActiveNav(0); }
             else if (section === 'popular') { document.getElementById('popularSection').style.display = 'block'; renderPopular(); updateActiveNav(1); }
-            else if (section === 'events') { document.getElementById('eventsSection').style.display = 'block'; renderEvents(); updateActiveNav(2); }
+            else if (section === 'alimentation') { document.getElementById('alimentationSection').style.display = 'block'; updateActiveNav(2); }
             else if (section === 'tracking') { document.getElementById('trackingSection').style.display = 'block'; updateTrackingDisplay(); if (deliveryMap) setTimeout(() => deliveryMap.invalidateSize(), 100); updateActiveNav(3); }
             else if (section === 'info') { document.getElementById('infoSection').style.display = 'block'; updateActiveNav(4); }
             if (menuOpen) toggleMenu();
         }
 
-        function updateActiveNav(index) { document.querySelectorAll('.quick-nav-btn').forEach((btn, i) => { if (i === index) btn.classList.add('active'); else btn.classList.remove('active'); }); }
+        function updateActiveNav(index) {
+            document.querySelectorAll('.quick-nav-btn').forEach((btn, i) => {
+                if (i === index) btn.classList.add('active'); else btn.classList.remove('active');
+            });
+        }
 
         function setupEventListeners() {
             document.querySelectorAll('#categoryTabs .category-tab').forEach(tab => {
@@ -1957,12 +2025,14 @@
                     renderProducts(this.dataset.category);
                 });
             });
-            document.getElementById('logoImage').addEventListener('click', () => showFullImage(document.getElementById('logoImage').src));
-            document.querySelectorAll('.modal-overlay').forEach(modal => modal.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); }));
-            document.getElementById('statusBar').addEventListener('click', () => showSection('popular'));
+            document.querySelectorAll('.modal-overlay').forEach(modal => modal.addEventListener('click', function(e) {
+                if (e.target === this) this.classList.remove('active');
+            }));
         }
 
-        function startPeriodicChecks() { setInterval(() => { if (currentOrder) updateTrackingDisplay(); }, 5000); }
+        function startPeriodicChecks() {
+            setInterval(() => { if (currentOrder) updateTrackingDisplay(); }, 5000);
+        }
     </script>
 </body>
 </html>
