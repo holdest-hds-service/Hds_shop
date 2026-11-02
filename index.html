@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>H.D.S SHOP | Épicerie & Alimentation en ligne à Marseille - Livraison 24h/24</title>
-    <meta name="description" content="🛒 H.D.S SHOP - Votre épicerie en ligne à Marseille 13015. Snacks, boissons, tabac, accessoires livrés 24h/24. Livraison GRATUITE dès 35€.">
+    <meta name="description" content="🛒 H.D.S SHOP - Votre épicerie en ligne à Marseille 13015. Snacks, boissons, vape, accessoires livrés 24h/24. Livraison GRATUITE dès 35€.">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="theme-color" content="#0F0F0F">
     <link rel="icon" href="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="H.D.S SHOP | Épicerie en ligne à Marseille">
-    <meta property="og:description" content="Snacks, boissons, tabac, accessoires livrés 24h/24 à Marseille. Livraison GRATUITE dès 35€ !">
+    <meta property="og:description" content="Snacks, boissons, vape, accessoires livrés 24h/24 à Marseille. Livraison GRATUITE dès 35€ !">
     <meta property="og:image" content="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/89a59702-cad3-dfb7-580d-22fb843f8d3f.jpeg">
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,6 @@
             --r-sm:8px;--r-md:12px;--r-lg:18px;--r-xl:24px;
             --t-fast:150ms cubic-bezier(0.4,0,0.2,1);
             --t-base:250ms cubic-bezier(0.4,0,0.2,1);
-            --t-slow:400ms cubic-bezier(0.4,0,0.2,1);
         }
         body.light-mode{
             --bg:#F4F5F7;--card:#FFFFFF;--card-hover:#FAFAFA;
@@ -47,6 +46,7 @@
             background:var(--bg);color:var(--text);min-height:100vh;
             display:flex;justify-content:center;padding:10px;
             transition:background var(--t-base),color var(--t-base);overflow-x:hidden;
+            -webkit-font-smoothing:antialiased;
         }
         img{max-width:100%;display:block}
         button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
@@ -54,7 +54,7 @@
         
         .main-container{width:100%;max-width:440px;margin:0 auto}
         .app-shell{background:var(--card);border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-lg);position:relative}
-        .app-shell::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--yellow),var(--orange),var(--yellow));background-size:200% 100%;animation:shimmer 4s linear infinite;z-index:1}
+        .app-shell::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--yellow),var(--orange),var(--yellow));background-size:200% 100%;animation:shimmer 4s linear infinite;z-index:1;will-change:background-position}
         @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
         
         .app-header{padding:18px 16px;display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,var(--card) 0%,var(--card-hover) 100%);border-bottom:1px solid var(--border);position:relative}
@@ -105,7 +105,7 @@
         .sort-btn{padding:5px 11px;background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:16px;font-size:11px;font-weight:600;white-space:nowrap;flex-shrink:0}
         .sort-btn.active{background:var(--yellow);color:#000;border-color:var(--yellow)}
         
-        .products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 16px 16px}
+        .products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 16px 16px;contain:layout style}
         .product-card{background:var(--card-hover);border:1px solid var(--border);border-radius:var(--r-md);padding:10px;position:relative;overflow:hidden;animation:fadeInUp 0.4s ease backwards}
         @keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
         .product-badge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--red),#DC2626);color:white;padding:3px 7px;border-radius:10px;font-size:8px;font-weight:800;z-index:2}
@@ -147,7 +147,8 @@
         .location-button{background:linear-gradient(135deg,var(--blue),#2563EB);color:white;border-radius:var(--r-md);padding:12px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
         .location-button:disabled{opacity:0.7;cursor:not-allowed}
         .location-status{background:var(--card);border-radius:var(--r-md);padding:10px;margin-top:10px;font-size:12px;border-left:3px solid var(--blue);line-height:1.5}
-        .map-container{height:200px;background:rgba(0,0,0,0.3);border-radius:var(--r-md);overflow:hidden;border:1px solid var(--border);margin:12px 16px}
+        
+        .map-container{height:380px;background:rgba(0,0,0,0.3);border-radius:var(--r-md);overflow:hidden;border:1px solid var(--border);margin:12px 16px}
         .map-legend{display:flex;justify-content:space-around;font-size:10px;color:var(--text-dim);padding:0 16px 12px;flex-wrap:wrap;gap:8px}
         .legend-item{display:flex;align-items:center;gap:5px}
         .legend-dot{width:9px;height:9px;border-radius:50%}
@@ -221,7 +222,7 @@
         .supplement-label{flex:1;font-size:12.5px;font-weight:600}
         .supplement-price{font-weight:800;color:var(--yellow);font-size:12.5px}
         
-        .alert-modal{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-100px);background:linear-gradient(135deg,var(--yellow),var(--gold));color:#000;padding:12px 20px;border-radius:var(--r-md);z-index:5000;display:flex;align-items:center;gap:9px;font-weight:700;box-shadow:var(--shadow-lg);font-size:13px;transition:transform var(--t-slow);max-width:90vw}
+        .alert-modal{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-100px);background:linear-gradient(135deg,var(--yellow),var(--gold));color:#000;padding:12px 20px;border-radius:var(--r-md);z-index:5000;display:flex;align-items:center;gap:9px;font-weight:700;box-shadow:var(--shadow-lg);font-size:13px;transition:transform var(--t-base);max-width:90vw}
         .alert-modal.visible{transform:translateX(-50%) translateY(0)}
         .alert-modal.error{background:linear-gradient(135deg,var(--red),#DC2626);color:white}
         .alert-modal.success{background:linear-gradient(135deg,var(--green),#16A34A);color:white}
@@ -276,11 +277,30 @@
         #shareUrlBox:hover{border-color:var(--yellow);color:var(--yellow)}
         #qrImage{width:100%;max-width:260px;margin:0 auto;display:block;background:white;padding:12px;border-radius:var(--r-md)}
         
+        .aide-livreur-card{background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(37,99,235,0.05));border:1.5px solid var(--blue);border-radius:var(--r-md);padding:14px;margin:10px 0}
+        .aide-livreur-card h4{color:var(--blue);font-size:13px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+        .aide-livreur-card .aide-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);font-size:12px;line-height:1.5}
+        .aide-livreur-card .aide-item:last-child{border-bottom:none}
+        .aide-livreur-card .aide-item i{color:var(--blue);font-size:14px;width:20px;text-align:center;flex-shrink:0;margin-top:2px}
+        .aide-livreur-card .aide-item strong{color:var(--text);display:block;margin-bottom:2px}
+        .aide-livreur-card .aide-item span{color:var(--text-dim);font-size:11.5px}
+        .aide-livreur-card .appel-btn{display:inline-flex;align-items:center;gap:5px;background:var(--green);color:white;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;margin-top:6px;text-decoration:none}
+        .livreur-liste{display:grid;gap:8px;margin:10px 0}
+        .livreur-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(--card-hover);border-radius:var(--r-sm);border:1px solid var(--border)}
+        .livreur-item .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--yellow),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:800;color:#000;font-size:14px;flex-shrink:0}
+        .livreur-item .infos{flex:1;min-width:0}
+        .livreur-item .infos strong{display:block;font-size:12.5px;margin-bottom:2px}
+        .livreur-item .infos span{font-size:10.5px;color:var(--text-dim)}
+        .statut-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:800}
+        .statut-badge.dispo{background:rgba(34,197,94,0.2);color:var(--green)}
+        .statut-badge.occupe{background:rgba(249,115,22,0.2);color:var(--orange)}
+        
         @media (max-width:380px){
             .products-grid{grid-template-columns:1fr;gap:8px}
             .header-title{font-size:18px}
             .modal{max-height:92vh}
             .share-grid{grid-template-columns:repeat(2,1fr)}
+            .map-container{height:300px}
         }
         ::-webkit-scrollbar{width:5px;height:5px}
         ::-webkit-scrollbar-track{background:transparent}
@@ -304,7 +324,7 @@
                 <div style="flex:1;min-width:0;">
                     <div class="header-title">🇯🇲 H.D.S 🗿</div>
                     <div class="header-subtitle">ALIMENTATION • LIVRAISON 24H/24</div>
-                    <div class="header-tag">🛒 SNACKS • BOISSONS • TABAC</div>
+                    <div class="header-tag">🛒 SNACKS • BOISSONS • VAPE</div>
                 </div>
                 <button class="icon-btn menu-button" id="menuButton" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
@@ -330,7 +350,7 @@
 
             <div class="status-bar" onclick="showSection('popular')">
                 🚚 <strong>LIVRAISON GRATUITE DÈS 35 €</strong><br>
-                <span style="font-size:11px;font-weight:600;">Snacks • Boissons • Tabac • Accessoires</span>
+                <span style="font-size:11px;font-weight:600;">Snacks • Boissons • Vape • Accessoires</span>
             </div>
 
             <div id="sharedBanner">
@@ -415,10 +435,10 @@
                 <div id="activeOrder" style="display:none;">
                     <div class="tracker-container">
                         <div class="tracker-header">
-                            <div class="driver-avatar" id="driverInitial">K</div>
+                            <div class="driver-avatar" id="driverInitial">T</div>
                             <div style="flex:1;">
                                 <div class="tracker-status" id="orderStatus">Préparation</div>
-                                <div style="font-weight:700;font-size:13px;" id="driverName">Karim</div>
+                                <div style="font-weight:700;font-size:13px;" id="driverName">Théo</div>
                                 <div style="font-size:11px;color:var(--text-dim);" id="orderCode">#HDS-1234</div>
                             </div>
                         </div>
@@ -436,6 +456,7 @@
                 </div>
             </section>
 
+            <!-- ✅ SECTION INFO avec Aide aux Livreurs intégrée -->
             <section id="infoSection" style="display:none;">
                 <div class="section-title"><i class="fas fa-info-circle"></i> Informations</div>
                 <div style="padding:0 16px;">
@@ -455,6 +476,51 @@
                             • 10 km+ : 8€<br><br>
                             <strong style="color:var(--yellow);">💡 Réduction client connecté :</strong> -5%
                         </div>
+                    </div>
+                    
+                    <!-- ✅ AIDE AUX LIVREURS DÉPLACÉE DANS INFO -->
+                    <div class="aide-livreur-card">
+                        <h4><i class="fas fa-hands-helping"></i> Aide aux Livreurs</h4>
+                        <div class="aide-item">
+                            <i class="fas fa-clock"></i>
+                            <div><strong>Horaires de livraison</strong><span>7j/7 de 10h à 2h du matin</span></div>
+                        </div>
+                        <div class="aide-item">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <div><strong>Zone de livraison</strong><span>Marseille et alentours (10 km max)</span></div>
+                        </div>
+                        <div class="aide-item">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <div><strong>Paiement</strong><span>Espèces ou carte à la livraison</span></div>
+                        </div>
+                        <div class="aide-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div><strong>Contact client</strong><span>Toujours appeler avant d'arriver</span></div>
+                        </div>
+                    </div>
+
+                    <div class="aide-livreur-card" style="background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(249,115,22,0.02));border-color:rgba(249,115,22,0.4);">
+                        <h4 style="color:var(--orange);"><i class="fas fa-exclamation-triangle"></i> En cas de problème</h4>
+                        <div class="aide-item">
+                            <i class="fas fa-box-open"></i>
+                            <div><strong>Produit manquant ou erreur</strong><span>Prévenir immédiatement le gérant</span></div>
+                        </div>
+                        <div class="aide-item">
+                            <i class="fas fa-road"></i>
+                            <div><strong>Adresse introuvable</strong><span>Appeler le client, utiliser le GPS</span></div>
+                        </div>
+                        <div class="aide-item">
+                            <i class="fas fa-user-slash"></i>
+                            <div><strong>Client injoignable</strong><span>Attendre 5 min puis contacter le gérant</span></div>
+                        </div>
+                        <a href="tel:+33744892782" class="appel-btn"><i class="fas fa-phone"></i> Appeler le gérant</a>
+                    </div>
+
+                    <div class="aide-livreur-card" style="background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(255,215,0,0.02));border-color:rgba(255,215,0,0.4);">
+                        <h4 style="color:var(--yellow);"><i class="fas fa-check-circle"></i> Check-list avant départ</h4>
+                        <div class="aide-item"><i class="fas fa-box"></i><div><strong>Tous les produits sont-ils dans le sac ?</strong><span>Vérifier la commande complète</span></div></div>
+                        <div class="aide-item"><i class="fas fa-money-bill"></i><div><strong>Fond de caisse prêt ?</strong><span>Pour les paiements en espèces</span></div></div>
+                        <div class="aide-item"><i class="fas fa-mobile-alt"></i><div><strong>Téléphone chargé ?</strong><span>Pour contacter le client et le gérant</span></div></div>
                     </div>
                 </div>
             </section>
@@ -565,7 +631,7 @@
                 </div>
                 <div class="recap-box" id="confirmRecap"></div>
                 <div style="background:var(--card-hover);border-radius:var(--r-md);padding:12px;margin:12px 0;text-align:left;font-size:12.5px;">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--text-dim);">🚚 Livreur:</span><span style="font-weight:700;" id="confirmDriver">Karim</span></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--text-dim);">🚚 Livreur:</span><span style="font-weight:700;" id="confirmDriver">Théo</span></div>
                     <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--text-dim);">⏱️ Livraison:</span><span style="font-weight:700;" id="confirmTime">30-40 min</span></div>
                     <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">💰 Total:</span><span style="font-weight:700;color:var(--yellow);" id="confirmTotal">0€</span></div>
                 </div>
@@ -696,6 +762,7 @@
         </div>
     </div>
 
+    <!-- ✅ ADMIN PANEL avec SEULEMENT les livreurs disponibles -->
     <div class="modal-overlay" id="adminPanelModal">
         <div class="modal" style="max-width:500px;">
             <div class="modal-header"><div class="modal-title"><i class="fas fa-shield-alt" style="color:var(--orange);"></i> Administration</div><button class="modal-close" onclick="closeAdminPanel()">×</button></div>
@@ -708,6 +775,29 @@
                     </div>
                     <button class="checkout-button secondary" onclick="adminLogout()" style="padding:6px;font-size:11px;margin-top:6px;">🚪 Déconnexion admin</button>
                 </div>
+                
+                <!-- ✅ LISTE DES LIVREURS DISPONIBLES (ADMIN UNIQUEMENT) -->
+                <div class="admin-card" style="background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(34,197,94,0.02));border-color:rgba(34,197,94,0.4);">
+                    <div class="admin-title" style="color:var(--green);"><i class="fas fa-users"></i> Livreurs disponibles</div>
+                    <div class="livreur-liste">
+                        <div class="livreur-item">
+                            <div class="avatar">T</div>
+                            <div class="infos"><strong>Théo</strong><span>06 12 34 56 78</span></div>
+                            <span class="statut-badge dispo">Dispo</span>
+                        </div>
+                        <div class="livreur-item">
+                            <div class="avatar">L</div>
+                            <div class="infos"><strong>Lucas</strong><span>06 98 76 54 32</span></div>
+                            <span class="statut-badge occupe">En course</span>
+                        </div>
+                        <div class="livreur-item">
+                            <div class="avatar">M</div>
+                            <div class="infos"><strong>Maxime</strong><span>06 45 67 89 01</span></div>
+                            <span class="statut-badge dispo">Dispo</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="adminProductList" style="margin-top:10px;max-height:280px;overflow-y:auto;"></div>
                 <div id="adminProductForm" style="display:none;margin-top:12px;border-top:1px solid var(--border);padding-top:12px;">
                     <h4 id="adminFormTitle" style="color:var(--yellow);margin-bottom:10px;font-size:13.5px;">Ajouter</h4>
@@ -752,6 +842,9 @@
     const ADMIN_PASSWORD_FALLBACK = "HDS2024Admin!";
     const MAX_ADMIN_ATTEMPTS = 3;
     const LOCKOUT_DURATION = 5 * 60 * 1000;
+
+    let _cachedFilteredProducts = null;
+    let _filterCacheKey = '';
 
     let cart = [];
     let favorites = [];
@@ -1020,7 +1113,6 @@
             updateFavCount();
             setTimeout(openSharedProductIfAny, 150);
             window.addEventListener('popstate', openSharedProductIfAny);
-            // ✅ Retour de Formspree → afficher confirmation
             if (new URLSearchParams(location.search).get('commande') === 'ok') {
                 setTimeout(showConfirmationFromStorage, 200);
             }
@@ -1205,6 +1297,7 @@
         adminCancelForm();
         renderProducts(currentCategory);
         renderPopular();
+        _cachedFilteredProducts = null;
     }
     function adminDeleteProduct(id) {
         if (!confirm('Supprimer ce produit ?')) return;
@@ -1213,6 +1306,7 @@
         adminLoadProducts();
         renderProducts(currentCategory);
         renderPopular();
+        _cachedFilteredProducts = null;
         showAlert('🗑️ Supprimé');
     }
     function adminCancelForm() {
@@ -1228,6 +1322,8 @@
     function saveProductsToStorage() { safeSet('hds_products_v4', products); }
 
     function getFilteredProducts() {
+        const cacheKey = currentCategory + '|' + searchQuery + '|' + currentSort;
+        if (_filterCacheKey === cacheKey && _cachedFilteredProducts) return _cachedFilteredProducts;
         let filtered = [...products];
         if (currentCategory !== 'all') filtered = filtered.filter(p => p.category === currentCategory);
         if (searchQuery.trim()) {
@@ -1244,6 +1340,8 @@
             case 'name': filtered.sort((a,b) => a.name.localeCompare(b.name)); break;
             case 'popular': filtered.sort((a,b) => (b.popular?1:0) - (a.popular?1:0)); break;
         }
+        _cachedFilteredProducts = filtered;
+        _filterCacheKey = cacheKey;
         return filtered;
     }
 
@@ -1257,7 +1355,12 @@
         const noResults = document.getElementById('noResults');
         if (filtered.length === 0) { grid.innerHTML = ''; if (noResults) noResults.style.display = 'block'; return; }
         if (noResults) noResults.style.display = 'none';
-        grid.innerHTML = filtered.map((p, i) => createProductCard(p, i)).join('');
+        const fragment = document.createDocumentFragment();
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = filtered.map((p, i) => createProductCard(p, i)).join('');
+        while (tempDiv.firstChild) fragment.appendChild(tempDiv.firstChild);
+        grid.innerHTML = '';
+        grid.appendChild(fragment);
     }
 
     function renderPopular() {
@@ -1764,13 +1867,10 @@
         if (o.discount > 0) d += 'Réduction: -' + o.discount.toFixed(2) + '€\n';
         d += 'Livraison: ' + (o.deliveryCost === 0 ? 'GRATUITE 🎉' : o.deliveryCost.toFixed(2) + '€') + '\n';
         d += '━━━━━━━━━━━━━━━━━━━━\n💵 TOTAL: ' + o.total.toFixed(2) + '€\n━━━━━━━━━━━━━━━━━━━━\n\n';
-        d += '⏱️ Temps: ' + o.totalTime + '-' + (o.totalTime + 10) + ' min\n🚚 Livreur: Karim\n';
+        d += '⏱️ Temps: ' + o.totalTime + '-' + (o.totalTime + 10) + ' min\n🚚 Livreur: Théo\n';
         return d;
     }
 
-    // ═══════════════════════════════════════════════════════════
-    // 🚀 SOUMISSION VERS FORMSPREE (redirection)
-    // ═══════════════════════════════════════════════════════════
     function submitOrder() {
         if (!checkoutLocationDone) { showAlert('📍 Calculez les frais d\'abord', 'error'); return; }
         const firstName = sanitize(document.getElementById('orderFirstName').value.trim());
@@ -1796,7 +1896,6 @@
         document.getElementById('orderCode').value    = code;
         document.getElementById('orderTotal').value   = total.toFixed(2) + '€';
 
-        // Coordonnées GPS exactes
         const loc = getEffectiveLocation();
         if (loc) {
             document.getElementById('orderLat').value = loc[0].toFixed(6);
@@ -1811,10 +1910,9 @@
         safeSet('hds_loyalty', loyaltyPoints);
         updateLoyaltyDisplay();
 
-        // Afficher la confirmation AVANT la redirection
         document.getElementById('confirmCode').textContent = code;
         document.getElementById('confirmTime').textContent = `${totalTime}-${totalTime+10} min`;
-        document.getElementById('confirmDriver').textContent = 'Karim';
+        document.getElementById('confirmDriver').textContent = 'Théo';
         document.getElementById('confirmTotal').textContent = total.toFixed(2) + '€';
         buildConfirmRecap();
 
@@ -1822,7 +1920,6 @@
         updateCartDisplay();
         saveCart();
 
-        // ✅ Redirection vers Formspree
         document.getElementById('orderForm').submit();
 
         closeCheckout();
@@ -1830,14 +1927,13 @@
         startOrderTracking();
     }
 
-    // Retour de Formspree → afficher la confirmation
     function showConfirmationFromStorage() {
         const order = safeGet('hds_order');
         if (!order) return;
         currentOrder = order;
         document.getElementById('confirmCode').textContent = order.code;
         document.getElementById('confirmTime').textContent = `${order.estimatedTime}-${order.estimatedTime + 10} min`;
-        document.getElementById('confirmDriver').textContent = 'Karim';
+        document.getElementById('confirmDriver').textContent = 'Théo';
         document.getElementById('confirmTotal').textContent = order.total.toFixed(2) + '€';
         buildConfirmRecap();
         document.getElementById('confirmationModal').classList.add('active');
@@ -1931,14 +2027,14 @@
         if (now < currentOrder.preparationEnd) {
             progress = Math.min(((now - currentOrder.startTime) / (PREPARATION_TIME * 60 * 1000)) * 33, 33);
             document.getElementById('orderStatus').textContent = '👨‍🍳 Préparation';
-            document.getElementById('driverName').textContent = 'Karim';
-            document.getElementById('driverInitial').textContent = 'K';
+            document.getElementById('driverName').textContent = 'Théo';
+            document.getElementById('driverInitial').textContent = 'T';
         } else {
             const totalDel = currentOrder.estimatedTime * 60 * 1000;
             progress = 33 + Math.min(((now - currentOrder.preparationEnd) / totalDel) * 67, 67);
             document.getElementById('orderStatus').textContent = progress >= 90 ? '📍 Arrivée imminente' : '🚚 En route';
-            document.getElementById('driverName').textContent = 'Thomas';
-            document.getElementById('driverInitial').textContent = 'T';
+            document.getElementById('driverName').textContent = 'Lucas';
+            document.getElementById('driverInitial').textContent = 'L';
         }
         document.getElementById('progressBar').style.width = progress + '%';
         updateSteps(progress);
@@ -2178,6 +2274,7 @@
                 document.querySelectorAll('#categoryTabs .category-tab').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
                 currentCategory = this.dataset.category;
+                _cachedFilteredProducts = null;
                 renderProducts(currentCategory);
             });
         });
@@ -2186,6 +2283,7 @@
                 document.querySelectorAll('#sortBar .sort-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentSort = this.dataset.sort;
+                _cachedFilteredProducts = null;
                 renderProducts(currentCategory);
             });
         });
@@ -2195,6 +2293,7 @@
             searchInput.addEventListener('input', debounce(function() {
                 searchQuery = this.value;
                 searchClear.classList.toggle('visible', this.value.length > 0);
+                _cachedFilteredProducts = null;
                 renderProducts(currentCategory);
             }, 250));
         }
@@ -2214,6 +2313,7 @@
         const input = document.getElementById('searchInput');
         if (input) input.value = '';
         searchQuery = '';
+        _cachedFilteredProducts = null;
         document.getElementById('searchClear')?.classList.remove('visible');
         renderProducts(currentCategory);
     }
@@ -2222,4 +2322,4 @@
     }
     </script>
 </body>
-    </html>
+</html>
