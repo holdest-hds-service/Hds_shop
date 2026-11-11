@@ -567,6 +567,8 @@ input,textarea,select{font-family:inherit}
 <button class="checkout-button orange" id="adminPanelBtn" style="display:none;" onclick="openAdminPanel()">🛡️ Ouvrir le Panneau Admin</button>
 <button class="checkout-button blue" id="driverPanelBtn" style="display:none;" onclick="openDriverInterface()">🛵 Ouvrir l'Espace Livreur</button>
 <button class="checkout-button blue" onclick="editClientProfile()">✏️ Modifier mes infos</button>
+<button class="checkout-button secondary" onclick="showOrderHistory()">📋 Historique des commandes</button>
+<button class="checkout-button secondary" onclick="showFavorites()">❤️ Mes favoris</button>
 <button class="checkout-button secondary" onclick="logoutClient()">Déconnexion</button>
 </div>
 <div id="editProfileView" style="display:none;">
@@ -651,6 +653,30 @@ input,textarea,select{font-family:inherit}
 <button class="checkout-button" onclick="downloadQR()" style="margin-top:8px;">📥 Télécharger</button>
 <button class="checkout-button secondary" onclick="closeQrModal()">Fermer</button>
 </div>
+</div>
+</div>
+
+<!-- HISTORIQUE DES COMMANDES (nouveau) -->
+<div class="modal-overlay" id="historyModal">
+<div class="modal wide">
+<div class="modal-header"><div class="modal-title"><i class="fas fa-history"></i> Mes commandes</div><button class="modal-close" onclick="closeHistoryModal()">×</button></div>
+<div class="modal-body" id="historyList"></div>
+</div>
+</div>
+
+<!-- DÉTAIL COMMANDE (nouveau) -->
+<div class="modal-overlay" id="orderDetailModal">
+<div class="modal">
+<div class="modal-header"><div class="modal-title"><i class="fas fa-receipt"></i> Détail commande</div><button class="modal-close" onclick="closeOrderDetailModal()">×</button></div>
+<div class="modal-body" id="orderDetailBody"></div>
+</div>
+</div>
+
+<!-- FAVORIS (nouveau) -->
+<div class="modal-overlay" id="favoritesModal">
+<div class="modal wide">
+<div class="modal-header"><div class="modal-title"><i class="fas fa-heart" style="color:var(--red);"></i> Mes favoris</div><button class="modal-close" onclick="closeFavoritesModal()">×</button></div>
+<div class="modal-body" id="favoritesList"></div>
 </div>
 </div>
 
@@ -752,15 +778,11 @@ input,textarea,select{font-family:inherit}
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
 /* ========================================================================
-   CONFIGURATION — REMPLACE LA CLÉ PUBLISHABLE
-   Dashboard Supabase → Project Settings → API
+   CONFIGURATION
    ======================================================================== */
 const SUPABASE_URL = "https://wzmbhztpdherntngexrl.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_eqkezHzDxiSWOLKaAENlsw_j344d_A_";
 
-if (!SUPABASE_PUBLISHABLE_KEY || SUPABASE_PUBLISHABLE_KEY.includes("COLLE_ICI")) {
-    alert("⚠️ La clé publishable Supabase n'est pas renseignée.\n\nOuvre le fichier et remplace SUPABASE_PUBLISHABLE_KEY.");
-}
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 const $ = (id) => document.getElementById(id);
@@ -785,6 +807,8 @@ let currentProduct = null;
 let userCoords = null;
 let userDistance = 0;
 let currentOrder = null;
+let myOrders = [];
+let orderItemsCache = {};
 
 const RESTAURANT_LAT = 43.3236041;
 const RESTAURANT_LNG = 5.3870093;
@@ -918,6 +942,8 @@ function showClientView() {
     if ($("clientPoints")) $("clientPoints").textContent = currentProfile?.loyalty_points || 0;
     if ($("loyaltyPointsBanner")) $("loyaltyPointsBanner").textContent = currentProfile?.loyalty_points || 0;
     if ($("menuLoyaltyPoints")) $("menuLoyaltyPoints").textContent = (currentProfile?.loyalty_points || 0) + " pts";
+    if ($("favCount")) $("favCount").textContent = favorites.length;
+    if ($("historyCount")) $("historyCount").textContent = myOrders.length;
     updateAccountButton();
 }
 window.showClientView = showClientView;
@@ -1060,8 +1086,10 @@ async function refreshAuth() {
         if (driverRow) currentDriver = driverRow;
         await loadFavorites();
         await loadSavedCart();
+        await loadMyOrders();
     } else {
         favorites = [];
+        myOrders = [];
         currentDriver = JSON.parse(localStorage.getItem("hds_driver") || "null");
     }
     updateAccountButton();
@@ -1312,10 +1340,7 @@ window.checkout = () => {
 };
 window.closeCheckout = () => $("checkoutModal")?.classList.remove("active");
 
-/* --------- CORRECTION 1 : REVERSE GEOCODING ---------
-   Avant : adresse = "Lat: xx, Lng: yy"
-   Maintenant : reverse geocoding Nominatim → adresse postale complète
-*/
+/* Reverse geocoding GPS → adresse postale */
 window.locateForCheckout = async () => {
     if (!navigator.geolocation) return alertUser("Géoloc indisponible.", "error");
     const btn = $("checkoutLocateBtn");
@@ -1323,7 +1348,6 @@ window.locateForCheckout = async () => {
     navigator.geolocation.getCurrentPosition(async pos => {
         userCoords = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
         userDistance = calculateDistance(RESTAURANT_LAT, RESTAURANT_LNG, userCoords.latitude, userCoords.longitude);
-        // Reverse geocoding pour récupérer une VRAIE adresse postale
         let address = "";
         try {
             const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${userCoords.latitude}&lon=${userCoords.longitude}&accept-language=fr&addressdetails=1`);
@@ -1355,10 +1379,7 @@ window.locateForCheckout = async () => {
     }, { enableHighAccuracy: true, timeout: 15000 });
 };
 
-/* --------- CORRECTION 2 : RPC place_order (comme le code 2) ---------
-   Avant : supabase.functions.invoke("create-order") → n'existait pas → admin recevait rien
-   Maintenant : supabase.rpc("place_order", ...) → exactement ce que fait le code 2 → admin reçoit
-*/
+/* RPC place_order — commande bien enregistrée côté admin */
 window.submitOrder = async () => {
     if (!currentUser) return alertUser("Connecte-toi.", "error");
     if (!cart.length) return alertUser("Panier vide.", "error");
@@ -1376,7 +1397,6 @@ window.submitOrder = async () => {
     const payment = document.querySelector('input[name="paiement"]:checked')?.value === "Carte" ? "Carte" : "Espèces";
     const itemsForRpc = cart.map(i => ({ product_id: i.product_id, quantity: i.quantity }));
 
-    // ✅ APPEL RPC — identique au code 2, la commande est bien enregistrée et visible côté admin
     const { data, error } = await supabase.rpc("place_order", {
         p_client_name: firstName + " " + lastName,
         p_client_phone: phone,
@@ -1405,7 +1425,6 @@ window.submitOrder = async () => {
         })
     };
 
-    // Reset panier
     cart = [];
     localStorage.removeItem("hds_cart_guest");
     await syncCartToDatabase();
@@ -1437,13 +1456,14 @@ window.captureScreenshot = () => {
 };
 
 /* ========================================================================
-   MES COMMANDES + MAP
+   MES COMMANDES + HISTORIQUE + MAP
    ======================================================================== */
 async function loadMyOrders() {
-    if (!currentUser) return;
-    const { data, error } = await supabase.from("orders").select("id,code,status,total,created_at,distance,driver_name").eq("user_id", currentUser.id).order("created_at", { ascending: false }).limit(20);
+    if (!currentUser) { myOrders = []; return; }
+    const { data, error } = await supabase.from("orders").select("id,code,status,total,created_at,distance,driver_name,address,client_name,client_phone,payment,items").eq("user_id", currentUser.id).order("created_at", { ascending: false }).limit(30);
     if (error) return console.error(error);
-    const active = (data || []).find(o => !["livree","annulee"].includes(o.status));
+    myOrders = data || [];
+    const active = myOrders.find(o => !["livree","annulee"].includes(o.status));
     if (active) {
         currentOrder = active;
         if ($("noActiveOrder")) $("noActiveOrder").style.display = "none";
@@ -1453,15 +1473,122 @@ async function loadMyOrders() {
         if ($("orderDistance")) $("orderDistance").textContent = `${active.distance || 0} km`;
         if ($("driverName")) $("driverName").textContent = active.driver_name || "À assigner";
         if ($("driverInitial")) $("driverInitial").textContent = (active.driver_name || "?")[0];
+        // Progression
+        const steps = { nouvelle: 1, preparation: 1, route: 2, livree: 3 };
+        const step = steps[active.status] || 0;
+        if ($("progressBar")) $("progressBar").style.width = (step * 33) + "%";
+        ["step1","step2","step3"].forEach((id, i) => {
+            const el = $(id)?.querySelector(".step-icon");
+            if (!el) return;
+            el.classList.remove("active","completed");
+            if (i + 1 < step) el.classList.add("completed");
+            else if (i + 1 === step) el.classList.add("active");
+        });
+        if ($("estimatedTime")) {
+            const eta = { nouvelle: "35-45 min", preparation: "25-35 min", route: "10-20 min" }[active.status] || "--";
+            $("estimatedTime").textContent = eta;
+        }
     } else {
         if ($("noActiveOrder")) $("noActiveOrder").style.display = "block";
         if ($("activeOrder")) $("activeOrder").style.display = "none";
     }
-    if ($("historyCount")) $("historyCount").textContent = (data || []).length;
+    if ($("historyCount")) $("historyCount").textContent = myOrders.length;
 }
 window.loadMyOrders = loadMyOrders;
 window.trackOrder = () => { $("confirmationModal")?.classList.remove("active"); showSection("tracking"); };
 window.closeConfirmation = () => $("confirmationModal")?.classList.remove("active");
+
+/* ========== HISTORIQUE DES COMMANDES (nouveau) ========== */
+window.showOrderHistory = async () => {
+    closeMenuIfOpen();
+    if (!currentUser) { openAccountModal(); return alertUser("Connecte-toi pour voir tes commandes.", "error"); }
+    await loadMyOrders();
+    $("historyModal")?.classList.add("active");
+    renderHistoryList();
+};
+window.closeHistoryModal = () => $("historyModal")?.classList.remove("active");
+
+function renderHistoryList() {
+    const list = $("historyList");
+    if (!list) return;
+    if (!myOrders.length) {
+        list.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i><p>Aucune commande pour le moment.</p></div>';
+        return;
+    }
+    const labels = {
+        nouvelle: { txt: "🆕 Nouvelle", color: "var(--orange)" },
+        preparation: { txt: "👨‍🍳 Préparation", color: "var(--yellow)" },
+        route: { txt: "🚚 En route", color: "var(--blue)" },
+        livree: { txt: "✅ Livrée", color: "var(--green)" },
+        annulee: { txt: "❌ Annulée", color: "var(--red)" }
+    };
+    list.innerHTML = myOrders.map(o => {
+        const lab = labels[o.status] || { txt: o.status, color: "var(--text-dim)" };
+        const date = o.created_at ? new Date(o.created_at).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "";
+        return `<div class="order-card status-${esc(o.status)}" style="cursor:pointer;" onclick="showOrderDetail(${o.id})">
+            <div class="order-card-header">
+                <span class="order-code">#${esc(o.code)}</span>
+                <span style="color:${lab.color};font-weight:800;font-size:11px;">${lab.txt}</span>
+            </div>
+            <div class="order-body">
+                📅 ${date}<br>
+                📍 ${esc((o.address || "").substring(0, 55))}${(o.address || "").length > 55 ? "..." : ""}<br>
+                💰 <strong>${money(o.total)}</strong>
+                ${o.driver_name ? ` • 🛵 ${esc(o.driver_name)}` : ""}
+            </div>
+            <div style="font-size:10.5px;color:var(--yellow);font-weight:700;text-align:right;">Voir détails →</div>
+        </div>`;
+    }).join("");
+}
+
+window.showOrderDetail = async (orderId) => {
+    const order = myOrders.find(o => o.id === orderId);
+    if (!order) return;
+    const body = $("orderDetailBody");
+    if (!body) return;
+    const labels = { nouvelle: "🆕 Nouvelle", preparation: "👨‍🍳 Préparation", route: "🚚 En route", livree: "✅ Livrée", annulee: "❌ Annulée" };
+
+    let itemsHtml = "";
+    try {
+        const { data: items } = await supabase.from("order_items").select("product_name,quantity,unit_price,supplements").eq("order_id", orderId);
+        if (items?.length) {
+            itemsHtml = items.map(i => {
+                const sup = i.supplements?.length ? `<div style="font-size:10px;color:var(--yellow);">+ ${i.supplements.join(", ")}</div>` : "";
+                return `<div class="line"><span>${esc(i.product_name)} × ${i.quantity}${sup}</span><span>${money((i.unit_price || 0) * i.quantity)}</span></div>`;
+            }).join("");
+        }
+    } catch {}
+
+    if (!itemsHtml && order.items) {
+        try {
+            const arr = typeof order.items === "string" ? JSON.parse(order.items) : order.items;
+            itemsHtml = arr.map(i => `<div class="line"><span>${esc(i.product_name || "Produit")} × ${i.quantity}</span><span>${money((i.unit_price || 0) * i.quantity)}</span></div>`).join("");
+        } catch {}
+    }
+    if (!itemsHtml) itemsHtml = '<div style="color:var(--text-dim);font-size:12px;text-align:center;">Détails non disponibles</div>';
+
+    body.innerHTML = `
+        <div class="code-hero" style="border-color:var(--yellow);">
+            <div class="label">Code commande</div>
+            <div class="code-big" style="color:var(--yellow);">${esc(order.code)}</div>
+            <div class="hint">${labels[order.status] || order.status}</div>
+        </div>
+        <div style="font-weight:800;font-size:13px;margin:12px 0 6px;">🛒 Articles commandés</div>
+        <div class="recap-box">${itemsHtml}</div>
+        <div style="background:var(--card-hover);border-radius:var(--r-md);padding:12px;margin:12px 0;font-size:12.5px;line-height:1.8;">
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">📅 Date:</span><span>${order.created_at ? new Date(order.created_at).toLocaleString("fr-FR") : "—"}</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">📍 Adresse:</span><span style="text-align:right;max-width:60%;">${esc(order.address || "—")}</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">📏 Distance:</span><span>${order.distance || 0} km</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">💳 Paiement:</span><span>${esc(order.payment || "Espèces")}</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">🚚 Livreur:</span><span>${esc(order.driver_name || "À assigner")}</span></div>
+            <div style="display:flex;justify-content:space-between;border-top:1px dashed var(--border);margin-top:8px;padding-top:8px;font-size:15px;font-weight:900;color:var(--yellow);"><span>Total:</span><span>${money(order.total)}</span></div>
+        </div>
+        ${!['livree','annulee'].includes(order.status) ? `<button class="checkout-button blue" onclick="closeOrderDetailModal();showSection('tracking');">🚚 Suivre cette commande</button>` : ""}
+        <button class="checkout-button secondary" onclick="closeOrderDetailModal()">Fermer</button>
+    `;
+    $("orderDetailModal")?.classList.add("active");
+};
+window.closeOrderDetailModal = () => $("orderDetailModal")?.classList.remove("active");
 
 let deliveryMap = null;
 function initMap() {
@@ -1511,6 +1638,7 @@ async function loadFavorites() {
     if (!currentUser) { favorites = []; return; }
     const { data, error } = await supabase.from("favorites").select("product_id").eq("user_id", currentUser.id);
     if (!error) favorites = (data || []).map(r => r.product_id);
+    if ($("favCount")) $("favCount").textContent = favorites.length;
 }
 window.toggleFavorite = async (id) => {
     if (!currentUser) { alertUser("Connecte-toi.", "error"); return openAccountModal(); }
@@ -1523,13 +1651,44 @@ window.toggleFavorite = async (id) => {
     renderProducts();
     if ($("favCount")) $("favCount").textContent = favorites.length;
 };
+
+/* ========== FAVORIS (modal complet — nouveau) ========== */
 window.showFavorites = () => {
     closeMenuIfOpen();
-    if (!favorites.length) return alertUser("Aucun favori.");
-    const names = products.filter(p => favorites.includes(p.id)).map(p => p.name);
-    alertUser(`Favoris : ${names.join(", ")}`);
+    if (!currentUser) { openAccountModal(); return alertUser("Connecte-toi pour voir tes favoris.", "error"); }
+    $("favoritesModal")?.classList.add("active");
+    renderFavoritesList();
 };
-window.showOrderHistory = () => { closeMenuIfOpen(); showSection("tracking"); };
+window.closeFavoritesModal = () => $("favoritesModal")?.classList.remove("active");
+
+function renderFavoritesList() {
+    const list = $("favoritesList");
+    if (!list) return;
+    const favProducts = products.filter(p => favorites.includes(p.id));
+    if (!favProducts.length) {
+        list.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><p>Aucun favori pour le moment.</p><p style="font-size:11px;margin-top:6px;">Clique sur le ❤️ d\'un produit pour l\'ajouter.</p></div>';
+        return;
+    }
+    list.innerHTML = favProducts.map(p => {
+        const out = p.manual_rupture || (p.stock !== null && Number(p.stock) <= 0);
+        return `<div class="cart-item">
+            <img src="${esc(p.image || "")}" alt="${esc(p.name)}" style="width:52px;height:52px;object-fit:contain;background:var(--card);border-radius:8px;margin-right:10px;flex-shrink:0;" onerror="this.src='https://via.placeholder.com/60?text=HDS'">
+            <div class="cart-item-details">
+                <div class="cart-item-name">${esc(p.name)}</div>
+                <div class="cart-item-meta" style="color:var(--yellow);font-weight:800;font-size:13px;margin-top:3px;">${money(p.price)}</div>
+            </div>
+            <button class="buy-button" ${out ? "disabled" : ""} onclick="addFavoriteToCart(${p.id})" style="height:30px;font-size:11px;flex:0 0 auto;padding:0 10px;">${out ? "Rupture" : "+ Panier"}</button>
+            <button class="cart-item-remove" onclick="toggleFavorite(${p.id});renderFavoritesList();">×</button>
+        </div>`;
+    }).join("");
+}
+window.addFavoriteToCart = (id) => {
+    const p = products.find(x => x.id === Number(id));
+    if (!p) return;
+    addProductToCart(p, 1);
+    alertUser("Produit ajouté au panier.", "success");
+    bumpCartButton();
+};
 
 /* ========================================================================
    ADMIN PANEL
@@ -1956,6 +2115,7 @@ document.querySelectorAll(".modal-overlay").forEach(m => m.addEventListener("cli
    ======================================================================== */
 await refreshAuth();
 await loadProducts();
+await loadMyOrders();
 renderCartItems();
 showSection("products");
 </script>
