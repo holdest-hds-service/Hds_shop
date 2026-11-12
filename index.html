@@ -69,6 +69,14 @@ input,textarea,select{font-family:inherit}
 .status-bar{background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.06));border:1px solid rgba(34,197,94,0.3);border-radius:var(--r-md);padding:11px 14px;margin:12px 16px;text-align:center;color:var(--green);font-weight:700;font-size:12px;cursor:pointer;line-height:1.5}
 #sharedBanner{background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(59,130,246,0.05));border:1px solid var(--blue);border-radius:var(--r-md);padding:11px 14px;margin:12px 16px;display:none;align-items:center;gap:10px;font-size:12px;color:var(--blue);font-weight:600}
 #sharedBanner button{padding:6px 12px;background:var(--blue);color:white;border-radius:var(--r-sm);font-size:11px;font-weight:700}
+#recommendBanner{background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05));border:1.5px solid var(--green);border-radius:var(--r-md);padding:12px 14px;margin:12px 16px;display:none;align-items:flex-start;gap:10px;font-size:12px;color:var(--green);font-weight:600}
+#recommendBanner .reco-icon{width:32px;height:32px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+#recommendBanner .reco-body{flex:1;min-width:0}
+#recommendBanner .reco-name{font-weight:900;color:var(--green);font-size:13px;margin-bottom:2px}
+#recommendBanner .reco-sub{font-size:11px;color:var(--text-dim);font-weight:500}
+#recommendBanner .reco-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+#recommendBanner .reco-actions button{padding:6px 10px;border-radius:6px;font-size:10.5px;font-weight:700;flex:1;min-width:100px}
+#recommendBanner .reco-share{background:var(--card-hover);color:var(--text);border:1px solid var(--border)}
 .section-title{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:800;margin:16px 16px 10px;letter-spacing:-0.2px}
 .section-title i{color:var(--yellow);font-size:14px}
 .category-tabs{display:flex;gap:6px;margin:0 16px 12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
@@ -220,7 +228,6 @@ input,textarea,select{font-family:inherit}
 .recap-box{background:var(--card-hover);border-radius:var(--r-md);padding:12px;margin:12px 0;text-align:left;font-size:12.5px;max-height:180px;overflow-y:auto;border:1px solid var(--border)}
 .recap-box .line{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.05)}
 .recap-box .line:last-child{border-bottom:none}
-.admin-card{background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.3);border-radius:var(--r-md);padding:12px;margin:8px 0}
 .admin-product-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--border);gap:8px}
 .admin-product-item:last-child{border-bottom:none}
 .admin-product-info{flex:1;min-width:0}
@@ -338,6 +345,18 @@ input,textarea,select{font-family:inherit}
 <div class="status-bar" onclick="showSection('popular')">🚚 <strong>LIVRAISON GRATUITE DÈS 35 €</strong><br><span style="font-size:11px;font-weight:600;">Snacks • Boissons • Vape • Accessoires</span></div>
 
 <div id="sharedBanner"><i class="fas fa-share-alt"></i><span id="sharedBannerText">Produit partagé</span><button onclick="backToShop()">← Boutique</button></div>
+
+<div id="recommendBanner">
+<div class="reco-icon"><i class="fas fa-gift"></i></div>
+<div class="reco-body">
+<div class="reco-name" id="recoName">Un ami te recommande ce produit</div>
+<div class="reco-sub" id="recoSub">Ajoute-le à ton panier ou partage-le à ton tour</div>
+<div class="reco-actions">
+<button class="checkout-button" onclick="addRecommendedToCart()" style="padding:6px 10px;font-size:10.5px;margin:0;">🛒 Ajouter</button>
+<button class="reco-share" onclick="reshareRecommended()">🔗 Partager à mon tour</button>
+</div>
+</div>
+</div>
 
 <div class="loyalty-banner" onclick="showLoyaltyInfo()">
 <div class="loyalty-icon">🎁</div>
@@ -562,7 +581,8 @@ input,textarea,select{font-family:inherit}
 <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-dim);">Téléphone:</span><span style="font-weight:700;" id="clientPhoneDisplay">—</span></div>
 <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-dim);">Adresse:</span><span style="font-weight:600;text-align:right;max-width:60%;font-size:11.5px;" id="clientAddressDisplay">Non définie</span></div>
 <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-dim);">Points:</span><span style="font-weight:700;" id="clientPoints">0</span></div>
-<div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">Réduction:</span><span style="font-weight:700;color:var(--green);">-5%</span></div>
+<div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-dim);">Réduction:</span><span style="font-weight:700;color:var(--green);">-5%</span></div>
+<div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">Code parrainage:</span><span style="font-weight:700;color:var(--yellow);font-family:monospace;" id="clientReferralCode">—</span></div>
 </div>
 <button class="checkout-button orange" id="adminPanelBtn" style="display:none;" onclick="openAdminPanel()">🛡️ Ouvrir le Panneau Admin</button>
 <button class="checkout-button blue" id="driverPanelBtn" style="display:none;" onclick="openDriverInterface()">🛵 Ouvrir l'Espace Livreur</button>
@@ -608,7 +628,8 @@ input,textarea,select{font-family:inherit}
 </div>
 <button class="buy-button" onclick="addFromDetail()" style="height:32px;font-size:12px;"><i class="fas fa-cart-plus"></i> Ajouter au panier</button>
 </div>
-<button class="checkout-button secondary" onclick="shareProductDetail()" style="margin-top:12px;padding:11px;font-size:12.5px;"><i class="fas fa-share-alt"></i> Partager ce produit</button>
+<button class="checkout-button" onclick="shareProductDetail()" style="margin-top:12px;padding:11px;font-size:12.5px;"><i class="fas fa-share-alt"></i> 🎁 Partager avec un ami</button>
+<button class="checkout-button secondary" onclick="openShareModal()" style="margin-top:6px;padding:11px;font-size:12.5px;"><i class="fas fa-link"></i> Autres options de partage</button>
 </div>
 </div>
 </div>
@@ -627,7 +648,8 @@ input,textarea,select{font-family:inherit}
 <div class="modal-header"><div class="modal-title"><i class="fas fa-share-alt"></i> Partager ce produit</div><button class="modal-close" onclick="closeShareModal()">×</button></div>
 <div class="modal-body">
 <div id="shareProductInfo"></div>
-<div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">🔗 Lien direct :</div>
+<div class="info-box" style="margin-top:8px;"><i class="fas fa-gift"></i>Ton lien contient ton code de parrainage. Si un ami commande, tu gagnes des points fidélité !</div>
+<div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">🔗 Lien personnalisé :</div>
 <div id="shareUrlBox" title="Cliquer pour copier"></div>
 <div class="share-grid">
 <button onclick="shareCopy()"><i class="fas fa-copy"></i> Copier</button>
@@ -637,7 +659,7 @@ input,textarea,select{font-family:inherit}
 <button onclick="shareInstagram()"><i class="fab fa-instagram"></i> Instagram</button>
 <button onclick="shareQRCode()"><i class="fas fa-qrcode"></i> QR Code</button>
 </div>
-<p style="font-size:10.5px;color:var(--text-dim);text-align:center;line-height:1.5;">💡 Le lien ouvre directement la fiche du produit.</p>
+<p style="font-size:10.5px;color:var(--text-dim);text-align:center;line-height:1.5;">💡 Le lien ouvre directement la fiche du produit avec ton nom.</p>
 </div>
 </div>
 </div>
@@ -656,7 +678,7 @@ input,textarea,select{font-family:inherit}
 </div>
 </div>
 
-<!-- HISTORIQUE DES COMMANDES (nouveau) -->
+<!-- HISTORIQUE DES COMMANDES -->
 <div class="modal-overlay" id="historyModal">
 <div class="modal wide">
 <div class="modal-header"><div class="modal-title"><i class="fas fa-history"></i> Mes commandes</div><button class="modal-close" onclick="closeHistoryModal()">×</button></div>
@@ -664,7 +686,7 @@ input,textarea,select{font-family:inherit}
 </div>
 </div>
 
-<!-- DÉTAIL COMMANDE (nouveau) -->
+<!-- DÉTAIL COMMANDE -->
 <div class="modal-overlay" id="orderDetailModal">
 <div class="modal">
 <div class="modal-header"><div class="modal-title"><i class="fas fa-receipt"></i> Détail commande</div><button class="modal-close" onclick="closeOrderDetailModal()">×</button></div>
@@ -672,7 +694,7 @@ input,textarea,select{font-family:inherit}
 </div>
 </div>
 
-<!-- FAVORIS (nouveau) -->
+<!-- FAVORIS -->
 <div class="modal-overlay" id="favoritesModal">
 <div class="modal wide">
 <div class="modal-header"><div class="modal-title"><i class="fas fa-heart" style="color:var(--red);"></i> Mes favoris</div><button class="modal-close" onclick="closeFavoritesModal()">×</button></div>
@@ -688,6 +710,7 @@ input,textarea,select{font-family:inherit}
 <button class="admin-tab active" data-atab="orders" onclick="switchAdminTab('orders')"><i class="fas fa-shopping-bag"></i> Commandes</button>
 <button class="admin-tab" data-atab="products" onclick="switchAdminTab('products')"><i class="fas fa-box"></i> Produits</button>
 <button class="admin-tab" data-atab="drivers" onclick="switchAdminTab('drivers')"><i class="fas fa-users"></i> Livreurs</button>
+<button class="admin-tab" data-atab="shares" onclick="switchAdminTab('shares')"><i class="fas fa-share-alt"></i> Partages</button>
 </div>
 <div class="modal-body" style="padding:0;">
 <div class="admin-panel-section active" id="atab-orders">
@@ -734,6 +757,13 @@ input,textarea,select{font-family:inherit}
 <button class="checkout-button blue" onclick="adminInviteDriver()" style="padding:10px;font-size:12px;margin-bottom:12px;"><i class="fas fa-user-plus"></i> Inviter un livreur</button>
 <div id="adminDriversList"></div>
 </div>
+<div class="admin-panel-section" id="atab-shares">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+<div style="font-weight:800;font-size:13px;">📊 Partages de produits</div>
+<button class="checkout-button secondary" onclick="adminLoadShares()" style="padding:5px 10px;font-size:11px;margin:0;width:auto;">🔄</button>
+</div>
+<div id="adminSharesList"></div>
+</div>
 </div>
 </div>
 </div>
@@ -744,10 +774,10 @@ input,textarea,select{font-family:inherit}
 <div class="modal-header"><div class="modal-title"><i class="fas fa-motorcycle" style="color:var(--blue);"></i> Espace Livreur</div><button class="modal-close" onclick="closeDriverLogin()">×</button></div>
 <div class="modal-body">
 <div style="text-align:center;margin-bottom:14px;"><i class="fas fa-motorcycle" style="font-size:48px;color:var(--blue);"></i></div>
-<div class="info-box"><i class="fas fa-key"></i>Entre le code d'invitation donné par le gérant.</div>
-<div class="form-group"><input type="text" class="form-input" id="driverNameInput" placeholder="Ton prénom (ex: Théo)"></div>
-<div class="form-group"><input type="text" class="form-input" id="driverCodeInput" placeholder="Code d'invitation" maxlength="10"></div>
+<div class="info-box"><i class="fas fa-key"></i>Entre ton code d'invitation (reçu par WhatsApp). Tu dois être connecté(e) à ton compte.</div>
+<div class="form-group"><input type="text" class="form-input" id="driverCodeInput" placeholder="Code d'invitation" maxlength="30"></div>
 <button class="checkout-button blue" onclick="driverLogin()">🛵 Se connecter</button>
+<button class="checkout-button secondary" onclick="closeDriverLogin();openAccountModal()" style="margin-top:8px;">Se connecter / Créer un compte</button>
 </div>
 </div>
 </div>
@@ -782,7 +812,6 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
    ======================================================================== */
 const SUPABASE_URL = "https://wzmbhztpdherntngexrl.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_eqkezHzDxiSWOLKaAENlsw_j344d_A_";
-
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 const $ = (id) => document.getElementById(id);
@@ -808,7 +837,8 @@ let userCoords = null;
 let userDistance = 0;
 let currentOrder = null;
 let myOrders = [];
-let orderItemsCache = {};
+let recommendedBy = null;
+let sharedProductId = null;
 
 const RESTAURANT_LAT = 43.3236041;
 const RESTAURANT_LNG = 5.3870093;
@@ -831,6 +861,27 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     const dLon = (lon2 - lon1) * Math.PI / 180;
     const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+function logSupabaseError(label, error) {
+    if (!error) return;
+    console.error(`[Supabase ${label}]`, { code: error.code, message: error.message, details: error.details, hint: error.hint });
+}
+function getMyReferralCode() {
+    if (currentProfile?.referral_code) return currentProfile.referral_code;
+    let anon = localStorage.getItem("hds_share_token");
+    if (!anon) {
+        anon = "ANON" + Math.random().toString(36).substring(2, 8).toUpperCase();
+        localStorage.setItem("hds_share_token", anon);
+    }
+    return anon;
+}
+function getMyDisplayName() {
+    return currentProfile?.first_name || "Un ami";
+}
+function buildShareUrl(productId, refCode) {
+    const base = location.origin + location.pathname;
+    const code = refCode || getMyReferralCode();
+    return `${base}?p=${productId}&ref=${encodeURIComponent(code)}&n=${encodeURIComponent(getMyDisplayName())}`;
 }
 
 /* ========================================================================
@@ -940,6 +991,7 @@ function showClientView() {
     if ($("clientPhoneDisplay")) $("clientPhoneDisplay").textContent = currentProfile?.phone || "—";
     if ($("clientAddressDisplay")) $("clientAddressDisplay").textContent = currentProfile?.address || "Non définie";
     if ($("clientPoints")) $("clientPoints").textContent = currentProfile?.loyalty_points || 0;
+    if ($("clientReferralCode")) $("clientReferralCode").textContent = currentProfile?.referral_code || getMyReferralCode();
     if ($("loyaltyPointsBanner")) $("loyaltyPointsBanner").textContent = currentProfile?.loyalty_points || 0;
     if ($("menuLoyaltyPoints")) $("menuLoyaltyPoints").textContent = (currentProfile?.loyalty_points || 0) + " pts";
     if ($("favCount")) $("favCount").textContent = favorites.length;
@@ -1037,7 +1089,7 @@ async function loadProfile() {
     const { data, error } = await supabase.from("profiles")
         .select("id,first_name,last_name,phone,address,loyalty_points,referral_code")
         .eq("id", currentUser.id).maybeSingle();
-    if (error) return console.error(error);
+    if (error) { logSupabaseError("loadProfile", error); return; }
     currentProfile = data;
     showClientView();
 }
@@ -1053,7 +1105,7 @@ window.saveProfile = async () => {
         updated_at: new Date().toISOString()
     };
     const { error } = await supabase.from("profiles").upsert(profile);
-    if (error) return alertUser(error.message, "error");
+    if (error) { logSupabaseError("saveProfile", error); return alertUser(error.message, "error"); }
     await loadProfile();
     alertUser("Profil enregistré.", "success");
 };
@@ -1106,20 +1158,35 @@ supabase.auth.onAuthStateChange((event) => {
    PRODUITS
    ======================================================================== */
 async function loadProducts() {
-    const [p, c, s, links] = await Promise.all([
-        supabase.from("products").select("id,name,price,category,image,description,specs,popular,stock,manual_rupture,coming_soon,category_slug,is_active").eq("is_active", true).order("name"),
+    const { data: prodData, error: prodError } = await supabase
+        .from("products")
+        .select("*")
+        .eq("is_active", true);
+
+    if (prodError) {
+        logSupabaseError("loadProducts", prodError);
+        alertUser(`Erreur produits (${prodError.code || "inconnu"}) : ${prodError.message}`, "error");
+        return;
+    }
+    console.log(`[Products] ${prodData?.length || 0} produits actifs chargés.`);
+
+    const [c, s, links] = await Promise.all([
         supabase.from("categories").select("id,slug,name,icon,is_active,display_order").eq("is_active", true).order("display_order"),
         supabase.from("supplements").select("id,name,price,is_active").eq("is_active", true),
         supabase.from("product_supplements").select("product_id,supplement_id")
     ]);
-    if (p.error) { console.error(p.error); return alertUser("Erreur produits : " + p.error.message, "error"); }
+    if (c.error) logSupabaseError("loadCategories", c.error);
+    if (s.error) logSupabaseError("loadSupplements", s.error);
+    if (links.error) logSupabaseError("loadProductSupplements", links.error);
+
     const supplements = s.data || [];
     const relations = links.data || [];
-    products = (p.data || []).map(product => ({
+    products = (prodData || []).map(product => ({
         ...product,
         specs: Array.isArray(product.specs) ? product.specs : [],
         supplements: relations.filter(l => l.product_id === product.id).map(l => supplements.find(x => x.id === l.supplement_id)).filter(Boolean)
     }));
+
     categories = c.data || [];
     const tab = $("categoryTabs");
     if (tab && categories.length) {
@@ -1267,11 +1334,12 @@ async function syncCartToDatabase() {
     if (!cart.length) return;
     const rows = cart.map(i => ({ user_id: currentUser.id, product_id: i.product_id, quantity: i.quantity, supplements: i.supplements || [], updated_at: new Date().toISOString() }));
     const { error } = await supabase.from("cart_items").insert(rows);
-    if (error) console.error("Cart save:", error);
+    if (error) logSupabaseError("syncCartToDatabase", error);
 }
 async function loadSavedCart() {
     const { data, error } = await supabase.from("cart_items").select("product_id,quantity,supplements").eq("user_id", currentUser.id);
-    if (error || !data?.length) return;
+    if (error) { logSupabaseError("loadSavedCart", error); return; }
+    if (!data?.length) return;
     cart = data.map(i => ({ key: `${i.product_id}:${(i.supplements || []).join(",")}`, product_id: i.product_id, quantity: i.quantity, supplements: i.supplements || [] }));
     persistCart();
 }
@@ -1340,7 +1408,6 @@ window.checkout = () => {
 };
 window.closeCheckout = () => $("checkoutModal")?.classList.remove("active");
 
-/* Reverse geocoding GPS → adresse postale */
 window.locateForCheckout = async () => {
     if (!navigator.geolocation) return alertUser("Géoloc indisponible.", "error");
     const btn = $("checkoutLocateBtn");
@@ -1379,7 +1446,6 @@ window.locateForCheckout = async () => {
     }, { enableHighAccuracy: true, timeout: 15000 });
 };
 
-/* RPC place_order — commande bien enregistrée côté admin */
 window.submitOrder = async () => {
     if (!currentUser) return alertUser("Connecte-toi.", "error");
     if (!cart.length) return alertUser("Panier vide.", "error");
@@ -1409,11 +1475,22 @@ window.submitOrder = async () => {
     if (btn) { btn.disabled = false; btn.textContent = "✅ Confirmer la commande"; }
 
     if (error) {
-        console.error("place_order error:", error);
-        return alertUser("Erreur commande : " + error.message, "error");
+        logSupabaseError("place_order", error);
+        return alertUser(`Erreur commande (${error.code || "inconnu"}) : ${error.message}`, "error");
     }
     if (!data || !data.code) {
         return alertUser("Réponse invalide du serveur.", "error");
+    }
+
+    if (recommendedBy?.code) {
+        try {
+            await supabase.from("share_conversions").insert({
+                user_id: currentUser.id,
+                referrer_code: recommendedBy.code,
+                product_id: sharedProductId || null,
+                order_code: data.code
+            });
+        } catch (e) { console.warn("Share conversion:", e); }
     }
 
     currentOrder = {
@@ -1461,7 +1538,7 @@ window.captureScreenshot = () => {
 async function loadMyOrders() {
     if (!currentUser) { myOrders = []; return; }
     const { data, error } = await supabase.from("orders").select("id,code,status,total,created_at,distance,driver_name,address,client_name,client_phone,payment,items").eq("user_id", currentUser.id).order("created_at", { ascending: false }).limit(30);
-    if (error) return console.error(error);
+    if (error) { logSupabaseError("loadMyOrders", error); return; }
     myOrders = data || [];
     const active = myOrders.find(o => !["livree","annulee"].includes(o.status));
     if (active) {
@@ -1473,7 +1550,6 @@ async function loadMyOrders() {
         if ($("orderDistance")) $("orderDistance").textContent = `${active.distance || 0} km`;
         if ($("driverName")) $("driverName").textContent = active.driver_name || "À assigner";
         if ($("driverInitial")) $("driverInitial").textContent = (active.driver_name || "?")[0];
-        // Progression
         const steps = { nouvelle: 1, preparation: 1, route: 2, livree: 3 };
         const step = steps[active.status] || 0;
         if ($("progressBar")) $("progressBar").style.width = (step * 33) + "%";
@@ -1498,7 +1574,6 @@ window.loadMyOrders = loadMyOrders;
 window.trackOrder = () => { $("confirmationModal")?.classList.remove("active"); showSection("tracking"); };
 window.closeConfirmation = () => $("confirmationModal")?.classList.remove("active");
 
-/* ========== HISTORIQUE DES COMMANDES (nouveau) ========== */
 window.showOrderHistory = async () => {
     closeMenuIfOpen();
     if (!currentUser) { openAccountModal(); return alertUser("Connecte-toi pour voir tes commandes.", "error"); }
@@ -1550,14 +1625,15 @@ window.showOrderDetail = async (orderId) => {
 
     let itemsHtml = "";
     try {
-        const { data: items } = await supabase.from("order_items").select("product_name,quantity,unit_price,supplements").eq("order_id", orderId);
+        const { data: items, error } = await supabase.from("order_items").select("product_name,quantity,unit_price,supplements").eq("order_id", orderId);
+        if (error) logSupabaseError("showOrderDetail.items", error);
         if (items?.length) {
             itemsHtml = items.map(i => {
                 const sup = i.supplements?.length ? `<div style="font-size:10px;color:var(--yellow);">+ ${i.supplements.join(", ")}</div>` : "";
                 return `<div class="line"><span>${esc(i.product_name)} × ${i.quantity}${sup}</span><span>${money((i.unit_price || 0) * i.quantity)}</span></div>`;
             }).join("");
         }
-    } catch {}
+    } catch (e) { console.warn(e); }
 
     if (!itemsHtml && order.items) {
         try {
@@ -1637,7 +1713,8 @@ window.locateUser = () => {
 async function loadFavorites() {
     if (!currentUser) { favorites = []; return; }
     const { data, error } = await supabase.from("favorites").select("product_id").eq("user_id", currentUser.id);
-    if (!error) favorites = (data || []).map(r => r.product_id);
+    if (error) { logSupabaseError("loadFavorites", error); return; }
+    favorites = (data || []).map(r => r.product_id);
     if ($("favCount")) $("favCount").textContent = favorites.length;
 }
 window.toggleFavorite = async (id) => {
@@ -1646,13 +1723,12 @@ window.toggleFavorite = async (id) => {
     const q = ex ? supabase.from("favorites").delete().eq("user_id", currentUser.id).eq("product_id", id)
                  : supabase.from("favorites").insert({ user_id: currentUser.id, product_id: id });
     const { error } = await q;
-    if (error) return alertUser(error.message, "error");
+    if (error) { logSupabaseError("toggleFavorite", error); return alertUser(error.message, "error"); }
     await loadFavorites();
     renderProducts();
     if ($("favCount")) $("favCount").textContent = favorites.length;
 };
 
-/* ========== FAVORIS (modal complet — nouveau) ========== */
 window.showFavorites = () => {
     closeMenuIfOpen();
     if (!currentUser) { openAccountModal(); return alertUser("Connecte-toi pour voir tes favoris.", "error"); }
@@ -1691,6 +1767,144 @@ window.addFavoriteToCart = (id) => {
 };
 
 /* ========================================================================
+   PARTAGE / RECOMMANDATION
+   ======================================================================== */
+async function recordShare(productId, channel) {
+    const channelMap = { native: "other", view_referral: "other", qrcode: "qr" };
+    const allowed = new Set(["whatsapp", "facebook", "twitter", "instagram", "copy", "qr", "other"]);
+    const safeChannel = channelMap[channel] || channel;
+    const finalChannel = allowed.has(safeChannel) ? safeChannel : "other";
+    const { error } = await supabase.from("shares").insert({
+        user_id: currentUser?.id || null,
+        product_id: productId,
+        channel: finalChannel,
+        referrer_code: getMyReferralCode(),
+        referrer_name: getMyDisplayName()
+    });
+    if (error) console.warn("Share log:", error);
+}
+
+window.shareProduct = async (id) => {
+    const p = products.find(x => x.id === Number(id));
+    if (!p) return;
+    const url = buildShareUrl(p.id);
+    currentProduct = p;
+    await recordShare(p.id, "native");
+    if (navigator.share) {
+        try {
+            await navigator.share({ title: `${p.name} — H.D.S SHOP`, text: `${getMyDisplayName()} te recommande ce produit :`, url });
+            return;
+        } catch (e) { }
+    }
+    openShareModalForProduct(p);
+};
+window.shareProductDetail = () => currentProduct && window.shareProduct(currentProduct.id);
+
+function openShareModalForProduct(p) {
+    if (!p) return;
+    currentProduct = p;
+    const url = buildShareUrl(p.id);
+    if ($("shareProductInfo")) {
+        $("shareProductInfo").innerHTML = `
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;">
+                <img src="${esc(p.image || "")}" style="width:56px;height:56px;object-fit:contain;background:var(--card-hover);border-radius:8px;" onerror="this.src='https://via.placeholder.com/60?text=HDS'">
+                <div style="flex:1;"><div style="font-weight:800;font-size:13px;">${esc(p.name)}</div><div style="color:var(--yellow);font-weight:800;font-size:14px;margin-top:2px;">${money(p.price)}</div></div>
+            </div>`;
+    }
+    if ($("shareUrlBox")) {
+        $("shareUrlBox").textContent = url;
+        $("shareUrlBox").onclick = () => { navigator.clipboard?.writeText(url); alertUser("Lien copié.", "success"); };
+    }
+    $("shareModal")?.classList.add("active");
+}
+window.openShareModal = () => currentProduct && openShareModalForProduct(currentProduct);
+window.closeShareModal = () => $("shareModal")?.classList.remove("active");
+
+window.shareCopy = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await navigator.clipboard?.writeText(url);
+    await recordShare(currentProduct.id, "copy");
+    alertUser("Lien copié avec ton code.", "success");
+};
+window.shareWhatsApp = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    const msg = `🎁 ${getMyDisplayName()} te recommande "${currentProduct.name}" (${money(currentProduct.price)}) chez H.D.S SHOP !\n\n👉 Commande ici : ${url}`;
+    await recordShare(currentProduct.id, "whatsapp");
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
+};
+window.shareFacebook = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await recordShare(currentProduct.id, "facebook");
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
+};
+window.shareTwitter = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await recordShare(currentProduct.id, "twitter");
+    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent("🎁 " + getMyDisplayName() + " te recommande " + currentProduct.name + " chez H.D.S SHOP")}`, "_blank");
+};
+window.shareInstagram = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await recordShare(currentProduct.id, "instagram");
+    await navigator.clipboard?.writeText(url);
+    alertUser("Lien copié avec ton code. Colle-le dans ta story Insta !", "success");
+};
+window.shareQRCode = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await recordShare(currentProduct.id, "qrcode");
+    $("qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(url)}&bgcolor=FFFFFF&color=000000&margin=10`;
+    $("qrProductName").textContent = currentProduct.name;
+    $("qrProductUrl").textContent = url;
+    $("qrImage").dataset.url = $("qrImage").src;
+    $("qrImage").dataset.name = `QR-HDS-${currentProduct.id}.png`;
+    closeShareModal();
+    $("qrModal").classList.add("active");
+};
+window.closeQrModal = () => $("qrModal")?.classList.remove("active");
+window.downloadQR = async () => {
+    const img = $("qrImage");
+    try {
+        const r = await fetch(img.dataset.url);
+        const b = await r.blob();
+        const u = URL.createObjectURL(b);
+        const a = document.createElement("a");
+        a.href = u; a.download = img.dataset.name || "QR.png";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(u), 1000);
+    } catch { window.open(img.dataset.url, "_blank"); }
+};
+
+function showRecommendBanner(referrerName, product) {
+    recommendedBy = { name: referrerName, code: new URLSearchParams(location.search).get("ref") || null };
+    sharedProductId = product.id;
+    if ($("recommendBanner")) {
+        $("recommendBanner").style.display = "flex";
+        if ($("recoName")) $("recoName").textContent = `🎁 ${referrerName} te recommande ce produit !`;
+        if ($("recoSub")) $("recoSub").textContent = `${product.name} — ${money(product.price)}`;
+    }
+}
+window.addRecommendedToCart = () => {
+    if (!sharedProductId) return;
+    const p = products.find(x => x.id === Number(sharedProductId));
+    if (!p) return;
+    addProductToCart(p, 1);
+    alertUser("Produit ajouté au panier.", "success");
+    bumpCartButton();
+    if ($("recommendBanner")) $("recommendBanner").style.display = "none";
+};
+window.reshareRecommended = () => {
+    if (!sharedProductId) return;
+    const p = products.find(x => x.id === Number(sharedProductId));
+    if (!p) return;
+    shareProduct(p.id);
+};
+
+/* ========================================================================
    ADMIN PANEL
    ======================================================================== */
 function openAdminPanel() {
@@ -1710,12 +1924,13 @@ window.switchAdminTab = async (tab) => {
     if (tab === "orders") await adminRefreshOrders();
     if (tab === "products") await adminLoadProducts();
     if (tab === "drivers") await adminLoadDrivers();
+    if (tab === "shares") await adminLoadShares();
 };
 
 window.adminRefreshOrders = async () => {
     if (!isAdmin) return;
     const { data, error } = await supabase.from("orders").select("id,code,client_name,client_phone,address,status,total,created_at,driver_name").order("created_at", { ascending: false }).limit(50);
-    if (error) return alertUser(error.message, "error");
+    if (error) { logSupabaseError("adminRefreshOrders", error); return alertUser(error.message, "error"); }
     const list = $("adminOrdersList");
     if (!list) return;
     if (!data?.length) { list.innerHTML = '<div class="empty-state">Aucune commande.</div>'; return; }
@@ -1742,15 +1957,18 @@ window.adminSetOrderStatus = async (id, status) => {
     const patch = { status, updated_at: new Date().toISOString() };
     if (status === "livree") patch.delivered_at = new Date().toISOString();
     const { error } = await supabase.from("orders").update(patch).eq("id", id);
-    if (error) return alertUser(error.message, "error");
+    if (error) { logSupabaseError("adminSetOrderStatus", error); return alertUser(error.message, "error"); }
     alertUser("Statut mis à jour.", "success");
     adminRefreshOrders();
 };
 
 window.adminLoadProducts = async () => {
     if (!isAdmin) return;
-    const { data, error } = await supabase.from("products").select("id,name,price,category,stock,is_active,category_slug,image,description,popular,coming_soon,specs").order("name");
-    if (error) return alertUser(error.message, "error");
+    const { data, error } = await supabase.from("products").select("*").order("name");
+    if (error) {
+        logSupabaseError("adminLoadProducts", error);
+        return alertUser(`Accès refusé (${error.code || "?"}) : ${error.message}`, "error");
+    }
     const list = $("adminProductList");
     if (!list) return;
     if (!data?.length) { list.innerHTML = '<div class="empty-state">Aucun produit.</div>'; return; }
@@ -1774,7 +1992,7 @@ window.adminLoadProducts = async () => {
 window.adminEditProduct = async (id) => {
     if (!isAdmin) return;
     const { data, error } = await supabase.from("products").select("*").eq("id", id).single();
-    if (error) return alertUser(error.message, "error");
+    if (error) { logSupabaseError("adminEditProduct", error); return alertUser(error.message, "error"); }
     $("adminEditId").value = data.id;
     $("adminPName").value = data.name || "";
     $("adminPPrice").value = data.price || "";
@@ -1796,7 +2014,10 @@ window.adminShowAddProduct = () => {
 };
 
 window.adminSaveProduct = async () => {
-    if (!isAdmin) return alertUser("Accès refusé.", "error");
+    if (!isAdmin) {
+        alertUser("Écriture réservée aux administrateurs (RLS).", "error");
+        return;
+    }
     const id = $("adminEditId").value;
     const specsRaw = $("adminPSpecs").value.trim();
     const payload = {
@@ -1814,8 +2035,19 @@ window.adminSaveProduct = async () => {
         updated_at: new Date().toISOString()
     };
     if (!payload.name || !Number.isFinite(payload.price) || payload.price < 0) return alertUser("Nom/prix invalide.", "error");
-    const result = id ? await supabase.from("products").update(payload).eq("id", id) : await supabase.from("products").insert(payload);
-    if (result.error) return alertUser(result.error.message, "error");
+
+    const result = id
+        ? await supabase.from("products").update(payload).eq("id", id)
+        : await supabase.from("products").insert(payload);
+
+    if (result.error) {
+        logSupabaseError("adminSaveProduct", result.error);
+        const code = result.error.code || "?";
+        if (code === "42501" || /row-level security|permission/i.test(result.error.message)) {
+            return alertUser(`RLS bloque l'écriture (${code}). Vérifie que ton compte est dans admin_users.`, "error");
+        }
+        return alertUser(`Erreur (${code}) : ${result.error.message}`, "error");
+    }
     alertUser("Produit enregistré.", "success");
     $("adminProductForm").style.display = "none";
     await loadProducts();
@@ -1823,50 +2055,115 @@ window.adminSaveProduct = async () => {
 };
 
 window.adminDisableProduct = async (id) => {
-    if (!isAdmin) return;
+    if (!isAdmin) return alertUser("Accès refusé.", "error");
     if (!confirm("Masquer ce produit ?")) return;
     const { error } = await supabase.from("products").update({ is_active: false, updated_at: new Date().toISOString() }).eq("id", id);
-    if (error) return alertUser(error.message, "error");
+    if (error) { logSupabaseError("adminDisableProduct", error); return alertUser(error.message, "error"); }
     await loadProducts();
     await adminLoadProducts();
 };
 window.adminCancelForm = () => $("adminProductForm").style.display = "none";
 
 /* ========================================================================
-   ADMIN : LIVREURS
+   ADMIN : PARTAGES
    ======================================================================== */
-function generateDriverCode() {
-    return "HDS" + Math.floor(1000 + Math.random() * 9000);
-}
+window.adminLoadShares = async () => {
+    if (!isAdmin) return;
+    const list = $("adminSharesList");
+    if (!list) return;
+    list.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>';
+    const { data, error } = await supabase.from("shares")
+        .select("id,product_id,channel,referrer_code,referrer_name,created_at")
+        .order("created_at", { ascending: false }).limit(80);
+    if (error) {
+        logSupabaseError("adminLoadShares", error);
+        list.innerHTML = `<div class="empty-state">Erreur (${esc(error.code || "?")}) : ${esc(error.message)}</div>`;
+        return;
+    }
+    if (!data?.length) { list.innerHTML = '<div class="empty-state">Aucun partage enregistré.</div>'; return; }
 
-window.adminInviteDriver = async () => {
-    if (!isAdmin) return alertUser("Accès refusé.", "error");
-    const code = generateDriverCode();
-    const { data, error } = await supabase.from("driver_invitations").insert({ code }).select().single();
-    if (error) return alertUser(error.message, "error");
-    const msg = `Bonjour ! Tu es invité(e) à rejoindre l'équipe H.D.S SHOP.\n\n🔑 Ton code : ${code}\n\n📱 Comment faire :\n1. Ouvre le site H.D.S SHOP\n2. Menu → Espace Livreur\n3. Entre ton prénom + ce code\n4. Tu verras toutes les commandes à livrer ✅`;
-    const overlay = document.createElement("div");
-    overlay.className = "modal-overlay active";
-    overlay.innerHTML = `
-        <div class="modal">
-            <div class="modal-header"><div class="modal-title">🎉 Code généré</div><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">×</button></div>
-            <div class="modal-body" style="text-align:center;">
-                <div style="font-size:13px;color:var(--text-dim);margin-bottom:10px;">Envoie ce code au livreur</div>
-                <div style="font-size:28px;background:rgba(255,215,0,0.15);padding:18px;border-radius:12px;margin:16px 0;color:var(--yellow);font-weight:900;letter-spacing:2px;">${code}</div>
-                <button class="checkout-button" onclick="navigator.clipboard.writeText('${code}').then(()=>alertUser('📋 Code copié !','success'))">📋 Copier</button>
-                <a href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" class="whatsapp-checkout-btn">📱 Envoyer WhatsApp</a>
+    const totalShares = data.length;
+    const byChannel = data.reduce((acc, s) => { acc[s.channel || "?"] = (acc[s.channel || "?"] || 0) + 1; return acc; }, {});
+    const byReferrer = data.reduce((acc, s) => { const k = s.referrer_name || s.referrer_code || "?"; acc[k] = (acc[k] || 0) + 1; return acc; }, {});
+    const topSharers = Object.entries(byReferrer).sort((a,b) => b[1]-a[1]).slice(0, 5);
+
+    let html = `<div class="info-box" style="margin-bottom:10px;"><i class="fas fa-chart-bar"></i> <strong>${totalShares}</strong> partages enregistrés.</div>`;
+
+    html += `<div style="font-weight:800;font-size:12px;margin:10px 0 6px;">📊 Par canal</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:12px;">`;
+    Object.entries(byChannel).forEach(([ch, n]) => {
+        html += `<div style="background:var(--card-hover);padding:8px;border-radius:8px;font-size:11.5px;border:1px solid var(--border);"><strong style="color:var(--yellow);">${n}</strong> ${esc(ch)}</div>`;
+    });
+    html += `</div>`;
+
+    if (topSharers.length) {
+        html += `<div style="font-weight:800;font-size:12px;margin:10px 0 6px;">🏆 Top partageurs</div><div style="margin-bottom:12px;">`;
+        topSharers.forEach(([name, n]) => {
+            html += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border);font-size:12px;"><span>👤 ${esc(name)}</span><strong style="color:var(--green);">${n} partages</strong></div>`;
+        });
+        html += `</div>`;
+    }
+
+    html += `<div style="font-weight:800;font-size:12px;margin:10px 0 6px;">📜 Historique récent</div>`;
+    data.slice(0, 25).forEach(s => {
+        const prod = products.find(p => p.id === s.product_id);
+        const date = s.created_at ? new Date(s.created_at).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "";
+        html += `<div class="admin-product-item">
+            <div class="admin-product-info">
+                <strong>${esc(prod?.name || "Produit #" + s.product_id)}</strong>
+                <span>${esc(s.referrer_name || "Anonyme")} • ${esc(s.channel || "?")} • ${date}</span>
             </div>
         </div>`;
-    document.body.appendChild(overlay);
+    });
+    list.innerHTML = html;
+};
+
+/* ========================================================================
+   ADMIN : LIVREURS
+   ======================================================================== */
+window.adminInviteDriver = async () => {
+    if (!isAdmin) return alertUser("Accès refusé.", "error");
+    const name = prompt("Prénom du livreur :")?.trim();
+    if (!name) return;
+
+    const { data: driver, error: driverError } = await supabase
+        .from("delivery_drivers")
+        .insert({ name, status: "dispo", is_active: true })
+        .select("id,name")
+        .single();
+
+    if (driverError) {
+        logSupabaseError("adminInviteDriver.createDriver", driverError);
+        return alertUser(driverError.message, "error");
+    }
+
+    const { data: code, error: inviteError } = await supabase.rpc(
+        "create_driver_invite",
+        { p_driver_id: driver.id, p_expires_hours: 48 }
+    );
+
+    if (inviteError) {
+        logSupabaseError("adminInviteDriver.createInvite", inviteError);
+        await supabase.from("delivery_drivers").update({ is_active: false }).eq("id", driver.id);
+        return alertUser(inviteError.message, "error");
+    }
+
+    const message =
+        `Bonjour ${driver.name}, voici ton code d'invitation H.D.S SHOP : ${code}. ` +
+        `Connecte-toi ou crée ton compte sur le site, puis saisis ce code dans « Espace Livreur ».`;
+
+    alertUser(`Invitation créée. Code : ${code}`, "success");
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank");
     adminLoadDrivers();
 };
 
 window.adminLoadDrivers = async () => {
     if (!isAdmin) return;
     const [inv, drv] = await Promise.all([
-        supabase.from("driver_invitations").select("*").order("created_at", { ascending: false }),
+        supabase.from("driver_invite_codes").select("*").order("created_at", { ascending: false }),
         supabase.from("delivery_drivers").select("*").order("created_at", { ascending: false })
     ]);
+    if (inv.error) logSupabaseError("adminLoadDrivers.invites", inv.error);
+    if (drv.error) logSupabaseError("adminLoadDrivers.drivers", drv.error);
     const list = $("adminDriversList");
     if (!list) return;
     let html = "";
@@ -1876,21 +2173,28 @@ window.adminLoadDrivers = async () => {
             <div class="livreur-item">
                 <div class="avatar">${esc((d.name || "?")[0])}</div>
                 <div class="infos"><strong>${esc(d.name)}</strong><span>${esc(d.phone || "")}</span></div>
-                <span class="statut-badge ${d.status === "disponible" ? "dispo" : d.status === "hors_ligne" ? "offline" : "occupe"}">${esc(d.status)}</span>
+                <span class="statut-badge ${d.status === "dispo" ? "dispo" : d.status === "offline" ? "offline" : "occupe"}">${esc(d.status)}</span>
             </div>`).join("");
         html += `</div>`;
     }
     if (inv.data?.length) {
         html += `<div style="font-weight:700;font-size:12px;color:var(--yellow);margin:12px 0 6px;">🔑 Invitations</div><div class="livreur-liste">`;
-        html += inv.data.map(i => `
+        html += inv.data.map(i => {
+            const used = i.used_at ? "used" : "actif";
+            return `
             <div class="livreur-item">
                 <div class="avatar">🔑</div>
-                <div class="infos"><strong style="color:var(--yellow);">${esc(i.code)}</strong><span>${i.driver_name ? "Utilisé par " + esc(i.driver_name) : "En attente"}</span></div>
-                <span class="statut-badge ${i.status === "used" ? "dispo" : "occupe"}">${esc(i.status)}</span>
-            </div>`).join("");
+                <div class="infos"><strong style="color:var(--yellow);">${esc(i.code_hash || i.code || "(masqué)")}</strong><span>${esc(i.driver_id ? "Livreur #" + i.driver_id : "")}</span></div>
+                <span class="statut-badge ${used === "used" ? "dispo" : "occupe"}">${used}</span>
+            </div>`;
+        }).join("");
         html += `</div>`;
     }
-    if (!html) html = '<div class="empty-state">Aucun livreur. Clique sur "Inviter".</div>';
+    if (inv.error && drv.error) {
+        html = `<div class="empty-state">Erreur lecture : ${esc(inv.error.message || drv.error.message)}</div>`;
+    } else if (!html) {
+        html = '<div class="empty-state">Aucun livreur. Clique sur "Inviter".</div>';
+    }
     list.innerHTML = html;
 };
 
@@ -1905,30 +2209,24 @@ window.openDriverLogin = () => {
 window.closeDriverLogin = () => $("driverLoginModal")?.classList.remove("active");
 
 window.driverLogin = async () => {
-    const name = $("driverNameInput")?.value.trim();
-    const code = $("driverCodeInput")?.value.trim().toUpperCase();
-    if (!name) return alertUser("Entre ton prénom.", "error");
-    if (!code) return alertUser("Entre le code.", "error");
-    const { data: inv, error } = await supabase.from("driver_invitations").select("*").eq("code", code).maybeSingle();
-    if (error) return alertUser(error.message, "error");
-    if (!inv) return alertUser("Code invalide.", "error");
-    if (inv.status === "used" && inv.driver_name && inv.driver_name !== name) return alertUser("Code déjà utilisé.", "error");
-
-    await supabase.from("driver_invitations").update({ driver_name: name, status: "used", used_at: new Date().toISOString() }).eq("id", inv.id);
-
-    let { data: driver } = await supabase.from("delivery_drivers").select("*").eq("name", name).maybeSingle();
-    if (!driver) {
-        const { data: newDriver, error: errDriver } = await supabase.from("delivery_drivers").insert({ name, status: "disponible", auth_user_id: currentUser?.id || null }).select().single();
-        if (errDriver) return alertUser(errDriver.message, "error");
-        driver = newDriver;
+    const code = $("driverCodeInput")?.value.trim();
+    if (!code) return alertUser("Entre le code d'invitation.", "error");
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+        closeDriverLogin();
+        openAccountModal();
+        return alertUser("Connecte-toi ou crée un compte avant d'utiliser le code.");
     }
-
-    currentDriver = driver;
-    localStorage.setItem("hds_driver", JSON.stringify(driver));
+    const { error } = await supabase.rpc("claim_driver_invite", { p_code: code });
+    if (error) return alertUser(error.message, "error");
+    await refreshAuth();
+    if (!currentDriver) {
+        return alertUser("Invitation acceptée, mais profil livreur introuvable.", "error");
+    }
     closeDriverLogin();
     updateAccountButton();
-    alertUser(`🛵 Bienvenue ${name} !`, "success");
-    setTimeout(openDriverInterface, 300);
+    alertUser(`Bienvenue ${currentDriver.name} !`, "success");
+    openDriverInterface();
 };
 
 window.openDriverInterface = () => {
@@ -1943,7 +2241,7 @@ window.driverRefreshOrders = async () => {
     const list = $("driverOrdersList");
     if (!list) return;
     const { data, error } = await supabase.from("orders").select("id,code,client_name,client_phone,address,status,total,distance,driver_name").in("status", ["nouvelle","preparation","route"]).order("created_at", { ascending: false }).limit(30);
-    if (error) return alertUser(error.message, "error");
+    if (error) { logSupabaseError("driverRefreshOrders", error); return alertUser(error.message, "error"); }
     if (!data?.length) { list.innerHTML = '<div class="empty-state">Aucune course.</div>'; return; }
     list.innerHTML = data.map(o => {
         const isMine = o.driver_name === currentDriver.name;
@@ -1966,24 +2264,28 @@ window.driverRefreshOrders = async () => {
 };
 
 window.driverAccept = async (id) => {
-    const { error } = await supabase.from("orders").update({ status: "preparation", driver_name: currentDriver.name, updated_at: new Date().toISOString() }).eq("id", id);
+    const { error } = await supabase.rpc("driver_accept_order", { p_order_id: id });
     if (error) return alertUser(error.message, "error");
-    await supabase.from("delivery_drivers").update({ status: "en_course" }).eq("id", currentDriver.id);
     alertUser("Course acceptée.", "success");
-    driverRefreshOrders();
+    await driverRefreshOrders();
 };
+
 window.driverStart = async (id) => {
-    const { error } = await supabase.from("orders").update({ status: "route", updated_at: new Date().toISOString() }).eq("id", id);
+    const { error } = await supabase.rpc("driver_set_order_status", {
+        p_order_id: id, p_status: "route", p_latitude: null, p_longitude: null
+    });
     if (error) return alertUser(error.message, "error");
     alertUser("En route !", "success");
-    driverRefreshOrders();
+    await driverRefreshOrders();
 };
+
 window.driverDeliver = async (id) => {
-    const { error } = await supabase.from("orders").update({ status: "livree", delivered_at: new Date().toISOString(), updated_at: new Date().toISOString() }).eq("id", id);
+    const { error } = await supabase.rpc("driver_set_order_status", {
+        p_order_id: id, p_status: "livree", p_latitude: null, p_longitude: null
+    });
     if (error) return alertUser(error.message, "error");
-    await supabase.from("delivery_drivers").update({ status: "disponible" }).eq("id", currentDriver.id);
     alertUser("Livraison confirmée.", "success");
-    driverRefreshOrders();
+    await driverRefreshOrders();
 };
 
 window.driverLogout = () => {
@@ -2001,9 +2303,8 @@ window.driverUpdateLocation = () => {
     navigator.geolocation.getCurrentPosition(async pos => {
         const lat = pos.coords.latitude, lng = pos.coords.longitude;
         if (c) c.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-        if (currentDriver) {
-            await supabase.from("delivery_drivers").update({ latitude: lat, longitude: lng, last_seen: new Date().toISOString() }).eq("id", currentDriver.id);
-        }
+        const { error } = await supabase.rpc("record_driver_location", { p_latitude: lat, p_longitude: lng });
+        if (error) logSupabaseError("driverUpdateLocation", error);
         try {
             const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fr`);
             const j = await r.json();
@@ -2013,48 +2314,8 @@ window.driverUpdateLocation = () => {
 };
 
 /* ========================================================================
-   PARTAGE / MENU / DIVERS
+   MENU / DIVERS
    ======================================================================== */
-window.shareProduct = async (id) => {
-    const p = products.find(x => x.id === Number(id));
-    if (!p) return;
-    const url = `${location.origin}${location.pathname}?p=${p.id}`;
-    if (currentUser) await supabase.from("shares").insert({ user_id: currentUser.id, product_id: p.id, channel: "copy" });
-    if (navigator.share) { try { await navigator.share({ title: p.name, text: `${p.name} — ${money(p.price)}`, url }); } catch {} }
-    else { await navigator.clipboard?.writeText(url); alertUser("Lien copié.", "success"); }
-};
-window.shareProductDetail = () => currentProduct && window.shareProduct(currentProduct.id);
-window.shareCopy = () => currentProduct && window.shareProduct(currentProduct.id);
-window.shareWhatsApp = () => currentProduct && window.open(`https://wa.me/?text=${encodeURIComponent(location.origin + location.pathname + "?p=" + currentProduct.id + " — " + currentProduct.name)}`, "_blank");
-window.shareFacebook = () => currentProduct && window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.origin + location.pathname + "?p=" + currentProduct.id)}`, "_blank");
-window.shareTwitter = () => currentProduct && window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(location.origin + location.pathname + "?p=" + currentProduct.id)}&text=${encodeURIComponent(currentProduct.name)}`, "_blank");
-window.shareInstagram = () => { if (currentProduct) { navigator.clipboard?.writeText(location.origin + location.pathname + "?p=" + currentProduct.id); alertUser("Lien copié pour Instagram.", "success"); } };
-window.shareQRCode = () => {
-    if (!currentProduct) return;
-    const url = `${location.origin}${location.pathname}?p=${currentProduct.id}`;
-    $("qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(url)}&bgcolor=FFFFFF&color=000000&margin=10`;
-    $("qrProductName").textContent = currentProduct.name;
-    $("qrProductUrl").textContent = url;
-    $("qrImage").dataset.url = $("qrImage").src;
-    $("qrImage").dataset.name = `QR-HDS-${currentProduct.id}.png`;
-    closeShareModal();
-    $("qrModal").classList.add("active");
-};
-window.closeShareModal = () => $("shareModal")?.classList.remove("active");
-window.closeQrModal = () => $("qrModal")?.classList.remove("active");
-window.downloadQR = async () => {
-    const img = $("qrImage");
-    try {
-        const r = await fetch(img.dataset.url);
-        const b = await r.blob();
-        const u = URL.createObjectURL(b);
-        const a = document.createElement("a");
-        a.href = u; a.download = img.dataset.name || "QR.png";
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(u), 1000);
-    } catch { window.open(img.dataset.url, "_blank"); }
-};
-
 window.toggleTheme = () => {
     document.body.classList.toggle("light-mode");
     localStorage.setItem("hds_theme", document.body.classList.contains("light-mode") ? "light" : "dark");
@@ -2072,23 +2333,39 @@ function closeMenuIfOpen() { $("verticalMenu")?.classList.remove("active"); $("m
 window.clearSearch = () => { if ($("searchInput")) $("searchInput").value = ""; searchQuery = ""; renderProducts(); };
 
 window.showLoyaltyInfo = () => { closeMenuIfOpen(); alertUser(`🎁 Tes points fidélité : ${currentProfile?.loyalty_points || 0}\n100 points = 10€`); };
-window.showReferralInfo = () => { closeMenuIfOpen(); alertUser(`🤝 Code de parrainage : ${currentProfile?.referral_code || "Crée un compte pour l'obtenir"}`); };
+window.showReferralInfo = () => {
+    closeMenuIfOpen();
+    const code = currentProfile?.referral_code || getMyReferralCode();
+    alertUser(`🤝 Ton code de parrainage : ${code}\n\nPartage un produit, ton code sera inclus automatiquement dans le lien !`);
+};
 
 /* ========================================================================
    URL PARTAGÉE
    ======================================================================== */
 function handleSharedProductUrl() {
-    const p = new URLSearchParams(location.search).get("p");
+    const params = new URLSearchParams(location.search);
+    const p = params.get("p");
     if (!p) return;
     const product = products.find(x => x.id === Number(p));
-    if (product) {
-        $("sharedBannerText").textContent = product.name;
-        $("sharedBanner").style.display = "flex";
-        setTimeout(() => openProductDetail(product.id), 200);
+    if (!product) return;
+
+    const refCode = params.get("ref");
+    const refName = params.get("n") ? decodeURIComponent(params.get("n")) : null;
+
+    $("sharedBannerText").textContent = product.name;
+    $("sharedBanner").style.display = "flex";
+
+    if (refCode) {
+        const displayName = refName || "Un ami";
+        showRecommendBanner(displayName, product);
+        recordShare(product.id, "view_referral").catch(() => {});
     }
+
+    setTimeout(() => openProductDetail(product.id), 200);
 }
 window.backToShop = () => {
     $("sharedBanner").style.display = "none";
+    if ($("recommendBanner")) $("recommendBanner").style.display = "none";
     history.replaceState(null, '', location.pathname);
     closeProductModal();
     showSection("products");
