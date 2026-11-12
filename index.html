@@ -233,6 +233,7 @@ input,textarea,select{font-family:inherit}
 .admin-product-info{flex:1;min-width:0}
 .admin-product-info strong{display:block;font-size:12.5px;margin-bottom:2px}
 .admin-product-info span{font-size:10.5px;color:var(--text-dim)}
+.admin-product-actions{display:flex;gap:4px}
 .admin-product-actions button{background:var(--card-hover);border:1px solid var(--border);color:var(--text);padding:5px 9px;border-radius:var(--r-sm);font-size:11px;font-weight:600}
 .admin-product-actions .delete-btn{background:rgba(239,68,68,0.15);color:var(--red);border-color:rgba(239,68,68,0.3)}
 .admin-product-actions .edit-btn{background:rgba(255,215,0,0.15);color:var(--yellow);border-color:rgba(255,215,0,0.3)}
@@ -301,7 +302,15 @@ input,textarea,select{font-family:inherit}
 .driver-location-box .coords{font-family:monospace;color:var(--blue);font-weight:700;font-size:10.5px;margin-top:4px}
 .empty-state{text-align:center;padding:30px 20px;color:var(--text-dim);font-size:12.5px}
 .empty-state i{font-size:38px;opacity:0.4;margin-bottom:10px;display:block}
-@media (max-width:380px){.products-grid{grid-template-columns:1fr;gap:8px}.header-title{font-size:18px}.modal{max-height:92vh}.share-grid{grid-template-columns:repeat(2,1fr)}.map-container{height:300px}}
+.notif-banner{position:fixed;top:16px;right:16px;background:linear-gradient(135deg,var(--orange),#DC2626);color:white;padding:14px 18px;border-radius:var(--r-md);z-index:6000;display:none;align-items:center;gap:12px;font-weight:700;box-shadow:0 12px 32px rgba(249,115,22,0.5);font-size:13px;max-width:340px;animation:notifSlide 0.4s ease;cursor:pointer}
+.notif-banner.visible{display:flex}
+@keyframes notifSlide{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}
+.notif-banner .notif-icon{width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;animation:notifPulse 1s infinite}
+@keyframes notifPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.notif-banner .notif-body{flex:1;min-width:0}
+.notif-banner .notif-title{font-size:12px;opacity:0.9;margin-bottom:2px;font-weight:600}
+.notif-banner .notif-text{font-size:13.5px;font-weight:800}
+@media (max-width:380px){.products-grid{grid-template-columns:1fr;gap:8px}.header-title{font-size:18px}.modal{max-height:92vh}.share-grid{grid-template-columns:repeat(2,1fr)}.map-container{height:300px}.notif-banner{top:8px;right:8px;left:8px;max-width:none;font-size:12px}}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:3px}
@@ -311,6 +320,15 @@ input,textarea,select{font-family:inherit}
 
 <div class="alert-modal" id="alertModal" role="alert" aria-live="polite">
 <i class="fas fa-check-circle" id="alertIcon"></i><span id="alertMessage"></span>
+</div>
+
+<!-- NOTIF COMMANDE (bandeau sonore) -->
+<div class="notif-banner" id="orderNotifBanner" onclick="onNotifClick()">
+<div class="notif-icon"><i class="fas fa-bell"></i></div>
+<div class="notif-body">
+<div class="notif-title" id="orderNotifTitle">🔔 Nouvelle commande !</div>
+<div class="notif-text" id="orderNotifText">Commande reçue</div>
+</div>
 </div>
 
 <div class="main-container">
@@ -496,6 +514,7 @@ input,textarea,select{font-family:inherit}
 <div class="menu-item" onclick="showReferralInfo()"><i class="fas fa-user-friends"></i><span>Parrainage</span><span class="menu-item-value">5€</span></div>
 <div class="menu-item" onclick="showOrderHistory()"><i class="fas fa-history"></i><span>Mes commandes</span><span class="menu-item-value" id="historyCount">0</span></div>
 <div class="menu-item" onclick="showFavorites()"><i class="fas fa-heart"></i><span>Favoris</span><span class="menu-item-value" id="favCount">0</span></div>
+<div class="menu-item" onclick="enableNotifications()"><i class="fas fa-bell"></i><span>Activer notifications</span><span class="menu-item-value" id="notifStatus">🔕</span></div>
 </div>
 </aside>
 
@@ -586,6 +605,7 @@ input,textarea,select{font-family:inherit}
 </div>
 <button class="checkout-button orange" id="adminPanelBtn" style="display:none;" onclick="openAdminPanel()">🛡️ Ouvrir le Panneau Admin</button>
 <button class="checkout-button blue" id="driverPanelBtn" style="display:none;" onclick="openDriverInterface()">🛵 Ouvrir l'Espace Livreur</button>
+<button class="checkout-button green" onclick="enableNotifications()">🔔 Activer les notifications</button>
 <button class="checkout-button blue" onclick="editClientProfile()">✏️ Modifier mes infos</button>
 <button class="checkout-button secondary" onclick="showOrderHistory()">📋 Historique des commandes</button>
 <button class="checkout-button secondary" onclick="showFavorites()">❤️ Mes favoris</button>
@@ -740,7 +760,17 @@ input,textarea,select{font-family:inherit}
 <option value="snack">Snack</option><option value="boissons">Boissons</option>
 <option value="tabac">Tabac</option><option value="accessoires">Accessoires</option>
 </select>
-<label>Image (URL)</label><input type="text" id="adminPImage">
+<label>📷 Image du produit</label>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<input type="file" id="adminPImageFile" accept="image/*" 
+       style="padding:9px 11px;background:var(--card-hover);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-size:12.5px;">
+<div style="font-size:10.5px;color:var(--text-dim);text-align:center;">— OU —</div>
+<input type="text" id="adminPImage" placeholder="Coller une URL d'image (https://...)">
+</div>
+<div id="adminPImagePreview" style="display:none;margin-top:10px;text-align:center;">
+<img id="adminPImagePreviewImg" src="" style="max-width:120px;max-height:120px;object-fit:contain;background:var(--card-hover);border-radius:var(--r-sm);border:1px solid var(--border);padding:4px;">
+<div id="adminPImageUploadStatus" style="font-size:11px;color:var(--text-dim);margin-top:6px;"></div>
+</div>
 <label>Description</label><textarea id="adminPDesc" rows="2"></textarea>
 <label>Spécifications (séparées par |)</label><input type="text" id="adminPSpecs">
 <label>Populaire</label><select id="adminPPopular"><option value="false">Non</option><option value="true">Oui</option></select>
@@ -796,6 +826,7 @@ input,textarea,select{font-family:inherit}
 <div class="coords" id="driverCoords">Non localisé</div>
 <div style="font-size:10.5px;color:var(--text-dim);margin-top:6px;" id="driverAddress">Clique sur 🔄 pour actualiser</div>
 </div>
+<button class="checkout-button green" onclick="enableNotifications()" style="margin-bottom:10px;font-size:12px;">🔔 Activer les notifications sonores</button>
 <div style="font-weight:800;font-size:13px;margin-bottom:10px;"><i class="fas fa-clipboard-list" style="color:var(--yellow);"></i> Mes courses</div>
 <div id="driverOrdersList"></div>
 <button class="checkout-button secondary" onclick="driverRefreshOrders()" style="margin-top:10px;font-size:12px;">🔄 Rafraîchir</button>
@@ -839,6 +870,12 @@ let currentOrder = null;
 let myOrders = [];
 let recommendedBy = null;
 let sharedProductId = null;
+let adminUploadedImageUrl = null;
+let audioCtx = null;
+let notifPermission = (typeof Notification !== "undefined") ? Notification.permission : "denied";
+let realtimeChannel = null;
+let lastSeenOrderId = null;
+let notifClickTarget = null;
 
 const RESTAURANT_LAT = 43.3236041;
 const RESTAURANT_LNG = 5.3870093;
@@ -853,7 +890,7 @@ function sanitize(str) {
     return d.innerHTML;
 }
 function isValidPhone(phone) {
-    return /^(?:\+33|0)[1-9](?:[\s.-]?\d{2}){4}$/.test(String(phone).replace(/\s/g, ""));
+    return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(phone).replace(/\s/g, ""));
 }
 function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371;
@@ -900,6 +937,121 @@ function alertUser(text, type = "default") {
 }
 
 /* ========================================================================
+   NOTIFICATIONS SONORES (style Samsung/Android)
+   ======================================================================== */
+function unlockAudio() {
+    try {
+        if (!audioCtx) {
+            const Ctx = window.AudioContext || window.webkitAudioContext;
+            if (Ctx) audioCtx = new Ctx();
+        }
+        if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+    } catch (e) { console.warn("Audio unlock:", e); }
+}
+document.addEventListener("click", unlockAudio, { once: true });
+document.addEventListener("touchstart", unlockAudio, { once: true });
+
+function playNotifSound() {
+    try {
+        unlockAudio();
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const playTone = (freq, start, dur, vol = 0.18, type = "sine") => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0, now + start);
+            gain.gain.linearRampToValueAtTime(vol, now + start + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + start + dur);
+            osc.connect(gain).connect(audioCtx.destination);
+            osc.start(now + start);
+            osc.stop(now + start + dur + 0.05);
+        };
+        playTone(1318.51, 0, 0.14, 0.20, "sine");
+        playTone(1760.00, 0.13, 0.14, 0.20, "sine");
+        playTone(1567.98, 0.28, 0.10, 0.15, "sine");
+        playTone(1760.00, 0.40, 0.10, 0.15, "sine");
+        playTone(2093.00, 0.52, 0.22, 0.18, "sine");
+    } catch (e) { console.warn("Notif sound:", e); }
+}
+
+function vibrateNotif() {
+    try {
+        if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400]);
+    } catch (e) {}
+}
+
+async function requestNotifPermission() {
+    if (typeof Notification === "undefined") return "denied";
+    if (Notification.permission === "granted") return "granted";
+    try {
+        const perm = await Notification.requestPermission();
+        notifPermission = perm;
+        return perm;
+    } catch (e) { return "denied"; }
+}
+
+window.enableNotifications = async () => {
+    const perm = await requestNotifPermission();
+    unlockAudio();
+    if (perm === "granted") {
+        notifPermission = "granted";
+        if ($("notifStatus")) $("notifStatus").textContent = "🔔";
+        alertUser("🔔 Notifications activées ! Tu recevras les alertes.", "success");
+        if (Notification.permission === "granted") {
+            new Notification("H.D.S SHOP", { body: "Notifications activées ✓", icon: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png" });
+        }
+    } else if (perm === "denied") {
+        alertUser("❌ Notifications refusées. Autorise-les dans les paramètres du navigateur.", "error");
+    } else {
+        alertUser("Autorisation en attente.", "default");
+    }
+    closeMenuIfOpen();
+};
+
+function showNotifBanner(title, text, onClickTarget) {
+    const banner = $("orderNotifBanner");
+    if (!banner) return;
+    if ($("orderNotifTitle")) $("orderNotifTitle").textContent = title;
+    if ($("orderNotifText")) $("orderNotifText").textContent = text;
+    banner.classList.add("visible");
+    notifClickTarget = onClickTarget || null;
+    clearTimeout(banner._timer);
+    banner._timer = setTimeout(() => banner.classList.remove("visible"), 8000);
+    playNotifSound();
+    vibrateNotif();
+}
+
+window.onNotifClick = () => {
+    $("orderNotifBanner")?.classList.remove("visible");
+    if (notifClickTarget === "admin") openAdminPanel();
+    else if (notifClickTarget === "driver") openDriverInterface();
+};
+
+async function notifyNewOrder(order) {
+    const title = "🔔 Nouvelle commande !";
+    const text = `#${order.code} • ${order.client_name || "Client"} • ${money(order.total)}`;
+    showNotifBanner(title, text, isAdmin ? "admin" : (currentDriver ? "driver" : null));
+    if (notifPermission === "granted" && typeof Notification !== "undefined") {
+        try {
+            const n = new Notification("H.D.S SHOP — Nouvelle commande", {
+                body: `${order.code} • ${order.client_name || "Client"}\n${order.address || ""}\n${money(order.total)}`,
+                icon: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png",
+                tag: "hds-order-" + order.id,
+                requireInteraction: true
+            });
+            n.onclick = () => {
+                window.focus();
+                if (isAdmin) openAdminPanel();
+                else if (currentDriver) openDriverInterface();
+                n.close();
+            };
+        } catch (e) { console.warn("System notif:", e); }
+    }
+}
+
+/* ========================================================================
    NAVIGATION
    ======================================================================== */
 function showSection(section) {
@@ -932,6 +1084,7 @@ function updateAccountButton() {
     if (ab) ab.style.display = isAdmin ? "block" : "none";
     const db = $("driverPanelBtn");
     if (db) db.style.display = currentDriver ? "block" : "none";
+    if ($("notifStatus")) $("notifStatus").textContent = (notifPermission === "granted") ? "🔔" : "🔕";
 }
 
 function onAccountClick() {
@@ -1049,6 +1202,7 @@ async function logoutClient() {
     closeAccountModal();
     closeAdminPanel();
     closeDriverInterface();
+    if (realtimeChannel) { supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
     alertUser("Déconnexion effectuée.");
 }
 window.logoutClient = logoutClient;
@@ -1121,6 +1275,41 @@ window.editClientProfile = () => {
 };
 
 /* ========================================================================
+   REALTIME : nouvelles commandes (admin + livreur)
+   ======================================================================== */
+async function initOrderRealtime() {
+    if (!currentUser || (!isAdmin && !currentDriver)) return;
+    if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
+
+    try {
+        const { data: last } = await supabase.from("orders").select("id").order("id", { ascending: false }).limit(1).maybeSingle();
+        lastSeenOrderId = last?.id || 0;
+    } catch { lastSeenOrderId = 0; }
+
+    realtimeChannel = supabase
+        .channel("orders-live")
+        .on("postgres_changes", { event: "INSERT", schema: "public", table: "orders" }, (payload) => {
+            const order = payload.new;
+            if (!order || !order.id) return;
+            if (lastSeenOrderId && order.id <= lastSeenOrderId) return;
+            lastSeenOrderId = order.id;
+            console.log("[Realtime] Nouvelle commande:", order);
+            notifyNewOrder(order);
+            if (isAdmin && $("adminPanelModal")?.classList.contains("active")) {
+                if ($("atab-orders")?.classList.contains("active")) adminRefreshOrders();
+            }
+            if (currentDriver && $("driverInterfaceModal")?.classList.contains("active")) {
+                driverRefreshOrders();
+            }
+            if (!isAdmin && !currentDriver) loadMyOrders();
+        })
+        .subscribe((status) => {
+            console.log("[Realtime] status:", status);
+        });
+}
+window.initOrderRealtime = initOrderRealtime;
+
+/* ========================================================================
    REFRESH AUTH
    ======================================================================== */
 async function refreshAuth() {
@@ -1139,10 +1328,12 @@ async function refreshAuth() {
         await loadFavorites();
         await loadSavedCart();
         await loadMyOrders();
+        await initOrderRealtime();
     } else {
         favorites = [];
         myOrders = [];
         currentDriver = JSON.parse(localStorage.getItem("hds_driver") || "null");
+        if (realtimeChannel) { supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
     }
     updateAccountButton();
     renderProducts();
@@ -1983,7 +2174,7 @@ window.adminLoadProducts = async () => {
             </div>
             <div class="admin-product-actions">
                 <button class="edit-btn" onclick="adminEditProduct(${p.id})">✏️</button>
-                <button class="delete-btn" onclick="adminDisableProduct(${p.id})">🗑️</button>
+                <button class="delete-btn" onclick="adminDeleteProduct(${p.id})">🗑️</button>
             </div>
         </div>`;
     }).join("");
@@ -2004,13 +2195,127 @@ window.adminEditProduct = async (id) => {
     $("adminPPopular").value = String(!!data.popular);
     $("adminPComingSoon").value = String(!!data.coming_soon);
     $("adminProductForm").style.display = "block";
+    adminUploadedImageUrl = null;
+    if ($("adminPImageFile")) $("adminPImageFile").value = "";
+    if ($("adminPImagePreview") && data.image) {
+        $("adminPImagePreview").style.display = "block";
+        if ($("adminPImagePreviewImg")) $("adminPImagePreviewImg").src = data.image;
+        if ($("adminPImageUploadStatus")) {
+            $("adminPImageUploadStatus").textContent = "Image actuelle";
+            $("adminPImageUploadStatus").style.color = "var(--text-dim)";
+        }
+    } else if ($("adminPImagePreview")) {
+        $("adminPImagePreview").style.display = "none";
+    }
 };
 
 window.adminShowAddProduct = () => {
     $("adminEditId").value = "";
     ["adminPName","adminPPrice","adminPImage","adminPDesc","adminPSpecs"].forEach(id => { if ($(id)) $(id).value = ""; });
     $("adminPStock").value = "10";
+    if ($("adminPImageFile")) $("adminPImageFile").value = "";
+    if ($("adminPImagePreview")) $("adminPImagePreview").style.display = "none";
+    adminUploadedImageUrl = null;
     $("adminProductForm").style.display = "block";
+};
+
+/* ========================================================================
+   ADMIN : VRAIE SUPPRESSION DU PRODUIT
+   ======================================================================== */
+window.adminDeleteProduct = async (id) => {
+    if (!isAdmin) return alertUser("Accès refusé.", "error");
+    if (!confirm("⚠️ SUPPRIMER DÉFINITIVEMENT ce produit ?\n\nCette action est irréversible.")) return;
+
+    const { error } = await supabase.from("products").delete().eq("id", id);
+
+    if (error) {
+        logSupabaseError("adminDeleteProduct", error);
+        if (error.code === "23503" || /foreign key/i.test(error.message)) {
+            const proceed = confirm("Ce produit est lié à des commandes existantes.\nLe masquer au lieu de le supprimer ?");
+            if (proceed) {
+                const { error: updErr } = await supabase.from("products").update({ is_active: false, updated_at: new Date().toISOString() }).eq("id", id);
+                if (updErr) return alertUser(updErr.message, "error");
+                await loadProducts();
+                await adminLoadProducts();
+                alertUser("Produit masqué (lié à des commandes).", "success");
+            }
+            return;
+        }
+        return alertUser(`Erreur suppression (${error.code || "?"}) : ${error.message}`, "error");
+    }
+
+    alertUser("🗑️ Produit supprimé définitivement.", "success");
+    await loadProducts();
+    await adminLoadProducts();
+};
+
+/* ========================================================================
+   ADMIN : UPLOAD IMAGE DEPUIS LE TÉLÉPHONE
+   ======================================================================== */
+window.adminHandleImageFile = async (file) => {
+    if (!file) return;
+    if (!isAdmin) return alertUser("Accès refusé.", "error");
+
+    if (!file.type.startsWith("image/")) {
+        return alertUser("Le fichier n'est pas une image.", "error");
+    }
+    if (file.size > 5 * 1024 * 1024) {
+        return alertUser("Image trop lourde (max 5 Mo).", "error");
+    }
+
+    const statusEl = $("adminPImageUploadStatus");
+    const previewEl = $("adminPImagePreview");
+    const previewImg = $("adminPImagePreviewImg");
+
+    if (previewEl) previewEl.style.display = "block";
+    if (previewImg) {
+        const reader = new FileReader();
+        reader.onload = (e) => { previewImg.src = e.target.result; };
+        reader.readAsDataURL(file);
+    }
+    if (statusEl) { statusEl.textContent = "⏳ Upload en cours..."; statusEl.style.color = "var(--yellow)"; }
+
+    const ext = file.name.split(".").pop().toLowerCase() || "jpg";
+    const safeExt = ["jpg","jpeg","png","webp","gif"].includes(ext) ? ext : "jpg";
+    const fileName = `product_${Date.now()}_${Math.random().toString(36).substring(2,8)}.${safeExt}`;
+    const filePath = `products/${fileName}`;
+
+    const { data, error } = await supabase.storage
+        .from("product-images")
+        .upload(filePath, file, { cacheControl: "3600", upsert: false, contentType: file.type });
+
+    if (error) {
+        logSupabaseError("adminUploadImage", error);
+        if (statusEl) { statusEl.textContent = "❌ Échec : " + error.message; statusEl.style.color = "var(--red)"; }
+        return alertUser("Upload échoué : " + error.message, "error");
+    }
+
+    const { data: urlData } = supabase.storage.from("product-images").getPublicUrl(filePath);
+    const publicUrl = urlData?.publicUrl;
+
+    if (!publicUrl) {
+        if (statusEl) { statusEl.textContent = "❌ URL introuvable"; statusEl.style.color = "var(--red)"; }
+        return alertUser("Impossible d'obtenir l'URL publique.", "error");
+    }
+
+    adminUploadedImageUrl = publicUrl;
+    if ($("adminPImage")) $("adminPImage").value = publicUrl;
+    if (previewImg) previewImg.src = publicUrl;
+    if (statusEl) { statusEl.textContent = "✅ Image uploadée !"; statusEl.style.color = "var(--green)"; }
+
+    if ($("adminEditId")?.value) {
+        const { error: updErr } = await supabase
+            .from("products")
+            .update({ image: publicUrl, updated_at: new Date().toISOString() })
+            .eq("id", $("adminEditId").value);
+        if (!updErr) {
+            await loadProducts();
+            await adminLoadProducts();
+            if (statusEl) statusEl.textContent = "✅ Image mise à jour dans la fiche produit !";
+        }
+    }
+
+    alertUser("📸 Image uploadée depuis le téléphone !", "success");
 };
 
 window.adminSaveProduct = async () => {
@@ -2026,7 +2331,7 @@ window.adminSaveProduct = async () => {
         category: $("adminPCategory").value,
         category_slug: $("adminPCategory").value,
         stock: Number($("adminPStock").value || 0),
-        image: $("adminPImage").value.trim() || null,
+        image: adminUploadedImageUrl || $("adminPImage").value.trim() || null,
         description: sanitize($("adminPDesc").value.trim()),
         specs: specsRaw ? specsRaw.split("|").map(s => s.trim()).filter(Boolean) : [],
         popular: $("adminPPopular").value === "true",
@@ -2049,19 +2354,14 @@ window.adminSaveProduct = async () => {
         return alertUser(`Erreur (${code}) : ${result.error.message}`, "error");
     }
     alertUser("Produit enregistré.", "success");
+    adminUploadedImageUrl = null;
+    if ($("adminPImageFile")) $("adminPImageFile").value = "";
+    if ($("adminPImagePreview")) $("adminPImagePreview").style.display = "none";
     $("adminProductForm").style.display = "none";
     await loadProducts();
     await adminLoadProducts();
 };
 
-window.adminDisableProduct = async (id) => {
-    if (!isAdmin) return alertUser("Accès refusé.", "error");
-    if (!confirm("Masquer ce produit ?")) return;
-    const { error } = await supabase.from("products").update({ is_active: false, updated_at: new Date().toISOString() }).eq("id", id);
-    if (error) { logSupabaseError("adminDisableProduct", error); return alertUser(error.message, "error"); }
-    await loadProducts();
-    await adminLoadProducts();
-};
 window.adminCancelForm = () => $("adminProductForm").style.display = "none";
 
 /* ========================================================================
@@ -2293,6 +2593,7 @@ window.driverLogout = () => {
     localStorage.removeItem("hds_driver");
     closeDriverInterface();
     updateAccountButton();
+    if (realtimeChannel) { supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
     alertUser("Déconnecté.", "success");
 };
 
@@ -2388,8 +2689,19 @@ document.querySelectorAll("#sortBar .sort-btn").forEach(b => b.addEventListener(
 document.querySelectorAll(".modal-overlay").forEach(m => m.addEventListener("click", e => { if (e.target === m) m.classList.remove("active"); }));
 
 /* ========================================================================
+   EVENT : input file admin (upload depuis téléphone)
+   ======================================================================== */
+document.addEventListener("change", (e) => {
+    if (e.target && e.target.id === "adminPImageFile") {
+        const file = e.target.files?.[0];
+        if (file) window.adminHandleImageFile(file);
+    }
+});
+
+/* ========================================================================
    DÉMARRAGE
    ======================================================================== */
+if (notifPermission === "granted" && $("notifStatus")) $("notifStatus").textContent = "🔔";
 await refreshAuth();
 await loadProducts();
 await loadMyOrders();
@@ -2397,4 +2709,4 @@ renderCartItems();
 showSection("products");
 </script>
 </body>
-</html>
+                                                                                                                                      </html>
