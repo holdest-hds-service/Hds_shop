@@ -233,12 +233,9 @@ input,textarea,select{font-family:inherit}
 .admin-product-info{flex:1;min-width:0}
 .admin-product-info strong{display:block;font-size:12.5px;margin-bottom:2px}
 .admin-product-info span{font-size:10.5px;color:var(--text-dim)}
-.admin-product-actions{display:flex;gap:4px;flex-shrink:0}
-.admin-product-actions button{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600;min-width:32px;display:flex;align-items:center;justify-content:center}
-.admin-product-actions .edit-btn{background:rgba(255,215,0,0.15);color:var(--yellow);border-color:rgba(255,215,0,0.35)}
-.admin-product-actions .hide-btn{background:rgba(161,161,170,0.15);color:var(--text-dim);border-color:rgba(161,161,170,0.35)}
-.admin-product-actions .hide-btn.is-active{background:rgba(34,197,94,0.15);color:var(--green);border-color:rgba(34,197,94,0.35)}
-.admin-product-actions .delete-btn{background:rgba(239,68,68,0.15);color:var(--red);border-color:rgba(239,68,68,0.35)}
+.admin-product-actions button{background:var(--card-hover);border:1px solid var(--border);color:var(--text);padding:5px 9px;border-radius:var(--r-sm);font-size:11px;font-weight:600}
+.admin-product-actions .delete-btn{background:rgba(239,68,68,0.15);color:var(--red);border-color:rgba(239,68,68,0.3)}
+.admin-product-actions .edit-btn{background:rgba(255,215,0,0.15);color:var(--yellow);border-color:rgba(255,215,0,0.3)}
 .admin-form input,.admin-form select,.admin-form textarea{width:100%;padding:9px 11px;background:var(--card-hover);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-size:12.5px;margin-bottom:8px}
 .admin-form input:focus,.admin-form select:focus,.admin-form textarea:focus{outline:none;border-color:var(--yellow)}
 .admin-form label{font-size:11.5px;font-weight:700;display:block;margin-bottom:4px;color:var(--text-dim)}
@@ -304,15 +301,7 @@ input,textarea,select{font-family:inherit}
 .driver-location-box .coords{font-family:monospace;color:var(--blue);font-weight:700;font-size:10.5px;margin-top:4px}
 .empty-state{text-align:center;padding:30px 20px;color:var(--text-dim);font-size:12.5px}
 .empty-state i{font-size:38px;opacity:0.4;margin-bottom:10px;display:block}
-.notif-banner{position:fixed;top:16px;right:16px;background:linear-gradient(135deg,var(--orange),#DC2626);color:white;padding:14px 18px;border-radius:var(--r-md);z-index:6000;display:none;align-items:center;gap:12px;font-weight:700;box-shadow:0 12px 32px rgba(249,115,22,0.5);font-size:13px;max-width:340px;animation:notifSlide 0.4s ease;cursor:pointer}
-.notif-banner.visible{display:flex}
-@keyframes notifSlide{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}
-.notif-banner .notif-icon{width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;animation:notifPulse 1s infinite}
-@keyframes notifPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-.notif-banner .notif-body{flex:1;min-width:0}
-.notif-banner .notif-title{font-size:12px;opacity:0.9;margin-bottom:2px;font-weight:600}
-.notif-banner .notif-text{font-size:13.5px;font-weight:800}
-@media (max-width:380px){.products-grid{grid-template-columns:1fr;gap:8px}.header-title{font-size:18px}.modal{max-height:92vh}.share-grid{grid-template-columns:repeat(2,1fr)}.map-container{height:300px}.notif-banner{top:8px;right:8px;left:8px;max-width:none;font-size:12px}}
+@media (max-width:380px){.products-grid{grid-template-columns:1fr;gap:8px}.header-title{font-size:18px}.modal{max-height:92vh}.share-grid{grid-template-columns:repeat(2,1fr)}.map-container{height:300px}}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:3px}
@@ -322,15 +311,6 @@ input,textarea,select{font-family:inherit}
 
 <div class="alert-modal" id="alertModal" role="alert" aria-live="polite">
 <i class="fas fa-check-circle" id="alertIcon"></i><span id="alertMessage"></span>
-</div>
-
-<!-- NOTIF COMMANDE (bandeau sonore) -->
-<div class="notif-banner" id="orderNotifBanner" onclick="onNotifClick()">
-<div class="notif-icon"><i class="fas fa-bell"></i></div>
-<div class="notif-body">
-<div class="notif-title" id="orderNotifTitle">🔔 Nouvelle commande !</div>
-<div class="notif-text" id="orderNotifText">Commande reçue</div>
-</div>
 </div>
 
 <div class="main-container">
@@ -510,7 +490,6 @@ input,textarea,select{font-family:inherit}
 <div class="menu-items">
 <div class="menu-item admin-item" id="adminMenuItem" style="display:none;" onclick="openAdminPanel()"><i class="fas fa-shield-alt"></i><span>🛡️ Panneau Admin</span><span class="menu-item-value">→</span></div>
 <div class="menu-item driver-item" id="driverMenuItem" onclick="openDriverLogin()"><i class="fas fa-motorcycle"></i><span>🛵 Espace Livreur</span><span class="menu-item-value">→</span></div>
-<div class="menu-item" onclick="enableNotifications()"><i class="fas fa-bell"></i><span>Activer notifications</span><span class="menu-item-value" id="notifStatus">🔕</span></div>
 <div class="menu-item" onclick="window.open('https://wa.me/33744892782','_blank')"><i class="fab fa-whatsapp"></i><span>WhatsApp</span><span class="menu-item-value">💬</span></div>
 <div class="menu-item" onclick="toggleTheme()"><i class="fas fa-moon" id="menuThemeIcon"></i><span>Mode nuit/jour</span><span class="menu-item-value" id="menuTheme">Nuit</span></div>
 <div class="menu-item" onclick="showLoyaltyInfo()"><i class="fas fa-gift"></i><span>Fidélité</span><span class="menu-item-value" id="menuLoyaltyPoints">0 pts</span></div>
@@ -605,7 +584,6 @@ input,textarea,select{font-family:inherit}
 <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-dim);">Réduction:</span><span style="font-weight:700;color:var(--green);">-5%</span></div>
 <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">Code parrainage:</span><span style="font-weight:700;color:var(--yellow);font-family:monospace;" id="clientReferralCode">—</span></div>
 </div>
-<button class="checkout-button green" onclick="enableNotifications()">🔔 Activer les notifications</button>
 <button class="checkout-button orange" id="adminPanelBtn" style="display:none;" onclick="openAdminPanel()">🛡️ Ouvrir le Panneau Admin</button>
 <button class="checkout-button blue" id="driverPanelBtn" style="display:none;" onclick="openDriverInterface()">🛵 Ouvrir l'Espace Livreur</button>
 <button class="checkout-button blue" onclick="editClientProfile()">✏️ Modifier mes infos</button>
@@ -762,13 +740,7 @@ input,textarea,select{font-family:inherit}
 <option value="snack">Snack</option><option value="boissons">Boissons</option>
 <option value="tabac">Tabac</option><option value="accessoires">Accessoires</option>
 </select>
-<label>📷 Image (depuis le téléphone ou URL)</label>
-<input type="file" id="adminPImageFile" accept="image/*" style="padding:9px 11px;background:var(--card-hover);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-size:12.5px;">
-<input type="text" id="adminPImage" placeholder="OU coller une URL (https://...)">
-<div id="adminPImagePreview" style="display:none;margin-top:10px;text-align:center;">
-<img id="adminPImagePreviewImg" src="" style="max-width:120px;max-height:120px;object-fit:contain;background:var(--card-hover);border-radius:var(--r-sm);border:1px solid var(--border);padding:4px;">
-<div id="adminPImageUploadStatus" style="font-size:11px;color:var(--text-dim);margin-top:6px;"></div>
-</div>
+<label>Image (URL)</label><input type="text" id="adminPImage">
 <label>Description</label><textarea id="adminPDesc" rows="2"></textarea>
 <label>Spécifications (séparées par |)</label><input type="text" id="adminPSpecs">
 <label>Populaire</label><select id="adminPPopular"><option value="false">Non</option><option value="true">Oui</option></select>
@@ -824,7 +796,6 @@ input,textarea,select{font-family:inherit}
 <div class="coords" id="driverCoords">Non localisé</div>
 <div style="font-size:10.5px;color:var(--text-dim);margin-top:6px;" id="driverAddress">Clique sur 🔄 pour actualiser</div>
 </div>
-<button class="checkout-button green" onclick="enableNotifications()" style="margin-bottom:10px;font-size:12px;">🔔 Activer les notifications sonores</button>
 <div style="font-weight:800;font-size:13px;margin-bottom:10px;"><i class="fas fa-clipboard-list" style="color:var(--yellow);"></i> Mes courses</div>
 <div id="driverOrdersList"></div>
 <button class="checkout-button secondary" onclick="driverRefreshOrders()" style="margin-top:10px;font-size:12px;">🔄 Rafraîchir</button>
@@ -836,6 +807,9 @@ input,textarea,select{font-family:inherit}
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
+/* ========================================================================
+   CONFIGURATION
+   ======================================================================== */
 const SUPABASE_URL = "https://wzmbhztpdherntngexrl.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_eqkezHzDxiSWOLKaAENlsw_j344d_A_";
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
@@ -844,6 +818,9 @@ const $ = (id) => document.getElementById(id);
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const money = (v) => `${Number(v || 0).toFixed(2)}€`;
 
+/* ========================================================================
+   ÉTAT GLOBAL
+   ======================================================================== */
 let products = [];
 let categories = [];
 let currentUser = null;
@@ -862,17 +839,13 @@ let currentOrder = null;
 let myOrders = [];
 let recommendedBy = null;
 let sharedProductId = null;
-let adminUploadedImageUrl = null;
-
-let realtimeChannel = null;
-let audioCtx = null;
-let notifPermission = (typeof Notification !== "undefined") ? Notification.permission : "denied";
-let notifClickTarget = null;
-let lastSeenOrderId = 0;
 
 const RESTAURANT_LAT = 43.3236041;
 const RESTAURANT_LNG = 5.3870093;
 
+/* ========================================================================
+   UTILITAIRES
+   ======================================================================== */
 function sanitize(str) {
     if (typeof str !== "string") return "";
     const d = document.createElement("div");
@@ -880,7 +853,7 @@ function sanitize(str) {
     return d.innerHTML;
 }
 function isValidPhone(phone) {
-    return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(phone).replace(/\s/g, ""));
+    return /^(?:\+33|0)[1-9](?:[\s.-]?\d{2}){4}$/.test(String(phone).replace(/\s/g, ""));
 }
 function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371;
@@ -911,6 +884,9 @@ function buildShareUrl(productId, refCode) {
     return `${base}?p=${productId}&ref=${encodeURIComponent(code)}&n=${encodeURIComponent(getMyDisplayName())}`;
 }
 
+/* ========================================================================
+   ALERTES
+   ======================================================================== */
 function alertUser(text, type = "default") {
     const box = $("alertModal");
     if (!box) return window.alert(text);
@@ -923,155 +899,9 @@ function alertUser(text, type = "default") {
     box._timer = setTimeout(() => box.classList.remove("visible"), 3500);
 }
 
-/* ================ NOTIFICATIONS ================ */
-function unlockAudio() {
-    try {
-        if (!audioCtx) {
-            const Ctx = window.AudioContext || window.webkitAudioContext;
-            if (Ctx) audioCtx = new Ctx();
-        }
-        if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
-    } catch (e) {}
-}
-document.addEventListener("click", unlockAudio, { once: true });
-document.addEventListener("touchstart", unlockAudio, { once: true });
-
-function playNotifSound() {
-    try {
-        unlockAudio();
-        if (!audioCtx) return;
-        const now = audioCtx.currentTime;
-        const playTone = (freq, start, dur, vol = 0.18, type = "sine") => {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = type;
-            osc.frequency.value = freq;
-            gain.gain.setValueAtTime(0, now + start);
-            gain.gain.linearRampToValueAtTime(vol, now + start + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + start + dur);
-            osc.connect(gain).connect(audioCtx.destination);
-            osc.start(now + start);
-            osc.stop(now + start + dur + 0.05);
-        };
-        playTone(1318.51, 0, 0.14, 0.20);
-        playTone(1760.00, 0.13, 0.14, 0.20);
-        playTone(1567.98, 0.28, 0.10, 0.15);
-        playTone(1760.00, 0.40, 0.10, 0.15);
-        playTone(2093.00, 0.52, 0.22, 0.18);
-    } catch (e) {}
-}
-
-function vibrateNotif() {
-    try { if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400]); } catch (e) {}
-}
-
-async function requestNotifPermission() {
-    if (typeof Notification === "undefined") return "denied";
-    if (Notification.permission === "granted") return "granted";
-    try {
-        const perm = await Notification.requestPermission();
-        notifPermission = perm;
-        return perm;
-    } catch (e) { return "denied"; }
-}
-
-window.enableNotifications = async () => {
-    const perm = await requestNotifPermission();
-    unlockAudio();
-    if (perm === "granted") {
-        notifPermission = "granted";
-        if ($("notifStatus")) $("notifStatus").textContent = "🔔";
-        alertUser("🔔 Notifications activées !", "success");
-        if (Notification.permission === "granted") {
-            try {
-                new Notification("H.D.S SHOP", { body: "Notifications activées ✓", icon: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png" });
-            } catch (e) {}
-        }
-    } else if (perm === "denied") {
-        alertUser("❌ Notifications refusées. Autorise-les dans les paramètres.", "error");
-    }
-    closeMenuIfOpen();
-};
-
-function showNotifBanner(title, text, onClickTarget) {
-    const banner = $("orderNotifBanner");
-    if (!banner) return;
-    if ($("orderNotifTitle")) $("orderNotifTitle").textContent = title;
-    if ($("orderNotifText")) $("orderNotifText").textContent = text;
-    banner.classList.add("visible");
-    notifClickTarget = onClickTarget || null;
-    clearTimeout(banner._timer);
-    banner._timer = setTimeout(() => banner.classList.remove("visible"), 8000);
-    playNotifSound();
-    vibrateNotif();
-}
-
-window.onNotifClick = () => {
-    $("orderNotifBanner")?.classList.remove("visible");
-    if (notifClickTarget === "admin") openAdminPanel();
-    else if (notifClickTarget === "driver") openDriverInterface();
-};
-
-async function notifyNewOrder(order) {
-    const target = isAdmin ? "admin" : (currentDriver ? "driver" : null);
-    const title = isAdmin ? "🔔 Nouvelle commande !" : "🛵 Nouvelle course dispo !";
-    const text = `#${order.code} • ${order.client_name || "Client"} • ${money(order.total)}`;
-    showNotifBanner(title, text, target);
-
-    if (notifPermission === "granted" && typeof Notification !== "undefined") {
-        try {
-            const n = new Notification("H.D.S SHOP", {
-                body: `${title}\n${order.code} • ${order.client_name || "Client"}\n${money(order.total)}`,
-                icon: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png",
-                tag: "hds-order-" + order.id,
-                requireInteraction: true
-            });
-            n.onclick = () => {
-                window.focus();
-                if (isAdmin) openAdminPanel();
-                else if (currentDriver) openDriverInterface();
-                n.close();
-            };
-        } catch (e) {}
-    }
-}
-
-/* ================ REALTIME ================ */
-async function initOrderRealtime() {
-    if (!currentUser || (!isAdmin && !currentDriver)) return;
-    if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
-
-    try {
-        const { data: last } = await supabase.from("orders").select("id").order("id", { ascending: false }).limit(1).maybeSingle();
-        lastSeenOrderId = last?.id || 0;
-    } catch { lastSeenOrderId = 0; }
-
-    realtimeChannel = supabase
-        .channel("orders-live")
-        .on("postgres_changes", { event: "INSERT", schema: "public", table: "orders" }, (payload) => {
-            const order = payload.new;
-            if (!order || !order.id) return;
-            if (lastSeenOrderId && order.id <= lastSeenOrderId) return;
-            lastSeenOrderId = order.id;
-            console.log("[Realtime] Nouvelle commande:", order);
-            notifyNewOrder(order);
-            if (isAdmin && $("adminPanelModal")?.classList.contains("active")) {
-                if ($("atab-orders")?.classList.contains("active")) adminRefreshOrders();
-            }
-            if (currentDriver && $("driverInterfaceModal")?.classList.contains("active")) {
-                driverRefreshOrders();
-            }
-            if (!isAdmin && !currentDriver) loadMyOrders();
-        })
-        .on("postgres_changes", { event: "UPDATE", schema: "public", table: "orders" }, () => {
-            if (isAdmin && $("adminPanelModal")?.classList.contains("active")) adminRefreshOrders();
-            if (currentDriver && $("driverInterfaceModal")?.classList.contains("active")) driverRefreshOrders();
-            if (!isAdmin && !currentDriver) loadMyOrders();
-        })
-        .subscribe((status) => console.log("[Realtime] status:", status));
-}
-
-/* ================ NAVIGATION ================ */
+/* ========================================================================
+   NAVIGATION
+   ======================================================================== */
 function showSection(section) {
     const sections = { products: "productsSection", popular: "popularSection", alimentation: "alimentationSection", tracking: "trackingSection", info: "infoSection" };
     Object.values(sections).forEach(id => { if ($(id)) $(id).style.display = "none"; });
@@ -1083,6 +913,9 @@ function showSection(section) {
 }
 window.showSection = showSection;
 
+/* ========================================================================
+   BOUTON COMPTE
+   ======================================================================== */
 function updateAccountButton() {
     const b = $("accountButton");
     if (!b) return;
@@ -1099,7 +932,6 @@ function updateAccountButton() {
     if (ab) ab.style.display = isAdmin ? "block" : "none";
     const db = $("driverPanelBtn");
     if (db) db.style.display = currentDriver ? "block" : "none";
-    if ($("notifStatus")) $("notifStatus").textContent = (notifPermission === "granted") ? "🔔" : "🔕";
 }
 
 function onAccountClick() {
@@ -1114,6 +946,9 @@ function closeAccountModal() { $("accountModal")?.classList.remove("active"); }
 window.openAccountModal = openAccountModal;
 window.closeAccountModal = closeAccountModal;
 
+/* ========================================================================
+   VUES COMPTE
+   ======================================================================== */
 function showLoginView() {
     ["loginView","registerView","clientView","editProfileView"].forEach(id => { if ($(id)) $(id).style.display = "none"; });
     const v = $("loginView");
@@ -1165,6 +1000,9 @@ function showClientView() {
 }
 window.showClientView = showClientView;
 
+/* ========================================================================
+   AUTH
+   ======================================================================== */
 async function signIn() {
     const email = $("authEmail")?.value.trim();
     const password = $("authPassword")?.value;
@@ -1196,7 +1034,7 @@ window.registerClient = signUp;
 
 async function forgotPassword() {
     const email = $("authEmail")?.value.trim();
-    if (!email) return alertUser("Saisis ton email.", "error");
+    if (!email) return alertUser("Saisis ton email dans le champ de connexion.", "error");
     const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: location.href.split("?")[0] });
     alertUser(error ? error.message : "Vérifie ta boîte mail.", error ? "error" : "success");
 }
@@ -1211,12 +1049,14 @@ async function logoutClient() {
     closeAccountModal();
     closeAdminPanel();
     closeDriverInterface();
-    if (realtimeChannel) { supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
     alertUser("Déconnexion effectuée.");
 }
 window.logoutClient = logoutClient;
 window.logout = logoutClient;
 
+/* ========================================================================
+   MOT DE PASSE : récupération
+   ======================================================================== */
 function showPasswordRecoveryForm() {
     const overlay = document.createElement("div");
     overlay.className = "modal-overlay active";
@@ -1224,6 +1064,7 @@ function showPasswordRecoveryForm() {
         <div class="modal">
             <div class="modal-header"><div class="modal-title"><i class="fas fa-key"></i> Nouveau mot de passe</div></div>
             <form id="recoveryForm" class="modal-body">
+                <p style="font-size:12px;color:var(--text-dim);margin-bottom:12px;">Choisis un mot de passe d'au moins 8 caractères.</p>
                 <input id="recoveryPassword" class="form-input" type="password" minlength="8" required placeholder="8 caractères minimum" style="margin-bottom:12px;">
                 <button class="checkout-button" type="submit">💾 Enregistrer</button>
             </form>
@@ -1240,9 +1081,14 @@ function showPasswordRecoveryForm() {
     });
 }
 
+/* ========================================================================
+   PROFIL
+   ======================================================================== */
 async function loadProfile() {
     if (!currentUser) return;
-    const { data, error } = await supabase.from("profiles").select("id,first_name,last_name,phone,address,loyalty_points,referral_code").eq("id", currentUser.id).maybeSingle();
+    const { data, error } = await supabase.from("profiles")
+        .select("id,first_name,last_name,phone,address,loyalty_points,referral_code")
+        .eq("id", currentUser.id).maybeSingle();
     if (error) { logSupabaseError("loadProfile", error); return; }
     currentProfile = data;
     showClientView();
@@ -1274,6 +1120,9 @@ window.editClientProfile = () => {
     if ($("editAddress")) $("editAddress").value = currentProfile?.address || "";
 };
 
+/* ========================================================================
+   REFRESH AUTH
+   ======================================================================== */
 async function refreshAuth() {
     const { data } = await supabase.auth.getUser();
     currentUser = data.user || null;
@@ -1290,12 +1139,10 @@ async function refreshAuth() {
         await loadFavorites();
         await loadSavedCart();
         await loadMyOrders();
-        await initOrderRealtime();
     } else {
         favorites = [];
         myOrders = [];
         currentDriver = JSON.parse(localStorage.getItem("hds_driver") || "null");
-        if (realtimeChannel) { supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
     }
     updateAccountButton();
     renderProducts();
@@ -1307,9 +1154,21 @@ supabase.auth.onAuthStateChange((event) => {
     if (event === "PASSWORD_RECOVERY") setTimeout(showPasswordRecoveryForm, 0);
 });
 
+/* ========================================================================
+   PRODUITS
+   ======================================================================== */
 async function loadProducts() {
-    const { data: prodData, error: prodError } = await supabase.from("products").select("*").eq("is_active", true);
-    if (prodError) { logSupabaseError("loadProducts", prodError); alertUser(`Erreur produits : ${prodError.message}`, "error"); return; }
+    const { data: prodData, error: prodError } = await supabase
+        .from("products")
+        .select("*")
+        .eq("is_active", true);
+
+    if (prodError) {
+        logSupabaseError("loadProducts", prodError);
+        alertUser(`Erreur produits (${prodError.code || "inconnu"}) : ${prodError.message}`, "error");
+        return;
+    }
+    console.log(`[Products] ${prodData?.length || 0} produits actifs chargés.`);
 
     const [c, s, links] = await Promise.all([
         supabase.from("categories").select("id,slug,name,icon,is_active,display_order").eq("is_active", true).order("display_order"),
@@ -1461,6 +1320,9 @@ function bumpCartButton() {
     setTimeout(() => b.classList.remove("bump"), 500);
 }
 
+/* ========================================================================
+   PANIER
+   ======================================================================== */
 function persistCart() {
     localStorage.setItem("hds_cart_guest", JSON.stringify(cart));
     renderCartItems();
@@ -1529,6 +1391,9 @@ window.removeFromCart = (idx) => { cart.splice(idx, 1); persistCart(); };
 window.openCart = () => { renderCartItems(); $("cartModal")?.classList.add("active"); };
 window.closeCart = () => $("cartModal")?.classList.remove("active");
 
+/* ========================================================================
+   COMMANDE
+   ======================================================================== */
 window.checkout = () => {
     if (!currentUser) { closeCart(); openAccountModal(); return alertUser("Connecte-toi pour commander."); }
     if (!cart.length) return alertUser("Panier vide.", "error");
@@ -1562,7 +1427,7 @@ window.locateForCheckout = async () => {
                 address = [street, `${postcode} ${city}`].filter(Boolean).join(", ");
             }
             if (!address && j && j.display_name) address = j.display_name;
-        } catch (e) {}
+        } catch (e) { console.warn("Reverse geocode:", e); }
         if (!address) address = currentProfile?.address || "";
         if ($("orderAddress")) $("orderAddress").value = address;
         if ($("checkoutLocationStatus")) {
@@ -1609,16 +1474,34 @@ window.submitOrder = async () => {
 
     if (btn) { btn.disabled = false; btn.textContent = "✅ Confirmer la commande"; }
 
-    if (error) { logSupabaseError("place_order", error); return alertUser(`Erreur commande : ${error.message}`, "error"); }
-    if (!data || !data.code) return alertUser("Réponse invalide.", "error");
+    if (error) {
+        logSupabaseError("place_order", error);
+        return alertUser(`Erreur commande (${error.code || "inconnu"}) : ${error.message}`, "error");
+    }
+    if (!data || !data.code) {
+        return alertUser("Réponse invalide du serveur.", "error");
+    }
 
     if (recommendedBy?.code) {
         try {
-            await supabase.from("share_conversions").insert({ user_id: currentUser.id, referrer_code: recommendedBy.code, product_id: sharedProductId || null, order_code: data.code });
-        } catch (e) {}
+            await supabase.from("share_conversions").insert({
+                user_id: currentUser.id,
+                referrer_code: recommendedBy.code,
+                product_id: sharedProductId || null,
+                order_code: data.code
+            });
+        } catch (e) { console.warn("Share conversion:", e); }
     }
 
-    currentOrder = { code: data.code, total: data.total, items: cart.map(i => { const p = getCartProduct(i); return { product_name: p?.name || "", quantity: i.quantity, unit_price: p?.price || 0 }; }) };
+    currentOrder = {
+        code: data.code,
+        total: data.total,
+        items: cart.map(i => {
+            const p = getCartProduct(i);
+            return { product_name: p?.name || "", quantity: i.quantity, unit_price: p?.price || 0 };
+        })
+    };
+
     cart = [];
     localStorage.removeItem("hds_cart_guest");
     await syncCartToDatabase();
@@ -1627,7 +1510,11 @@ window.submitOrder = async () => {
 
     if ($("confirmCode")) $("confirmCode").textContent = data.code;
     if ($("confirmTotal")) $("confirmTotal").textContent = money(data.total);
-    if ($("confirmRecap")) $("confirmRecap").innerHTML = currentOrder.items.map(i => `<div class="line"><span>${esc(i.product_name)} × ${i.quantity}</span><span>${money(i.unit_price * i.quantity)}</span></div>`).join("");
+    if ($("confirmRecap")) {
+        $("confirmRecap").innerHTML = currentOrder.items.map(i =>
+            `<div class="line"><span>${esc(i.product_name)} × ${i.quantity}</span><span>${money(i.unit_price * i.quantity)}</span></div>`
+        ).join("");
+    }
     $("confirmationModal")?.classList.add("active");
     await loadMyOrders();
     alertUser(`Commande ${data.code} enregistrée.`, "success");
@@ -1645,6 +1532,9 @@ window.captureScreenshot = () => {
     }).catch(() => alertUser("Erreur capture.", "error"));
 };
 
+/* ========================================================================
+   MES COMMANDES + HISTORIQUE + MAP
+   ======================================================================== */
 async function loadMyOrders() {
     if (!currentUser) { myOrders = []; return; }
     const { data, error } = await supabase.from("orders").select("id,code,status,total,created_at,distance,driver_name,address,client_name,client_phone,payment,items").eq("user_id", currentUser.id).order("created_at", { ascending: false }).limit(30);
@@ -1670,7 +1560,10 @@ async function loadMyOrders() {
             if (i + 1 < step) el.classList.add("completed");
             else if (i + 1 === step) el.classList.add("active");
         });
-        if ($("estimatedTime")) $("estimatedTime").textContent = { nouvelle: "35-45 min", preparation: "25-35 min", route: "10-20 min" }[active.status] || "--";
+        if ($("estimatedTime")) {
+            const eta = { nouvelle: "35-45 min", preparation: "25-35 min", route: "10-20 min" }[active.status] || "--";
+            $("estimatedTime").textContent = eta;
+        }
     } else {
         if ($("noActiveOrder")) $("noActiveOrder").style.display = "block";
         if ($("activeOrder")) $("activeOrder").style.display = "none";
@@ -1693,14 +1586,31 @@ window.closeHistoryModal = () => $("historyModal")?.classList.remove("active");
 function renderHistoryList() {
     const list = $("historyList");
     if (!list) return;
-    if (!myOrders.length) { list.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i><p>Aucune commande.</p></div>'; return; }
-    const labels = { nouvelle: { txt: "🆕 Nouvelle", color: "var(--orange)" }, preparation: { txt: "👨‍🍳 Préparation", color: "var(--yellow)" }, route: { txt: "🚚 En route", color: "var(--blue)" }, livree: { txt: "✅ Livrée", color: "var(--green)" }, annulee: { txt: "❌ Annulée", color: "var(--red)" } };
+    if (!myOrders.length) {
+        list.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i><p>Aucune commande pour le moment.</p></div>';
+        return;
+    }
+    const labels = {
+        nouvelle: { txt: "🆕 Nouvelle", color: "var(--orange)" },
+        preparation: { txt: "👨‍🍳 Préparation", color: "var(--yellow)" },
+        route: { txt: "🚚 En route", color: "var(--blue)" },
+        livree: { txt: "✅ Livrée", color: "var(--green)" },
+        annulee: { txt: "❌ Annulée", color: "var(--red)" }
+    };
     list.innerHTML = myOrders.map(o => {
         const lab = labels[o.status] || { txt: o.status, color: "var(--text-dim)" };
         const date = o.created_at ? new Date(o.created_at).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "";
         return `<div class="order-card status-${esc(o.status)}" style="cursor:pointer;" onclick="showOrderDetail(${o.id})">
-            <div class="order-card-header"><span class="order-code">#${esc(o.code)}</span><span style="color:${lab.color};font-weight:800;font-size:11px;">${lab.txt}</span></div>
-            <div class="order-body">📅 ${date}<br>📍 ${esc((o.address || "").substring(0, 55))}${(o.address || "").length > 55 ? "..." : ""}<br>💰 <strong>${money(o.total)}</strong>${o.driver_name ? ` • 🛵 ${esc(o.driver_name)}` : ""}</div>
+            <div class="order-card-header">
+                <span class="order-code">#${esc(o.code)}</span>
+                <span style="color:${lab.color};font-weight:800;font-size:11px;">${lab.txt}</span>
+            </div>
+            <div class="order-body">
+                📅 ${date}<br>
+                📍 ${esc((o.address || "").substring(0, 55))}${(o.address || "").length > 55 ? "..." : ""}<br>
+                💰 <strong>${money(o.total)}</strong>
+                ${o.driver_name ? ` • 🛵 ${esc(o.driver_name)}` : ""}
+            </div>
             <div style="font-size:10.5px;color:var(--yellow);font-weight:700;text-align:right;">Voir détails →</div>
         </div>`;
     }).join("");
@@ -1712,15 +1622,35 @@ window.showOrderDetail = async (orderId) => {
     const body = $("orderDetailBody");
     if (!body) return;
     const labels = { nouvelle: "🆕 Nouvelle", preparation: "👨‍🍳 Préparation", route: "🚚 En route", livree: "✅ Livrée", annulee: "❌ Annulée" };
+
     let itemsHtml = "";
     try {
-        const { data: items } = await supabase.from("order_items").select("product_name,quantity,unit_price,supplements").eq("order_id", orderId);
-        if (items?.length) itemsHtml = items.map(i => `<div class="line"><span>${esc(i.product_name)} × ${i.quantity}</span><span>${money((i.unit_price || 0) * i.quantity)}</span></div>`).join("");
-    } catch {}
+        const { data: items, error } = await supabase.from("order_items").select("product_name,quantity,unit_price,supplements").eq("order_id", orderId);
+        if (error) logSupabaseError("showOrderDetail.items", error);
+        if (items?.length) {
+            itemsHtml = items.map(i => {
+                const sup = i.supplements?.length ? `<div style="font-size:10px;color:var(--yellow);">+ ${i.supplements.join(", ")}</div>` : "";
+                return `<div class="line"><span>${esc(i.product_name)} × ${i.quantity}${sup}</span><span>${money((i.unit_price || 0) * i.quantity)}</span></div>`;
+            }).join("");
+        }
+    } catch (e) { console.warn(e); }
+
+    if (!itemsHtml && order.items) {
+        try {
+            const arr = typeof order.items === "string" ? JSON.parse(order.items) : order.items;
+            itemsHtml = arr.map(i => `<div class="line"><span>${esc(i.product_name || "Produit")} × ${i.quantity}</span><span>${money((i.unit_price || 0) * i.quantity)}</span></div>`).join("");
+        } catch {}
+    }
     if (!itemsHtml) itemsHtml = '<div style="color:var(--text-dim);font-size:12px;text-align:center;">Détails non disponibles</div>';
+
     body.innerHTML = `
-        <div class="code-hero" style="border-color:var(--yellow);"><div class="label">Code commande</div><div class="code-big" style="color:var(--yellow);">${esc(order.code)}</div><div class="hint">${labels[order.status] || order.status}</div></div>
-        <div style="font-weight:800;font-size:13px;margin:12px 0 6px;">🛒 Articles</div><div class="recap-box">${itemsHtml}</div>
+        <div class="code-hero" style="border-color:var(--yellow);">
+            <div class="label">Code commande</div>
+            <div class="code-big" style="color:var(--yellow);">${esc(order.code)}</div>
+            <div class="hint">${labels[order.status] || order.status}</div>
+        </div>
+        <div style="font-weight:800;font-size:13px;margin:12px 0 6px;">🛒 Articles commandés</div>
+        <div class="recap-box">${itemsHtml}</div>
         <div style="background:var(--card-hover);border-radius:var(--r-md);padding:12px;margin:12px 0;font-size:12.5px;line-height:1.8;">
             <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">📅 Date:</span><span>${order.created_at ? new Date(order.created_at).toLocaleString("fr-FR") : "—"}</span></div>
             <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">📍 Adresse:</span><span style="text-align:right;max-width:60%;">${esc(order.address || "—")}</span></div>
@@ -1729,8 +1659,9 @@ window.showOrderDetail = async (orderId) => {
             <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">🚚 Livreur:</span><span>${esc(order.driver_name || "À assigner")}</span></div>
             <div style="display:flex;justify-content:space-between;border-top:1px dashed var(--border);margin-top:8px;padding-top:8px;font-size:15px;font-weight:900;color:var(--yellow);"><span>Total:</span><span>${money(order.total)}</span></div>
         </div>
-        ${!['livree','annulee'].includes(order.status) ? `<button class="checkout-button blue" onclick="closeOrderDetailModal();showSection('tracking');">🚚 Suivre</button>` : ""}
-        <button class="checkout-button secondary" onclick="closeOrderDetailModal()">Fermer</button>`;
+        ${!['livree','annulee'].includes(order.status) ? `<button class="checkout-button blue" onclick="closeOrderDetailModal();showSection('tracking');">🚚 Suivre cette commande</button>` : ""}
+        <button class="checkout-button secondary" onclick="closeOrderDetailModal()">Fermer</button>
+    `;
     $("orderDetailModal")?.classList.add("active");
 };
 window.closeOrderDetailModal = () => $("orderDetailModal")?.classList.remove("active");
@@ -1776,6 +1707,9 @@ window.locateUser = () => {
     }, { enableHighAccuracy: true, timeout: 10000 });
 };
 
+/* ========================================================================
+   FAVORIS
+   ======================================================================== */
 async function loadFavorites() {
     if (!currentUser) { favorites = []; return; }
     const { data, error } = await supabase.from("favorites").select("product_id").eq("user_id", currentUser.id);
@@ -1807,12 +1741,18 @@ function renderFavoritesList() {
     const list = $("favoritesList");
     if (!list) return;
     const favProducts = products.filter(p => favorites.includes(p.id));
-    if (!favProducts.length) { list.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><p>Aucun favori.</p></div>'; return; }
+    if (!favProducts.length) {
+        list.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><p>Aucun favori pour le moment.</p><p style="font-size:11px;margin-top:6px;">Clique sur le ❤️ d\'un produit pour l\'ajouter.</p></div>';
+        return;
+    }
     list.innerHTML = favProducts.map(p => {
         const out = p.manual_rupture || (p.stock !== null && Number(p.stock) <= 0);
         return `<div class="cart-item">
             <img src="${esc(p.image || "")}" alt="${esc(p.name)}" style="width:52px;height:52px;object-fit:contain;background:var(--card);border-radius:8px;margin-right:10px;flex-shrink:0;" onerror="this.src='https://via.placeholder.com/60?text=HDS'">
-            <div class="cart-item-details"><div class="cart-item-name">${esc(p.name)}</div><div class="cart-item-meta" style="color:var(--yellow);font-weight:800;font-size:13px;margin-top:3px;">${money(p.price)}</div></div>
+            <div class="cart-item-details">
+                <div class="cart-item-name">${esc(p.name)}</div>
+                <div class="cart-item-meta" style="color:var(--yellow);font-weight:800;font-size:13px;margin-top:3px;">${money(p.price)}</div>
+            </div>
             <button class="buy-button" ${out ? "disabled" : ""} onclick="addFavoriteToCart(${p.id})" style="height:30px;font-size:11px;flex:0 0 auto;padding:0 10px;">${out ? "Rupture" : "+ Panier"}</button>
             <button class="cart-item-remove" onclick="toggleFavorite(${p.id});renderFavoritesList();">×</button>
         </div>`;
@@ -1826,12 +1766,21 @@ window.addFavoriteToCart = (id) => {
     bumpCartButton();
 };
 
+/* ========================================================================
+   PARTAGE / RECOMMANDATION
+   ======================================================================== */
 async function recordShare(productId, channel) {
     const channelMap = { native: "other", view_referral: "other", qrcode: "qr" };
     const allowed = new Set(["whatsapp", "facebook", "twitter", "instagram", "copy", "qr", "other"]);
     const safeChannel = channelMap[channel] || channel;
     const finalChannel = allowed.has(safeChannel) ? safeChannel : "other";
-    const { error } = await supabase.from("shares").insert({ user_id: currentUser?.id || null, product_id: productId, channel: finalChannel, referrer_code: getMyReferralCode(), referrer_name: getMyDisplayName() });
+    const { error } = await supabase.from("shares").insert({
+        user_id: currentUser?.id || null,
+        product_id: productId,
+        channel: finalChannel,
+        referrer_code: getMyReferralCode(),
+        referrer_name: getMyDisplayName()
+    });
     if (error) console.warn("Share log:", error);
 }
 
@@ -1842,7 +1791,10 @@ window.shareProduct = async (id) => {
     currentProduct = p;
     await recordShare(p.id, "native");
     if (navigator.share) {
-        try { await navigator.share({ title: `${p.name} — H.D.S SHOP`, text: `${getMyDisplayName()} te recommande ce produit :`, url }); return; } catch (e) {}
+        try {
+            await navigator.share({ title: `${p.name} — H.D.S SHOP`, text: `${getMyDisplayName()} te recommande ce produit :`, url });
+            return;
+        } catch (e) { }
     }
     openShareModalForProduct(p);
 };
@@ -1852,21 +1804,80 @@ function openShareModalForProduct(p) {
     if (!p) return;
     currentProduct = p;
     const url = buildShareUrl(p.id);
-    if ($("shareProductInfo")) $("shareProductInfo").innerHTML = `<div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;"><img src="${esc(p.image || "")}" style="width:56px;height:56px;object-fit:contain;background:var(--card-hover);border-radius:8px;" onerror="this.src='https://via.placeholder.com/60?text=HDS'"><div style="flex:1;"><div style="font-weight:800;font-size:13px;">${esc(p.name)}</div><div style="color:var(--yellow);font-weight:800;font-size:14px;margin-top:2px;">${money(p.price)}</div></div></div>`;
-    if ($("shareUrlBox")) { $("shareUrlBox").textContent = url; $("shareUrlBox").onclick = () => { navigator.clipboard?.writeText(url); alertUser("Lien copié.", "success"); }; }
+    if ($("shareProductInfo")) {
+        $("shareProductInfo").innerHTML = `
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;">
+                <img src="${esc(p.image || "")}" style="width:56px;height:56px;object-fit:contain;background:var(--card-hover);border-radius:8px;" onerror="this.src='https://via.placeholder.com/60?text=HDS'">
+                <div style="flex:1;"><div style="font-weight:800;font-size:13px;">${esc(p.name)}</div><div style="color:var(--yellow);font-weight:800;font-size:14px;margin-top:2px;">${money(p.price)}</div></div>
+            </div>`;
+    }
+    if ($("shareUrlBox")) {
+        $("shareUrlBox").textContent = url;
+        $("shareUrlBox").onclick = () => { navigator.clipboard?.writeText(url); alertUser("Lien copié.", "success"); };
+    }
     $("shareModal")?.classList.add("active");
 }
 window.openShareModal = () => currentProduct && openShareModalForProduct(currentProduct);
 window.closeShareModal = () => $("shareModal")?.classList.remove("active");
 
-window.shareCopy = async () => { if (!currentProduct) return; const url = buildShareUrl(currentProduct.id); await navigator.clipboard?.writeText(url); await recordShare(currentProduct.id, "copy"); alertUser("Lien copié.", "success"); };
-window.shareWhatsApp = async () => { if (!currentProduct) return; const url = buildShareUrl(currentProduct.id); const msg = `🎁 ${getMyDisplayName()} te recommande "${currentProduct.name}" (${money(currentProduct.price)}) chez H.D.S SHOP !\n\n👉 ${url}`; await recordShare(currentProduct.id, "whatsapp"); window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank"); };
-window.shareFacebook = async () => { if (!currentProduct) return; const url = buildShareUrl(currentProduct.id); await recordShare(currentProduct.id, "facebook"); window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank"); };
-window.shareTwitter = async () => { if (!currentProduct) return; const url = buildShareUrl(currentProduct.id); await recordShare(currentProduct.id, "twitter"); window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent("🎁 " + getMyDisplayName() + " te recommande " + currentProduct.name)}`, "_blank"); };
-window.shareInstagram = async () => { if (!currentProduct) return; const url = buildShareUrl(currentProduct.id); await recordShare(currentProduct.id, "instagram"); await navigator.clipboard?.writeText(url); alertUser("Lien copié pour Insta !", "success"); };
-window.shareQRCode = async () => { if (!currentProduct) return; const url = buildShareUrl(currentProduct.id); await recordShare(currentProduct.id, "qrcode"); $("qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(url)}&bgcolor=FFFFFF&color=000000&margin=10`; $("qrProductName").textContent = currentProduct.name; $("qrProductUrl").textContent = url; $("qrImage").dataset.url = $("qrImage").src; $("qrImage").dataset.name = `QR-HDS-${currentProduct.id}.png`; closeShareModal(); $("qrModal").classList.add("active"); };
+window.shareCopy = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await navigator.clipboard?.writeText(url);
+    await recordShare(currentProduct.id, "copy");
+    alertUser("Lien copié avec ton code.", "success");
+};
+window.shareWhatsApp = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    const msg = `🎁 ${getMyDisplayName()} te recommande "${currentProduct.name}" (${money(currentProduct.price)}) chez H.D.S SHOP !\n\n👉 Commande ici : ${url}`;
+    await recordShare(currentProduct.id, "whatsapp");
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
+};
+window.shareFacebook = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await recordShare(currentProduct.id, "facebook");
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
+};
+window.shareTwitter = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await recordShare(currentProduct.id, "twitter");
+    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent("🎁 " + getMyDisplayName() + " te recommande " + currentProduct.name + " chez H.D.S SHOP")}`, "_blank");
+};
+window.shareInstagram = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await recordShare(currentProduct.id, "instagram");
+    await navigator.clipboard?.writeText(url);
+    alertUser("Lien copié avec ton code. Colle-le dans ta story Insta !", "success");
+};
+window.shareQRCode = async () => {
+    if (!currentProduct) return;
+    const url = buildShareUrl(currentProduct.id);
+    await recordShare(currentProduct.id, "qrcode");
+    $("qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(url)}&bgcolor=FFFFFF&color=000000&margin=10`;
+    $("qrProductName").textContent = currentProduct.name;
+    $("qrProductUrl").textContent = url;
+    $("qrImage").dataset.url = $("qrImage").src;
+    $("qrImage").dataset.name = `QR-HDS-${currentProduct.id}.png`;
+    closeShareModal();
+    $("qrModal").classList.add("active");
+};
 window.closeQrModal = () => $("qrModal")?.classList.remove("active");
-window.downloadQR = async () => { const img = $("qrImage"); try { const r = await fetch(img.dataset.url); const b = await r.blob(); const u = URL.createObjectURL(b); const a = document.createElement("a"); a.href = u; a.download = img.dataset.name || "QR.png"; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(() => URL.revokeObjectURL(u), 1000); } catch { window.open(img.dataset.url, "_blank"); } };
+window.downloadQR = async () => {
+    const img = $("qrImage");
+    try {
+        const r = await fetch(img.dataset.url);
+        const b = await r.blob();
+        const u = URL.createObjectURL(b);
+        const a = document.createElement("a");
+        a.href = u; a.download = img.dataset.name || "QR.png";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(u), 1000);
+    } catch { window.open(img.dataset.url, "_blank"); }
+};
 
 function showRecommendBanner(referrerName, product) {
     recommendedBy = { name: referrerName, code: new URLSearchParams(location.search).get("ref") || null };
@@ -1877,9 +1888,25 @@ function showRecommendBanner(referrerName, product) {
         if ($("recoSub")) $("recoSub").textContent = `${product.name} — ${money(product.price)}`;
     }
 }
-window.addRecommendedToCart = () => { if (!sharedProductId) return; const p = products.find(x => x.id === Number(sharedProductId)); if (!p) return; addProductToCart(p, 1); alertUser("Produit ajouté au panier.", "success"); bumpCartButton(); if ($("recommendBanner")) $("recommendBanner").style.display = "none"; };
-window.reshareRecommended = () => { if (!sharedProductId) return; const p = products.find(x => x.id === Number(sharedProductId)); if (!p) return; shareProduct(p.id); };
+window.addRecommendedToCart = () => {
+    if (!sharedProductId) return;
+    const p = products.find(x => x.id === Number(sharedProductId));
+    if (!p) return;
+    addProductToCart(p, 1);
+    alertUser("Produit ajouté au panier.", "success");
+    bumpCartButton();
+    if ($("recommendBanner")) $("recommendBanner").style.display = "none";
+};
+window.reshareRecommended = () => {
+    if (!sharedProductId) return;
+    const p = products.find(x => x.id === Number(sharedProductId));
+    if (!p) return;
+    shareProduct(p.id);
+};
 
+/* ========================================================================
+   ADMIN PANEL
+   ======================================================================== */
 function openAdminPanel() {
     if (!isAdmin) return alertUser("Compte admin requis.", "error");
     closeMenuIfOpen();
@@ -1915,7 +1942,11 @@ window.adminRefreshOrders = async () => {
         else if (o.status === "route") actions = `<button class="btn-livree" onclick="adminSetOrderStatus(${o.id},'livree')">✅ Livrée</button>`;
         return `<div class="order-card status-${esc(o.status)}">
             <div class="order-card-header"><span class="order-code">#${esc(o.code)}</span><span class="statut-chip ${esc(o.status)}">${labels[o.status] || o.status}</span></div>
-            <div class="order-body"><strong>👤 ${esc(o.client_name || "")}</strong> • 📞 ${esc(o.client_phone || "")}<br>📍 ${esc((o.address || "").substring(0, 60))}<br>💰 <strong>${money(o.total)}</strong>${o.driver_name ? ` • 🛵 ${esc(o.driver_name)}` : ""}</div>
+            <div class="order-body">
+                <strong>👤 ${esc(o.client_name || "")}</strong> • 📞 ${esc(o.client_phone || "")}<br>
+                📍 ${esc((o.address || "").substring(0, 60))}<br>
+                💰 <strong>${money(o.total)}</strong>${o.driver_name ? ` • 🛵 ${esc(o.driver_name)}` : ""}
+            </div>
             ${actions ? `<div class="order-actions">${actions}</div>` : ""}
         </div>`;
     }).join("");
@@ -1934,7 +1965,10 @@ window.adminSetOrderStatus = async (id, status) => {
 window.adminLoadProducts = async () => {
     if (!isAdmin) return;
     const { data, error } = await supabase.from("products").select("*").order("name");
-    if (error) { logSupabaseError("adminLoadProducts", error); return alertUser(`Accès refusé : ${error.message}`, "error"); }
+    if (error) {
+        logSupabaseError("adminLoadProducts", error);
+        return alertUser(`Accès refusé (${error.code || "?"}) : ${error.message}`, "error");
+    }
     const list = $("adminProductList");
     if (!list) return;
     if (!data?.length) { list.innerHTML = '<div class="empty-state">Aucun produit.</div>'; return; }
@@ -1942,70 +1976,17 @@ window.adminLoadProducts = async () => {
         const stock = p.stock ?? 0;
         const cls = stock === 0 ? "rupture" : stock <= 3 ? "low" : "ok";
         const label = stock === 0 ? "⚠️ RUPTURE" : stock <= 3 ? `⚠️ ${stock}` : `✅ ${stock}`;
-        const isActive = p.is_active !== false;
         return `<div class="admin-product-item">
             <div class="admin-product-info">
                 <strong>${esc(p.name)} <span class="stock-badge ${cls}">${label}</span></strong>
-                <span>${esc(p.category || "")} · ${money(p.price)} ${isActive ? "" : "· ⛔ masqué"}</span>
+                <span>${esc(p.category || "")} · ${money(p.price)} ${p.is_active ? "" : "· ⛔ masqué"}</span>
             </div>
             <div class="admin-product-actions">
-                <button class="edit-btn" title="Modifier" onclick="adminEditProduct(${p.id})">✏️</button>
-                <button class="hide-btn ${isActive ? "is-active" : ""}" title="${isActive ? "Masquer" : "Réactiver"}" onclick="adminToggleHideProduct(${p.id}, ${isActive})">${isActive ? "👁️" : "🚫"}</button>
-                <button class="delete-btn" title="Supprimer" onclick="adminDeleteProduct(${p.id})">🗑️</button>
+                <button class="edit-btn" onclick="adminEditProduct(${p.id})">✏️</button>
+                <button class="delete-btn" onclick="adminDisableProduct(${p.id})">🗑️</button>
             </div>
         </div>`;
     }).join("");
-};
-
-window.adminToggleHideProduct = async (id, currentlyActive) => {
-    if (!isAdmin) return alertUser("Accès refusé.", "error");
-    const newActive = !currentlyActive;
-    if (!confirm(newActive ? "Réactiver ce produit ?" : "Masquer ce produit ?")) return;
-    const { error } = await supabase.from("products").update({ is_active: newActive, updated_at: new Date().toISOString() }).eq("id", id);
-    if (error) { logSupabaseError("adminToggleHideProduct", error); return alertUser(error.message, "error"); }
-    alertUser(newActive ? "✅ Produit réactivé." : "👁️ Produit masqué.", "success");
-    await loadProducts();
-    await adminLoadProducts();
-};
-
-window.adminDeleteProduct = async (id) => {
-    if (!isAdmin) return alertUser("Accès refusé.", "error");
-    const { data: product } = await supabase.from("products").select("name,image").eq("id", id).maybeSingle();
-    const productName = product?.name || `#${id}`;
-    if (!confirm(`⚠️ SUPPRESSION DÉFINITIVE\n\n"${productName}" sera supprimé définitivement.\n\nContinuer ?`)) return;
-
-    try { await supabase.from("product_supplements").delete().eq("product_id", id); } catch (e) {}
-    try { await supabase.from("favorites").delete().eq("product_id", id); } catch (e) {}
-    try { await supabase.from("cart_items").delete().eq("product_id", id); } catch (e) {}
-
-    const { error } = await supabase.from("products").delete().eq("id", id);
-    if (error) {
-        if (error.code === "23503" || /foreign key/i.test(error.message)) {
-            if (confirm("Produit lié à des commandes. Le masquer au lieu ?")) {
-                await supabase.from("products").update({ is_active: false, updated_at: new Date().toISOString() }).eq("id", id);
-                await loadProducts();
-                await adminLoadProducts();
-                alertUser("Produit masqué.", "success");
-            }
-            return;
-        }
-        logSupabaseError("adminDeleteProduct", error);
-        return alertUser(`Erreur : ${error.message}`, "error");
-    }
-
-    if (product?.image && product.image.includes("/product-images/")) {
-        try {
-            const parts = product.image.split("/product-images/");
-            if (parts[1]) {
-                const filePath = parts[1].split("?")[0];
-                await supabase.storage.from("product-images").remove([filePath]);
-            }
-        } catch (e) {}
-    }
-
-    alertUser(`🗑️ "${productName}" supprimé.`, "success");
-    await loadProducts();
-    await adminLoadProducts();
 };
 
 window.adminEditProduct = async (id) => {
@@ -2023,64 +2004,20 @@ window.adminEditProduct = async (id) => {
     $("adminPPopular").value = String(!!data.popular);
     $("adminPComingSoon").value = String(!!data.coming_soon);
     $("adminProductForm").style.display = "block";
-    adminUploadedImageUrl = null;
-    if ($("adminPImageFile")) $("adminPImageFile").value = "";
-    if ($("adminPImagePreview") && data.image) {
-        $("adminPImagePreview").style.display = "block";
-        if ($("adminPImagePreviewImg")) $("adminPImagePreviewImg").src = data.image;
-        if ($("adminPImageUploadStatus")) { $("adminPImageUploadStatus").textContent = "Image actuelle"; $("adminPImageUploadStatus").style.color = "var(--text-dim)"; }
-    } else if ($("adminPImagePreview")) { $("adminPImagePreview").style.display = "none"; }
 };
 
 window.adminShowAddProduct = () => {
     $("adminEditId").value = "";
     ["adminPName","adminPPrice","adminPImage","adminPDesc","adminPSpecs"].forEach(id => { if ($(id)) $(id).value = ""; });
     $("adminPStock").value = "10";
-    if ($("adminPImageFile")) $("adminPImageFile").value = "";
-    if ($("adminPImagePreview")) $("adminPImagePreview").style.display = "none";
-    adminUploadedImageUrl = null;
     $("adminProductForm").style.display = "block";
 };
 
-window.adminHandleImageFile = async (file) => {
-    if (!file || !isAdmin) return;
-    if (!file.type.startsWith("image/")) return alertUser("Pas une image.", "error");
-    if (file.size > 5 * 1024 * 1024) return alertUser("Image trop lourde (max 5 Mo).", "error");
-
-    const statusEl = $("adminPImageUploadStatus");
-    const previewEl = $("adminPImagePreview");
-    const previewImg = $("adminPImagePreviewImg");
-
-    if (previewEl) previewEl.style.display = "block";
-    if (previewImg) { const reader = new FileReader(); reader.onload = (e) => { previewImg.src = e.target.result; }; reader.readAsDataURL(file); }
-    if (statusEl) { statusEl.textContent = "⏳ Upload..."; statusEl.style.color = "var(--yellow)"; }
-
-    const ext = file.name.split(".").pop().toLowerCase() || "jpg";
-    const safeExt = ["jpg","jpeg","png","webp","gif"].includes(ext) ? ext : "jpg";
-    const fileName = `product_${Date.now()}_${Math.random().toString(36).substring(2,8)}.${safeExt}`;
-    const filePath = `products/${fileName}`;
-
-    const { error } = await supabase.storage.from("product-images").upload(filePath, file, { cacheControl: "3600", upsert: false, contentType: file.type });
-    if (error) { logSupabaseError("adminUploadImage", error); if (statusEl) { statusEl.textContent = "❌ " + error.message; statusEl.style.color = "var(--red)"; } return alertUser("Upload échoué : " + error.message, "error"); }
-
-    const { data: urlData } = supabase.storage.from("product-images").getPublicUrl(filePath);
-    const publicUrl = urlData?.publicUrl;
-    if (!publicUrl) { if (statusEl) { statusEl.textContent = "❌ URL introuvable"; statusEl.style.color = "var(--red)"; } return; }
-
-    adminUploadedImageUrl = publicUrl;
-    if ($("adminPImage")) $("adminPImage").value = publicUrl;
-    if (previewImg) previewImg.src = publicUrl;
-    if (statusEl) { statusEl.textContent = "✅ Uploadée !"; statusEl.style.color = "var(--green)"; }
-
-    if ($("adminEditId")?.value) {
-        const { error: updErr } = await supabase.from("products").update({ image: publicUrl, updated_at: new Date().toISOString() }).eq("id", $("adminEditId").value);
-        if (!updErr) { await loadProducts(); await adminLoadProducts(); if (statusEl) statusEl.textContent = "✅ Image mise à jour !"; }
-    }
-    alertUser("📸 Image uploadée !", "success");
-};
-
 window.adminSaveProduct = async () => {
-    if (!isAdmin) return alertUser("Écriture réservée admin.", "error");
+    if (!isAdmin) {
+        alertUser("Écriture réservée aux administrateurs (RLS).", "error");
+        return;
+    }
     const id = $("adminEditId").value;
     const specsRaw = $("adminPSpecs").value.trim();
     const payload = {
@@ -2089,7 +2026,7 @@ window.adminSaveProduct = async () => {
         category: $("adminPCategory").value,
         category_slug: $("adminPCategory").value,
         stock: Number($("adminPStock").value || 0),
-        image: adminUploadedImageUrl || $("adminPImage").value.trim() || null,
+        image: $("adminPImage").value.trim() || null,
         description: sanitize($("adminPDesc").value.trim()),
         specs: specsRaw ? specsRaw.split("|").map(s => s.trim()).filter(Boolean) : [],
         popular: $("adminPPopular").value === "true",
@@ -2099,61 +2036,121 @@ window.adminSaveProduct = async () => {
     };
     if (!payload.name || !Number.isFinite(payload.price) || payload.price < 0) return alertUser("Nom/prix invalide.", "error");
 
-    const result = id ? await supabase.from("products").update(payload).eq("id", id) : await supabase.from("products").insert(payload);
+    const result = id
+        ? await supabase.from("products").update(payload).eq("id", id)
+        : await supabase.from("products").insert(payload);
+
     if (result.error) {
         logSupabaseError("adminSaveProduct", result.error);
-        if (result.error.code === "42501" || /row-level security|permission/i.test(result.error.message)) return alertUser(`RLS bloque l'écriture. Vérifie admin_users.`, "error");
-        return alertUser(`Erreur : ${result.error.message}`, "error");
+        const code = result.error.code || "?";
+        if (code === "42501" || /row-level security|permission/i.test(result.error.message)) {
+            return alertUser(`RLS bloque l'écriture (${code}). Vérifie que ton compte est dans admin_users.`, "error");
+        }
+        return alertUser(`Erreur (${code}) : ${result.error.message}`, "error");
     }
     alertUser("Produit enregistré.", "success");
-    adminUploadedImageUrl = null;
-    if ($("adminPImageFile")) $("adminPImageFile").value = "";
-    if ($("adminPImagePreview")) $("adminPImagePreview").style.display = "none";
     $("adminProductForm").style.display = "none";
+    await loadProducts();
+    await adminLoadProducts();
+};
+
+window.adminDisableProduct = async (id) => {
+    if (!isAdmin) return alertUser("Accès refusé.", "error");
+    if (!confirm("Masquer ce produit ?")) return;
+    const { error } = await supabase.from("products").update({ is_active: false, updated_at: new Date().toISOString() }).eq("id", id);
+    if (error) { logSupabaseError("adminDisableProduct", error); return alertUser(error.message, "error"); }
     await loadProducts();
     await adminLoadProducts();
 };
 window.adminCancelForm = () => $("adminProductForm").style.display = "none";
 
+/* ========================================================================
+   ADMIN : PARTAGES
+   ======================================================================== */
 window.adminLoadShares = async () => {
     if (!isAdmin) return;
     const list = $("adminSharesList");
     if (!list) return;
     list.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>';
-    const { data, error } = await supabase.from("shares").select("id,product_id,channel,referrer_code,referrer_name,created_at").order("created_at", { ascending: false }).limit(80);
-    if (error) { logSupabaseError("adminLoadShares", error); list.innerHTML = `<div class="empty-state">Erreur : ${esc(error.message)}</div>`; return; }
-    if (!data?.length) { list.innerHTML = '<div class="empty-state">Aucun partage.</div>'; return; }
+    const { data, error } = await supabase.from("shares")
+        .select("id,product_id,channel,referrer_code,referrer_name,created_at")
+        .order("created_at", { ascending: false }).limit(80);
+    if (error) {
+        logSupabaseError("adminLoadShares", error);
+        list.innerHTML = `<div class="empty-state">Erreur (${esc(error.code || "?")}) : ${esc(error.message)}</div>`;
+        return;
+    }
+    if (!data?.length) { list.innerHTML = '<div class="empty-state">Aucun partage enregistré.</div>'; return; }
+
     const totalShares = data.length;
     const byChannel = data.reduce((acc, s) => { acc[s.channel || "?"] = (acc[s.channel || "?"] || 0) + 1; return acc; }, {});
     const byReferrer = data.reduce((acc, s) => { const k = s.referrer_name || s.referrer_code || "?"; acc[k] = (acc[k] || 0) + 1; return acc; }, {});
     const topSharers = Object.entries(byReferrer).sort((a,b) => b[1]-a[1]).slice(0, 5);
-    let html = `<div class="info-box" style="margin-bottom:10px;"><i class="fas fa-chart-bar"></i> <strong>${totalShares}</strong> partages.</div>`;
+
+    let html = `<div class="info-box" style="margin-bottom:10px;"><i class="fas fa-chart-bar"></i> <strong>${totalShares}</strong> partages enregistrés.</div>`;
+
     html += `<div style="font-weight:800;font-size:12px;margin:10px 0 6px;">📊 Par canal</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:12px;">`;
-    Object.entries(byChannel).forEach(([ch, n]) => { html += `<div style="background:var(--card-hover);padding:8px;border-radius:8px;font-size:11.5px;border:1px solid var(--border);"><strong style="color:var(--yellow);">${n}</strong> ${esc(ch)}</div>`; });
+    Object.entries(byChannel).forEach(([ch, n]) => {
+        html += `<div style="background:var(--card-hover);padding:8px;border-radius:8px;font-size:11.5px;border:1px solid var(--border);"><strong style="color:var(--yellow);">${n}</strong> ${esc(ch)}</div>`;
+    });
     html += `</div>`;
+
     if (topSharers.length) {
         html += `<div style="font-weight:800;font-size:12px;margin:10px 0 6px;">🏆 Top partageurs</div><div style="margin-bottom:12px;">`;
-        topSharers.forEach(([name, n]) => { html += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border);font-size:12px;"><span>👤 ${esc(name)}</span><strong style="color:var(--green);">${n}</strong></div>`; });
+        topSharers.forEach(([name, n]) => {
+            html += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border);font-size:12px;"><span>👤 ${esc(name)}</span><strong style="color:var(--green);">${n} partages</strong></div>`;
+        });
         html += `</div>`;
     }
-    html += `<div style="font-weight:800;font-size:12px;margin:10px 0 6px;">📜 Récent</div>`;
+
+    html += `<div style="font-weight:800;font-size:12px;margin:10px 0 6px;">📜 Historique récent</div>`;
     data.slice(0, 25).forEach(s => {
         const prod = products.find(p => p.id === s.product_id);
         const date = s.created_at ? new Date(s.created_at).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "";
-        html += `<div class="admin-product-item"><div class="admin-product-info"><strong>${esc(prod?.name || "Produit #" + s.product_id)}</strong><span>${esc(s.referrer_name || "Anonyme")} • ${esc(s.channel || "?")} • ${date}</span></div></div>`;
+        html += `<div class="admin-product-item">
+            <div class="admin-product-info">
+                <strong>${esc(prod?.name || "Produit #" + s.product_id)}</strong>
+                <span>${esc(s.referrer_name || "Anonyme")} • ${esc(s.channel || "?")} • ${date}</span>
+            </div>
+        </div>`;
     });
     list.innerHTML = html;
 };
 
+/* ========================================================================
+   ADMIN : LIVREURS
+   ======================================================================== */
 window.adminInviteDriver = async () => {
     if (!isAdmin) return alertUser("Accès refusé.", "error");
     const name = prompt("Prénom du livreur :")?.trim();
     if (!name) return;
-    const { data: driver, error: driverError } = await supabase.from("delivery_drivers").insert({ name, status: "dispo", is_active: true }).select("id,name").single();
-    if (driverError) { logSupabaseError("adminInviteDriver.createDriver", driverError); return alertUser(driverError.message, "error"); }
-    const { data: code, error: inviteError } = await supabase.rpc("create_driver_invite", { p_driver_id: driver.id, p_expires_hours: 48 });
-    if (inviteError) { logSupabaseError("adminInviteDriver.createInvite", inviteError); await supabase.from("delivery_drivers").update({ is_active: false }).eq("id", driver.id); return alertUser(inviteError.message, "error"); }
-    const message = `Bonjour ${driver.name}, ton code d'invitation H.D.S SHOP : ${code}. Connecte-toi, puis saisis-le dans « Espace Livreur ».`;
+
+    const { data: driver, error: driverError } = await supabase
+        .from("delivery_drivers")
+        .insert({ name, status: "dispo", is_active: true })
+        .select("id,name")
+        .single();
+
+    if (driverError) {
+        logSupabaseError("adminInviteDriver.createDriver", driverError);
+        return alertUser(driverError.message, "error");
+    }
+
+    const { data: code, error: inviteError } = await supabase.rpc(
+        "create_driver_invite",
+        { p_driver_id: driver.id, p_expires_hours: 48 }
+    );
+
+    if (inviteError) {
+        logSupabaseError("adminInviteDriver.createInvite", inviteError);
+        await supabase.from("delivery_drivers").update({ is_active: false }).eq("id", driver.id);
+        return alertUser(inviteError.message, "error");
+    }
+
+    const message =
+        `Bonjour ${driver.name}, voici ton code d'invitation H.D.S SHOP : ${code}. ` +
+        `Connecte-toi ou crée ton compte sur le site, puis saisis ce code dans « Espace Livreur ».`;
+
     alertUser(`Invitation créée. Code : ${code}`, "success");
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank");
     adminLoadDrivers();
@@ -2165,23 +2162,45 @@ window.adminLoadDrivers = async () => {
         supabase.from("driver_invite_codes").select("*").order("created_at", { ascending: false }),
         supabase.from("delivery_drivers").select("*").order("created_at", { ascending: false })
     ]);
+    if (inv.error) logSupabaseError("adminLoadDrivers.invites", inv.error);
+    if (drv.error) logSupabaseError("adminLoadDrivers.drivers", drv.error);
     const list = $("adminDriversList");
     if (!list) return;
     let html = "";
     if (drv.data?.length) {
         html += `<div style="font-weight:700;font-size:12px;color:var(--green);margin-bottom:6px;">✅ Livreurs actifs</div><div class="livreur-liste">`;
-        html += drv.data.map(d => `<div class="livreur-item"><div class="avatar">${esc((d.name || "?")[0])}</div><div class="infos"><strong>${esc(d.name)}</strong><span>${esc(d.phone || "")}</span></div><span class="statut-badge ${d.status === "dispo" ? "dispo" : d.status === "offline" ? "offline" : "occupe"}">${esc(d.status)}</span></div>`).join("");
+        html += drv.data.map(d => `
+            <div class="livreur-item">
+                <div class="avatar">${esc((d.name || "?")[0])}</div>
+                <div class="infos"><strong>${esc(d.name)}</strong><span>${esc(d.phone || "")}</span></div>
+                <span class="statut-badge ${d.status === "dispo" ? "dispo" : d.status === "offline" ? "offline" : "occupe"}">${esc(d.status)}</span>
+            </div>`).join("");
         html += `</div>`;
     }
     if (inv.data?.length) {
         html += `<div style="font-weight:700;font-size:12px;color:var(--yellow);margin:12px 0 6px;">🔑 Invitations</div><div class="livreur-liste">`;
-        html += inv.data.map(i => { const used = i.used_at ? "used" : "actif"; return `<div class="livreur-item"><div class="avatar">🔑</div><div class="infos"><strong style="color:var(--yellow);">${esc(i.code_hash || i.code || "(masqué)")}</strong><span>${esc(i.driver_id ? "Livreur #" + i.driver_id : "")}</span></div><span class="statut-badge ${used === "used" ? "dispo" : "occupe"}">${used}</span></div>`; }).join("");
+        html += inv.data.map(i => {
+            const used = i.used_at ? "used" : "actif";
+            return `
+            <div class="livreur-item">
+                <div class="avatar">🔑</div>
+                <div class="infos"><strong style="color:var(--yellow);">${esc(i.code_hash || i.code || "(masqué)")}</strong><span>${esc(i.driver_id ? "Livreur #" + i.driver_id : "")}</span></div>
+                <span class="statut-badge ${used === "used" ? "dispo" : "occupe"}">${used}</span>
+            </div>`;
+        }).join("");
         html += `</div>`;
     }
-    if (!html) html = '<div class="empty-state">Aucun livreur. Clique sur "Inviter".</div>';
+    if (inv.error && drv.error) {
+        html = `<div class="empty-state">Erreur lecture : ${esc(inv.error.message || drv.error.message)}</div>`;
+    } else if (!html) {
+        html = '<div class="empty-state">Aucun livreur. Clique sur "Inviter".</div>';
+    }
     list.innerHTML = html;
 };
 
+/* ========================================================================
+   ESPACE LIVREUR
+   ======================================================================== */
 window.openDriverLogin = () => {
     closeMenuIfOpen();
     if (currentDriver) return openDriverInterface();
@@ -2193,11 +2212,17 @@ window.driverLogin = async () => {
     const code = $("driverCodeInput")?.value.trim();
     if (!code) return alertUser("Entre le code d'invitation.", "error");
     const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) { closeDriverLogin(); openAccountModal(); return alertUser("Connecte-toi ou crée un compte avant d'utiliser le code."); }
+    if (userError || !user) {
+        closeDriverLogin();
+        openAccountModal();
+        return alertUser("Connecte-toi ou crée un compte avant d'utiliser le code.");
+    }
     const { error } = await supabase.rpc("claim_driver_invite", { p_code: code });
     if (error) return alertUser(error.message, "error");
     await refreshAuth();
-    if (!currentDriver) return alertUser("Invitation acceptée, mais profil livreur introuvable.", "error");
+    if (!currentDriver) {
+        return alertUser("Invitation acceptée, mais profil livreur introuvable.", "error");
+    }
     closeDriverLogin();
     updateAccountButton();
     alertUser(`Bienvenue ${currentDriver.name} !`, "success");
@@ -2227,7 +2252,12 @@ window.driverRefreshOrders = async () => {
         else if (o.status === "route" && isMine) actions = `<button class="btn-livree" onclick="driverDeliver(${o.id})">✅ Livrée</button>`;
         return `<div class="order-card status-${esc(o.status)}">
             <div class="order-card-header"><span class="order-code">#${esc(o.code)}</span><span class="statut-chip ${esc(o.status)}">${labels[o.status] || o.status}</span></div>
-            <div class="order-body">👤 ${esc(o.client_name)} • 📞 ${esc(o.client_phone)}<br>📍 ${esc((o.address || "").substring(0, 60))}<br>💰 <strong>${money(o.total)}</strong> • 📏 ${o.distance || 0} km${o.driver_name && !isMine ? `<br>🛵 ${esc(o.driver_name)}` : ""}</div>
+            <div class="order-body">
+                👤 ${esc(o.client_name)} • 📞 ${esc(o.client_phone)}<br>
+                📍 ${esc((o.address || "").substring(0, 60))}<br>
+                💰 <strong>${money(o.total)}</strong> • 📏 ${o.distance || 0} km
+                ${o.driver_name && !isMine ? `<br>🛵 ${esc(o.driver_name)}` : ""}
+            </div>
             ${actions ? `<div class="order-actions">${actions}</div>` : ""}
         </div>`;
     }).join("");
@@ -2239,14 +2269,20 @@ window.driverAccept = async (id) => {
     alertUser("Course acceptée.", "success");
     await driverRefreshOrders();
 };
+
 window.driverStart = async (id) => {
-    const { error } = await supabase.rpc("driver_set_order_status", { p_order_id: id, p_status: "route", p_latitude: null, p_longitude: null });
+    const { error } = await supabase.rpc("driver_set_order_status", {
+        p_order_id: id, p_status: "route", p_latitude: null, p_longitude: null
+    });
     if (error) return alertUser(error.message, "error");
     alertUser("En route !", "success");
     await driverRefreshOrders();
 };
+
 window.driverDeliver = async (id) => {
-    const { error } = await supabase.rpc("driver_set_order_status", { p_order_id: id, p_status: "livree", p_latitude: null, p_longitude: null });
+    const { error } = await supabase.rpc("driver_set_order_status", {
+        p_order_id: id, p_status: "livree", p_latitude: null, p_longitude: null
+    });
     if (error) return alertUser(error.message, "error");
     alertUser("Livraison confirmée.", "success");
     await driverRefreshOrders();
@@ -2257,7 +2293,6 @@ window.driverLogout = () => {
     localStorage.removeItem("hds_driver");
     closeDriverInterface();
     updateAccountButton();
-    if (realtimeChannel) { supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
     alertUser("Déconnecté.", "success");
 };
 
@@ -2278,6 +2313,9 @@ window.driverUpdateLocation = () => {
     }, () => { if (c) c.textContent = "❌ Erreur GPS"; alertUser("GPS indisponible.", "error"); }, { enableHighAccuracy: true, timeout: 10000 });
 };
 
+/* ========================================================================
+   MENU / DIVERS
+   ======================================================================== */
 window.toggleTheme = () => {
     document.body.classList.toggle("light-mode");
     localStorage.setItem("hds_theme", document.body.classList.contains("light-mode") ? "light" : "dark");
@@ -2295,23 +2333,34 @@ function closeMenuIfOpen() { $("verticalMenu")?.classList.remove("active"); $("m
 window.clearSearch = () => { if ($("searchInput")) $("searchInput").value = ""; searchQuery = ""; renderProducts(); };
 
 window.showLoyaltyInfo = () => { closeMenuIfOpen(); alertUser(`🎁 Tes points fidélité : ${currentProfile?.loyalty_points || 0}\n100 points = 10€`); };
-window.showReferralInfo = () => { closeMenuIfOpen(); const code = currentProfile?.referral_code || getMyReferralCode(); alertUser(`🤝 Ton code de parrainage : ${code}\n\nPartage un produit, ton code sera inclus automatiquement !`); };
+window.showReferralInfo = () => {
+    closeMenuIfOpen();
+    const code = currentProfile?.referral_code || getMyReferralCode();
+    alertUser(`🤝 Ton code de parrainage : ${code}\n\nPartage un produit, ton code sera inclus automatiquement dans le lien !`);
+};
 
+/* ========================================================================
+   URL PARTAGÉE
+   ======================================================================== */
 function handleSharedProductUrl() {
     const params = new URLSearchParams(location.search);
     const p = params.get("p");
     if (!p) return;
     const product = products.find(x => x.id === Number(p));
     if (!product) return;
+
     const refCode = params.get("ref");
     const refName = params.get("n") ? decodeURIComponent(params.get("n")) : null;
+
     $("sharedBannerText").textContent = product.name;
     $("sharedBanner").style.display = "flex";
+
     if (refCode) {
         const displayName = refName || "Un ami";
         showRecommendBanner(displayName, product);
         recordShare(product.id, "view_referral").catch(() => {});
     }
+
     setTimeout(() => openProductDetail(product.id), 200);
 }
 window.backToShop = () => {
@@ -2322,6 +2371,9 @@ window.backToShop = () => {
     showSection("products");
 };
 
+/* ========================================================================
+   EVENTS UI
+   ======================================================================== */
 $("searchInput")?.addEventListener("input", e => {
     searchQuery = e.target.value.trim();
     $("searchClear")?.classList.toggle("visible", !!searchQuery);
@@ -2335,14 +2387,9 @@ document.querySelectorAll("#sortBar .sort-btn").forEach(b => b.addEventListener(
 }));
 document.querySelectorAll(".modal-overlay").forEach(m => m.addEventListener("click", e => { if (e.target === m) m.classList.remove("active"); }));
 
-document.addEventListener("change", (e) => {
-    if (e.target && e.target.id === "adminPImageFile") {
-        const file = e.target.files?.[0];
-        if (file) window.adminHandleImageFile(file);
-    }
-});
-
-if (notifPermission === "granted" && $("notifStatus")) $("notifStatus").textContent = "🔔";
+/* ========================================================================
+   DÉMARRAGE
+   ======================================================================== */
 await refreshAuth();
 await loadProducts();
 await loadMyOrders();
@@ -2350,4 +2397,4 @@ renderCartItems();
 showSection("products");
 </script>
 </body>
-                                                                             </html>
+</html>
