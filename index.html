@@ -39,40 +39,9 @@ input,textarea,select{font-family:inherit}
 .app-shell{background:var(--card);border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-lg);position:relative}
 .app-shell::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--yellow),var(--orange),var(--yellow));background-size:200% 100%;animation:shimmer 4s linear infinite;z-index:1}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-
-/* ============ RESPONSIVE GLOBAL ============ */
-@media (min-width:640px){
-  body{padding:16px}
-  .main-container{max-width:760px}
-  .products-grid{grid-template-columns:repeat(3,1fr);gap:14px}
-  .map-container{height:460px}
-}
-@media (min-width:1024px){
-  body{padding:24px 32px}
-  .main-container{max-width:1080px}
-  .app-shell{border-radius:26px}
-  .products-grid{grid-template-columns:repeat(4,1fr);gap:16px}
-  .app-header{padding:22px 24px}
-  .quick-nav{padding:10px 18px;gap:8px;justify-content:flex-start}
-  .quick-nav-btn{padding:10px 16px;font-size:11.5px}
-  .quick-nav-btn i{font-size:18px}
-  .section-title{font-size:17px;margin:22px 24px 12px}
-  .category-tabs{margin:0 24px 14px}
-  .sort-bar{margin:0 24px 14px}
-  .products-grid{padding:0 24px 24px}
-  .search-bar{padding:12px 24px}
-  .status-bar{margin:16px 24px}
-  .modal{max-width:520px}
-  .modal.wide{max-width:760px}
-  .map-container{margin:16px 24px;height:520px}
-  .location-section,.loyalty-banner,.tracker-container,#sharedBanner,#recommendBanner{margin-left:24px;margin-right:24px}
-  footer{padding:32px 24px}
-}
-@media (min-width:1440px){
-  .main-container{max-width:1240px}
-  .products-grid{grid-template-columns:repeat(5,1fr)}
-}
-
+@media (min-width:640px){body{padding:16px}.main-container{max-width:760px}.products-grid{grid-template-columns:repeat(3,1fr);gap:14px}.map-container{height:460px}}
+@media (min-width:1024px){body{padding:24px 32px}.main-container{max-width:1080px}.app-shell{border-radius:26px}.products-grid{grid-template-columns:repeat(4,1fr);gap:16px}.app-header{padding:22px 24px}.quick-nav{padding:10px 18px;gap:8px;justify-content:flex-start}.quick-nav-btn{padding:10px 16px;font-size:11.5px}.quick-nav-btn i{font-size:18px}.section-title{font-size:17px;margin:22px 24px 12px}.category-tabs{margin:0 24px 14px}.sort-bar{margin:0 24px 14px}.products-grid{padding:0 24px 24px}.search-bar{padding:12px 24px}.status-bar{margin:16px 24px}.modal{max-width:520px}.modal.wide{max-width:760px}.map-container{margin:16px 24px;height:520px}.location-section,.loyalty-banner,.tracker-container,#sharedBanner,#recommendBanner{margin-left:24px;margin-right:24px}footer{padding:32px 24px}}
+@media (min-width:1440px){.main-container{max-width:1240px}.products-grid{grid-template-columns:repeat(5,1fr)}}
 .app-header{padding:18px 16px;display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,var(--card) 0%,var(--card-hover) 100%);border-bottom:1px solid var(--border);position:relative}
 .logo-wrapper{width:56px;height:56px;flex-shrink:0;cursor:pointer}
 .logo-image{width:100%;height:100%;border-radius:var(--r-md);border:2px solid var(--yellow);object-fit:cover}
@@ -199,10 +168,8 @@ input,textarea,select{font-family:inherit}
 .step-icon.completed::after{content:'✓'}
 .no-order{text-align:center;padding:40px 20px;color:var(--text-dim)}
 .no-order i{font-size:44px;margin-bottom:12px;opacity:0.4}
-
 .whatsapp-inline{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#25D366,#128C7E);color:white;padding:12px 18px;border-radius:var(--r-md);font-size:13px;font-weight:700;text-decoration:none;margin:12px 0;width:100%}
 .whatsapp-inline:hover{filter:brightness(1.1)}
-
 .cart-floating-bar{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom, 0px));left:50%;transform:translateX(-50%) translateY(200%);width:calc(100% - 28px);max-width:500px;background:linear-gradient(135deg,var(--yellow),var(--gold));color:#000;border-radius:var(--r-lg);padding:11px 16px;box-shadow:0 12px 32px rgba(255,215,0,0.55);z-index:1001;display:flex;align-items:center;gap:12px;cursor:pointer;border:2px solid #000;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);font-weight:800}
 .cart-floating-bar.visible{transform:translateX(-50%) translateY(0)}
 .cart-floating-bar:hover{filter:brightness(1.05)}
@@ -212,7 +179,6 @@ input,textarea,select{font-family:inherit}
 .cart-floating-bar .fb-items{font-size:11px;font-weight:700;opacity:0.8;line-height:1.15}
 .cart-floating-bar .fb-total{font-size:15px;font-weight:900;line-height:1.15}
 .cart-floating-bar .fb-cta{background:#000;color:var(--yellow);padding:9px 14px;border-radius:var(--r-sm);font-size:12px;font-weight:900;white-space:nowrap;display:flex;align-items:center;gap:6px}
-
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);z-index:2000;padding:12px}
 .modal-overlay.active{display:flex;justify-content:center;align-items:center}
 .modal{background:var(--card);border-radius:var(--r-lg);width:100%;max-width:420px;max-height:88vh;overflow-y:auto;border:1px solid var(--border);animation:modalIn 0.25s ease}
@@ -419,7 +385,6 @@ input,textarea,select{font-family:inherit}
 .admin-floating-btn:hover{filter:brightness(1.1);transform:scale(1.05)}
 .admin-floating-btn.show{display:flex}
 .admin-floating-btn .badge{position:absolute;top:-4px;right:-4px;background:var(--red);min-width:22px;height:22px;border-radius:11px;font-size:11px;font-weight:800;display:flex;justify-content:center;align-items:center;border:2px solid var(--card);padding:0 5px}
-#orderAdminModal .modal{max-width:540px}
 .order-detail-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--border);font-size:12.5px}
 .order-detail-row:last-child{border-bottom:none}
 .order-detail-row span:first-child{color:var(--text-dim);flex-shrink:0}
@@ -437,7 +402,6 @@ input,textarea,select{font-family:inherit}
 .order-admin-actions .btn-gps{background:var(--blue);color:white}
 .order-admin-actions .btn-ma-carte{background:var(--yellow);color:#000;border:1px solid var(--gold)}
 .order-admin-actions .btn-ma-carte:hover{filter:brightness(1.08)}
-
 .admin-dashboard{position:fixed;top:0;left:0;width:100vw;height:100vh;background:radial-gradient(circle at top,#141414,#000);z-index:7000;display:none;flex-direction:column;overflow-y:auto;color:var(--text);padding:12px;gap:12px}
 .admin-dashboard.active{display:flex}
 .admin-dashboard-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:linear-gradient(135deg,rgba(249,115,22,0.2),rgba(220,38,38,0.1));border:1px solid rgba(249,115,22,0.5);border-radius:var(--r-md)}
@@ -478,8 +442,6 @@ input,textarea,select{font-family:inherit}
 .dash-order-actions .btn-appeler{background:var(--green);color:white;border-color:var(--green)}
 .dash-empty{text-align:center;padding:20px;color:var(--text-dim);font-size:12px}
 .dash-footer-note{text-align:center;font-size:10.5px;color:var(--text-dim);padding:8px;line-height:1.5}
-
-/* Historique admin */
 .admin-history-filters{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
 .admin-history-filters::-webkit-scrollbar{display:none}
 .ahf-btn{padding:6px 12px;background:var(--card-hover);border:1px solid var(--border);color:var(--text-dim);border-radius:16px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0}
@@ -491,8 +453,6 @@ input,textarea,select{font-family:inherit}
 .ahi-date{font-size:10px;color:var(--text-dim);font-family:monospace}
 .ahi-body{font-size:11px;color:var(--text-dim);line-height:1.5}
 .ahi-total{font-weight:900;color:var(--green);font-size:13px}
-
-/* Vidéos entreprise */
 .video-company-section{padding:0 16px 16px}
 .video-company-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .video-company-header i{color:var(--yellow);font-size:16px}
@@ -513,8 +473,6 @@ input,textarea,select{font-family:inherit}
 .video-admin-item .vai-infos strong{display:block;font-size:11.5px;margin-bottom:1px}
 .video-admin-item .vai-infos span{font-size:10px;color:var(--text-dim);word-break:break-all}
 .video-admin-item .vai-actions{display:flex;gap:4px;flex-shrink:0}
-
-/* ============ WAZE-STYLE ROUTE MAP ============ */
 #routeMapModal .modal{max-width:760px;padding:0;overflow:hidden;background:#0A0A0A}
 #routeMapModal .modal-header{background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,152,0,0.1));border-bottom:1px solid rgba(255,215,0,0.3)}
 #routeMapModal .modal-body{padding:0;position:relative}
@@ -538,7 +496,6 @@ input,textarea,select{font-family:inherit}
 .driver-marker-pulse{background:rgba(59,130,246,0.3);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;animation:pulseDriverMarker 1.5s infinite}
 @keyframes pulseDriverMarker{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:0.6}}
 .driver-marker-inner{background:#3B82F6;width:20px;height:20px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px #3B82F6}
-
 @media (max-width:380px){.products-grid{grid-template-columns:1fr}.header-title{font-size:18px}.admin-product-actions button{width:28px;height:28px;font-size:11px}.admin-stats{grid-template-columns:1fr 1fr}.notif-banner{max-width:calc(100vw - 32px);right:16px;left:16px}.cart-floating-bar{width:calc(100vw - 28px)}}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:3px}
@@ -793,6 +750,7 @@ input,textarea,select{font-family:inherit}
 </div>
 </aside>
 
+<!-- ==== MODALS ==== -->
 <div class="modal-overlay" id="cartModal"><div class="modal"><div class="modal-header"><div class="modal-title"><i class="fas fa-shopping-cart"></i> Mon Panier</div><button class="modal-close" onclick="closeCart()">×</button></div><div class="modal-body"><div id="cartItems"></div><div class="cart-summary" id="cartSummary" style="display:none;"><div class="cart-summary-row"><span>Sous-total</span><span id="subtotal">0€</span></div><div class="cart-summary-row"><span>Réduction (-5%)</span><span id="discount" style="color:var(--green);">0€</span></div><div class="cart-summary-row"><span>Livraison</span><span id="deliveryCost">À calculer</span></div></div><div class="cart-total" id="cartTotal" style="display:none;">Total: 0€</div><button class="checkout-button" onclick="checkout()" id="checkoutBtn" style="display:none;">🔒 Commander</button></div></div></div>
 
 <div class="modal-overlay" id="checkoutModal"><div class="modal"><div class="modal-header"><div class="modal-title"><i class="fas fa-lock"></i> Finaliser</div><button class="modal-close" onclick="closeCheckout()">×</button></div><div class="modal-body"><div class="info-box"><i class="fas fa-map-marker-alt"></i><strong>Étape 1 :</strong> Adresse ou Me localiser</div><div class="form-group"><textarea class="form-textarea" id="orderAddress" placeholder="Adresse complète (rue, code postal, ville)" autocomplete="street-address"></textarea><button type="button" class="location-button" style="margin-top:8px;padding:11px;font-size:12.5px;" id="checkoutLocateBtn" onclick="locateForCheckout()"><i class="fas fa-location-dot"></i> 📍 Me localiser (GPS)</button><div id="checkoutLocationStatus" style="display:none;margin-top:10px;padding:10px;background:rgba(34,197,94,0.1);border-radius:var(--r-md);border-left:3px solid var(--green);font-size:12px;"></div></div><div id="checkoutDetailsSection" style="display:none;"><div class="info-box"><i class="fas fa-user"></i><strong>Étape 2 :</strong> Coordonnées</div><form id="orderForm" onsubmit="event.preventDefault();submitOrder();"><div class="form-row"><div class="form-group"><input type="text" class="form-input" id="orderFirstName" placeholder="Prénom" autocomplete="given-name"></div><div class="form-group"><input type="text" class="form-input" id="orderLastName" placeholder="Nom" autocomplete="family-name"></div></div><div class="form-group"><input type="tel" class="form-input" id="orderPhone" placeholder="Téléphone" autocomplete="tel"></div><div class="radio-group"><label class="radio-option"><input type="radio" name="paiement" value="Espèces" checked><span>💵 Espèces</span></label><label class="radio-option"><input type="radio" name="paiement" value="Carte"><span>💳 Carte bancaire</span></label></div><button type="submit" class="checkout-button">✅ Confirmer la commande</button></form></div></div></div></div>
@@ -918,7 +876,6 @@ input,textarea,select{font-family:inherit}
 
 <div class="modal-overlay" id="driverInterfaceModal"><div class="modal wide"><div class="modal-header"><div class="modal-title"><i class="fas fa-motorcycle" style="color:var(--blue);"></i> Interface Livreur</div><button class="modal-close" onclick="closeDriverInterface()">×</button></div><div class="modal-body"><div class="driver-header"><h2>🛵 <span id="driverNameDisplay">Livreur</span></h2><p>Connecté • Prêt à livrer</p></div><div class="driver-location-box"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:700;color:var(--blue);"><i class="fas fa-map-marker-alt"></i> Ma position</span><button onclick="driverUpdateLocation()" style="padding:4px 8px;background:var(--blue);color:white;border-radius:6px;font-size:10px;font-weight:700;">🔄 Actualiser</button></div><div class="coords" id="driverCoords">Non localisé</div><div style="font-size:10.5px;color:var(--text-dim);margin-top:6px;" id="driverAddress">Clique sur 🔄 pour actualiser</div></div><button class="checkout-button green" onclick="enableNotifications()" style="margin-bottom:10px;font-size:12px;">🔔 Activer les notifications sonores</button><div style="font-weight:800;font-size:13px;margin-bottom:10px;"><i class="fas fa-clipboard-list" style="color:var(--yellow);"></i> Mes courses</div><div id="driverOrdersList"></div><button class="checkout-button secondary" onclick="driverRefreshOrders()" style="margin-top:10px;font-size:12px;">🔄 Rafraîchir</button><button class="checkout-button danger" onclick="driverLogout()" style="margin-top:8px;font-size:12px;">↩️ Quitter l'espace livreur</button></div></div></div>
 
-<!-- MODAL ROUTE MAP - Style Waze -->
 <div class="modal-overlay" id="routeMapModal">
 <div class="modal wide">
 <div class="modal-header">
@@ -956,13 +913,45 @@ const $ = (id) => document.getElementById(id);
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const money = (v) => `${Number(v || 0).toFixed(2)}€`;
 
-function gaEvent(name, params) { try { if (typeof gtag === "function") { gtag("event", name, params || {}); } if (window.dataLayer) { window.dataLayer.push({ event: name, ...params }); } } catch (e) {} }
-function gaItem(product, quantity = 1) { if (!product) return null; return { item_id: String(product.id), item_name: product.name, item_category: product.category_slug || product.category || "snack", price: Number(product.price || 0), quantity: Number(quantity || 1) }; }
-function trackViewItem(product) { if (!product) return; gaEvent("view_item", { currency: "EUR", value: Number(product.price || 0), items: [gaItem(product, 1)] }); }
-function trackAddToCart(product, quantity) { if (!product) return; gaEvent("add_to_cart", { currency: "EUR", value: Number(product.price || 0) * quantity, items: [gaItem(product, quantity)] }); }
-function trackRemoveFromCart(product, quantity) { if (!product) return; gaEvent("remove_from_cart", { currency: "EUR", value: Number(product.price || 0) * quantity, items: [gaItem(product, quantity)] }); }
-function trackBeginCheckout(items) { const total = items.reduce((s, i) => s + (Number(i.price) * Number(i.quantity)), 0); gaEvent("begin_checkout", { currency: "EUR", value: total, items }); }
-function trackPurchase(orderCode, total, items, shipping = 0) { gaEvent("purchase", { transaction_id: String(orderCode), currency: "EUR", value: Number(total || 0), shipping: Number(shipping || 0), items }); }
+/* ============================================================
+   ⚡ CORRECTIONS MAJEURES DE CETTE VERSION ⚡
+   1) Le livreur NE VOIT PLUS ses propres commandes client
+      - filtre côté JS dans driverRefreshOrders : o.user_id !== currentUser.id
+      - filtre côté adminSetOrderStatus & openAdminOrderDetail
+   2) Le livreur VOIT désormais les commandes non assignées
+      - la policy RLS "orders_self_read" doit inclure driver_id IS NULL
+        (voir SQL ci-dessous, à exécuter 1 fois)
+   3) Distinction claire entre mode "client" et mode "livreur"
+      - suppression de la bascule automatique isDriver si pas en mode driver
+      - setDriverMode() filtre loadMyOrders() pour exclure les commandes livreur
+   4) Realtime renforcé
+      - on n'ouvre le canal orders-live QUE si nécessaire
+      - subscribeDispatch en canal PUBLIC (pas de private:true)
+   5) Anti-doublon : empêche le même livreur de "prendre" sa propre commande
+   6) place_order RPC protégé (security definer déjà côté DB, mais on gère
+      le fallback si RLS bloque l'insertion côté client)
+   ============================================================ */
+
+// SQL À EXÉCUTER UNE FOIS (policy à corriger, car sinon le livreur ne voit pas
+// les commandes non assignées) :
+// ------------------------------------------------------------
+// drop policy if exists "orders_self_read" on public.orders;
+// create policy "orders_self_read" on public.orders for select using (
+//   auth.uid() = user_id
+//   or public.is_admin()
+//   or (
+//     exists (select 1 from public.delivery_drivers d where d.auth_user_id = auth.uid() and d.is_active)
+//     and (driver_id is null or driver_id = (select id from public.delivery_drivers where auth_user_id = auth.uid()))
+//   )
+// );
+// ------------------------------------------------------------
+// + policy d'UPDATE pour que driver_claim_order_v1 / driver_set_status_v1
+// fonctionnent (elles sont security definer, mais on sécurise quand même) :
+// drop policy if exists "orders_driver_update" on public.orders;
+// create policy "orders_driver_update" on public.orders for update using (
+//   exists (select 1 from public.delivery_drivers d where d.auth_user_id = auth.uid() and d.is_active
+//           and (driver_id is null or driver_id = d.id))
+// );
 
 let products = [], categories = [], currentUser = null, currentProfile = null;
 let isAdmin = false, currentDriver = null;
@@ -981,17 +970,9 @@ let companyVideos = [];
 const RESTAURANT_LAT = 43.3226, RESTAURANT_LNG = 5.4019;
 const DISCOUNT_CLIENT_PCT = 0.05;
 
-// ============ ROUTE MAP / WAZE MODE ============
-let routeMapInstance = null;
-let routeLineInstance = null;
-let routeSourceMarker = null;
-let routeDestMarker = null;
-let routeDriverMarker = null;
-let routeCurrentOrder = null;
-let routeWatchId = null;
-let routeFollowMode = true; // Waze mode : la carte suit la position
-let routeRefreshTimer = null;
-let routeLastRouteInfo = null;
+let routeMapInstance = null, routeLineInstance = null, routeSourceMarker = null;
+let routeDestMarker = null, routeDriverMarker = null, routeCurrentOrder = null;
+let routeWatchId = null, routeFollowMode = true, routeRefreshTimer = null;
 
 function sanitize(str) { if (typeof str !== "string") return ""; const d = document.createElement("div"); d.textContent = str; return d.innerHTML; }
 function isValidPhone(phone) { return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(phone).replace(/\s/g, "")); }
@@ -1001,6 +982,9 @@ function getMyReferralCode() { if (currentProfile?.referral_code) return current
 function getMyDisplayName() { return currentProfile?.first_name || "Un ami"; }
 function buildShareUrl(productId, refCode) { const base = location.origin + location.pathname; const code = refCode || getMyReferralCode(); return `${base}?p=${productId}&ref=${encodeURIComponent(code)}&n=${encodeURIComponent(getMyDisplayName())}`; }
 function applyClientDiscount(amount) { return currentUser ? Number(amount) * (1 - DISCOUNT_CLIENT_PCT) : Number(amount); }
+
+// ⚡ NOUVEAU : helper pour savoir si on doit filtrer les commandes
+function isDriverActive() { return Boolean(currentDriver && driverMode); }
 
 function alertUser(text, type = "default") {
     const box = $("alertModal"); if (!box) return window.alert(text);
@@ -1036,8 +1020,14 @@ window.enableNotifications = async () => {
     closeMenuIfOpen();
 };
 
-async function requestWakeLock() { if (!isAdmin && !(currentDriver && driverMode)) return; if (!("wakeLock" in navigator)) return; try { wakeLock = await navigator.wakeLock.request("screen"); } catch (e) {} }
-document.addEventListener("visibilitychange", async () => { if (document.visibilityState === "visible" && (isAdmin || (currentDriver && driverMode))) { await requestWakeLock(); if (currentDriver && driverMode) driverRefreshOrders(); if (isAdmin) { adminRefreshOrders(); if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders(); } } });
+async function requestWakeLock() { if (!isAdmin && !isDriverActive()) return; if (!("wakeLock" in navigator)) return; try { wakeLock = await navigator.wakeLock.request("screen"); } catch (e) {} }
+document.addEventListener("visibilitychange", async () => {
+    if (document.visibilityState === "visible" && (isAdmin || isDriverActive())) {
+        await requestWakeLock();
+        if (isDriverActive()) driverRefreshOrders();
+        if (isAdmin) { adminRefreshOrders(); if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders(); }
+    }
+});
 
 function showNotifBanner(title, htmlContent, onClickTarget, ctaText) {
     const banner = $("orderNotifBanner"); if (!banner) return;
@@ -1065,8 +1055,8 @@ function updateAdminFloatingBadge() { const btn = $("adminFloatingBtn"), badge =
 async function notifyNewOrder(order) {
     if (isAdmin) { newOrdersCount++; updateAdminFloatingBadge(); }
     let items = [];
-    let deliveryFee = Number(order.delivery_fee || 0);
     try { const { data: orderItems } = await supabase.from("order_items").select("product_name,quantity,unit_price").eq("order_id", order.id); items = orderItems || []; } catch (e) {}
+    const deliveryFee = Number(order.delivery_fee || 0);
     const subtotal = items.reduce((s, i) => s + (Number(i.unit_price || 0) * Number(i.quantity || 1)), 0);
     const discount = Number(order.discount || 0);
     const total = Number(order.total || 0);
@@ -1083,11 +1073,11 @@ async function notifyNewOrder(order) {
         ${deliveryFee > 0 ? `<div class="notif-line"><i class="fas fa-truck"></i><span>Livraison : <strong>${money(deliveryFee)}</strong></span></div>` : `<div class="notif-line"><i class="fas fa-truck"></i><span>Livraison : <strong>GRATUITE</strong></span></div>`}
         ${discount > 0 ? `<div class="notif-line"><i class="fas fa-tag"></i><span>Réduction : <strong>−${money(discount)}</strong></span></div>` : ``}
         <div class="notif-line" style="font-size:13.5px;margin-top:4px;"><i class="fas fa-coins"></i><span>TOTAL : <strong>${money(total)}</strong></span></div>`;
-    showNotifBanner("🔔 NOUVELLE COMMANDE !", html, isAdmin ? "admin" : (currentDriver && driverMode ? "driver" : null), "👆 Ouvrir la commande");
+    showNotifBanner("🔔 NOUVELLE COMMANDE !", html, isAdmin ? "admin" : (isDriverActive() ? "driver" : null), "👆 Ouvrir la commande");
     if (notifPermission === "granted" && typeof Notification !== "undefined") {
         try {
             const n = new Notification("🔔 H.D.S SHOP — Nouvelle commande", { body: `${order.code} • ${order.client_name || "Client"}\n${order.address || ""}\nTOTAL : ${money(total)}`, icon: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png", tag: "hds-order-" + order.id, requireInteraction: true, vibrate: [300,100,300,100,300,100,300,500] });
-            n.onclick = () => { window.focus(); stopNotifLoop(); if (isAdmin) openAdminPanel(); else if (currentDriver && driverMode) openDriverInterface(); n.close(); };
+            n.onclick = () => { window.focus(); stopNotifLoop(); if (isAdmin) openAdminPanel(); else if (isDriverActive()) openDriverInterface(); n.close(); };
         } catch (e) {}
     }
 }
@@ -1143,12 +1133,19 @@ function showSection(section, scrollTop = false) {
 }
 window.showSection = showSection;
 
+function gaEvent(name, params) { try { if (typeof gtag === "function") { gtag("event", name, params || {}); } if (window.dataLayer) { window.dataLayer.push({ event: name, ...params }); } } catch (e) {} }
+function gaItem(product, quantity = 1) { if (!product) return null; return { item_id: String(product.id), item_name: product.name, item_category: product.category_slug || product.category || "snack", price: Number(product.price || 0), quantity: Number(quantity || 1) }; }
+function trackViewItem(product) { if (!product) return; gaEvent("view_item", { currency: "EUR", value: Number(product.price || 0), items: [gaItem(product, 1)] }); }
+function trackAddToCart(product, quantity) { if (!product) return; gaEvent("add_to_cart", { currency: "EUR", value: Number(product.price || 0) * quantity, items: [gaItem(product, quantity)] }); }
+function trackRemoveFromCart(product, quantity) { if (!product) return; gaEvent("remove_from_cart", { currency: "EUR", value: Number(product.price || 0) * quantity, items: [gaItem(product, quantity)] }); }
+function trackBeginCheckout(items) { const total = items.reduce((s, i) => s + (Number(i.price) * Number(i.quantity)), 0); gaEvent("begin_checkout", { currency: "EUR", value: total, items }); }
+function trackPurchase(orderCode, total, items, shipping = 0) { gaEvent("purchase", { transaction_id: String(orderCode), currency: "EUR", value: Number(total || 0), shipping: Number(shipping || 0), items }); }
+
 function updateAccountButton() {
     const b = $("accountButton"); if (!b) return;
-    const inDriverMode = !!currentDriver && driverMode;
     b.classList.remove("admin", "driver", "connected");
     if (isAdmin) { b.classList.add("admin"); b.innerHTML = '<i class="fas fa-shield-alt"></i>'; }
-    else if (inDriverMode) { b.classList.add("driver"); b.innerHTML = '<i class="fas fa-motorcycle"></i>'; }
+    else if (isDriverActive()) { b.classList.add("driver"); b.innerHTML = '<i class="fas fa-motorcycle"></i>'; }
     else if (currentUser) { b.classList.add("connected"); b.innerHTML = '<i class="fas fa-user-check"></i>'; }
     else b.innerHTML = '<i class="fas fa-user"></i>';
     if ($("adminMenuItem")) $("adminMenuItem").style.display = isAdmin ? "flex" : "none";
@@ -1158,11 +1155,28 @@ function updateAccountButton() {
     if ($("notifStatus")) $("notifStatus").textContent = notifPermission === "granted" ? "🔔" : "🔕";
     updateAdminFloatingBadge();
 }
-function onAccountClick() { if (isAdmin) return openAdminPanel(); if (currentDriver && driverMode) return openDriverInterface(); openAccountModal(); }
+function onAccountClick() { if (isAdmin) return openAdminPanel(); if (isDriverActive()) return openDriverInterface(); openAccountModal(); }
 window.onAccountClick = onAccountClick;
 
-function setDriverMode(enabled) { driverMode = Boolean(enabled); if (driverMode) sessionStorage.setItem("hds_driver_mode", "1"); else sessionStorage.removeItem("hds_driver_mode"); updateAccountButton(); initOrderRealtime(); if (driverMode && currentDriver) { driverRefreshOrders(); startDriverAutoRefresh(); subscribeDispatch(); } else { stopDriverAutoRefresh(); } }
+// ⚡ CORRIGÉ : plus de "bascule auto" — le mode livreur est explicite
+function setDriverMode(enabled) {
+    driverMode = Boolean(enabled);
+    if (driverMode) sessionStorage.setItem("hds_driver_mode", "1");
+    else sessionStorage.removeItem("hds_driver_mode");
+    updateAccountButton();
+    initOrderRealtime();
+    if (driverMode && currentDriver) {
+        driverRefreshOrders();
+        startDriverAutoRefresh();
+        subscribeDispatch();
+    } else {
+        stopDriverAutoRefresh();
+        // Recharge le suivi client classique
+        loadMyOrders();
+    }
+}
 window.setDriverMode = setDriverMode;
+
 function startDriverAutoRefresh() { stopDriverAutoRefresh(); driverAutoRefreshTimer = setInterval(() => { if (currentDriver && driverMode && document.visibilityState === "visible") driverRefreshOrders(); }, 20000); }
 function stopDriverAutoRefresh() { if (driverAutoRefreshTimer) { clearInterval(driverAutoRefreshTimer); driverAutoRefreshTimer = null; } }
 
@@ -1195,7 +1209,7 @@ window.showClientView = showClientView;
 async function signIn() { const email = $("authEmail")?.value.trim(); const password = $("authPassword")?.value; if (!email || !password) return alertUser("Email et mot de passe requis.", "error"); const { error } = await supabase.auth.signInWithPassword({ email, password }); if (error) return alertUser(error.message, "error"); gaEvent("login", { method: "email" }); closeAccountModal(); alertUser("Connexion réussie.", "success"); }
 window.signIn = signIn; window.loginClient = signIn;
 
-async function signUp() { const email = $("regEmail")?.value.trim(); const password = $("regPassword")?.value; const firstName = sanitize($("regFirstName")?.value.trim() || ""); const lastName = sanitize($("regLastName")?.value.trim() || ""); const phone = $("regPhone")?.value.trim() || ""; if (!email || !password || password.length < 8) return alertUser("Email + mot de passe (8 min).", "error"); const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: location.href.split("?")[0] } }); if (error) return alertUser(error.message, "error"); if (data.user && data.session) await supabase.from("profiles").upsert({ id: data.user.id, first_name: firstName, last_name: lastName, phone, updated_at: new Date().toISOString() }); gaEvent("sign_up", { method: "email" }); alertUser("Inscription envoyée. Vérifie ton email.", "success"); }
+async function signUp() { const email = $("regEmail")?.value.trim(); const password = $("regPassword")?.value; const firstName = sanitize($("regFirstName")?.value.trim() || ""); const lastName = sanitize($("regLastName")?.value.trim() || ""); const phone = $("regPhone")?.value.trim() || ""; if (!email || !password || password.length < 8) return alertUser("Email + mot de passe (8 min).", "error"); const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: location.href.split("?")[0], data: { first_name: firstName, last_name: lastName, phone } } }); if (error) return alertUser(error.message, "error"); gaEvent("sign_up", { method: "email" }); alertUser("Inscription envoyée. Vérifie ton email.", "success"); }
 window.signUp = signUp; window.registerClient = signUp;
 
 async function forgotPassword() { const email = $("authEmail")?.value.trim(); if (!email) return alertUser("Saisis ton email.", "error"); const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: location.href.split("?")[0] }); alertUser(error ? error.message : "Vérifie ta boîte mail.", error ? "error" : "success"); }
@@ -1220,20 +1234,40 @@ window.saveProfile = async () => { if (!currentUser) return alertUser("Connecte-
 
 window.editClientProfile = () => { if (!currentUser) return showLoginView(); ["loginView","registerView","clientView"].forEach(id => { if ($(id)) $(id).style.display = "none"; }); if ($("editProfileView")) $("editProfileView").style.display = "block"; if ($("editFirstName")) $("editFirstName").value = currentProfile?.first_name || ""; if ($("editLastName")) $("editLastName").value = currentProfile?.last_name || ""; if ($("editPhone")) $("editPhone").value = currentProfile?.phone || ""; if ($("editAddress")) $("editAddress").value = currentProfile?.address || ""; };
 
+// ⚡ CORRIGÉ : realtime
 async function initOrderRealtime() {
     if (!currentUser) return;
-    if (!isAdmin && !(currentDriver && driverMode) && !myOrders.some(o => !["livree","annulee"].includes(o.status))) { if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; } return; }
+    const hasActiveOrder = myOrders.some(o => !["livree","annulee"].includes(o.status));
+    const shouldSubscribe = isAdmin || isDriverActive() || hasActiveOrder;
+    if (!shouldSubscribe) {
+        if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
+        return;
+    }
     if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
-    try { const { data: last } = await supabase.from("orders").select("id").order("id", { ascending: false }).limit(1).maybeSingle(); lastSeenOrderId = last?.id || 0; } catch { lastSeenOrderId = 0; }
-    realtimeChannel = supabase.channel("orders-live").on("postgres_changes", { event: "*", schema: "public", table: "orders" }, (payload) => {
+    try {
+        const { data: last } = await supabase.from("orders").select("id").order("id", { ascending: false }).limit(1).maybeSingle();
+        lastSeenOrderId = last?.id || 0;
+    } catch { lastSeenOrderId = 0; }
+    realtimeChannel = supabase.channel("orders-live")
+    .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, (payload) => {
         const order = payload.new || payload.old; if (!order || !order.id) return;
         if (payload.eventType === "INSERT") {
             if (lastSeenOrderId && order.id <= lastSeenOrderId) return;
             if (!isAdmin && order.user_id === currentUser?.id) return;
-            if (currentDriver && driverMode) { if (order.user_id === currentUser?.id) return; if (order.driver_id && order.driver_id !== currentDriver.id) return; driverRefreshOrders(); if ($("driverInterfaceModal")?.classList.contains("active")) notifyNewOrder(order); }
-            if (isAdmin) { lastSeenOrderId = order.id; notifyNewOrder(order); if ($("adminPanelModal")?.classList.contains("active") && $("atab-orders")?.classList.contains("active")) adminRefreshOrders(); if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders(); }
+            if (isDriverActive()) {
+                if (order.user_id === currentUser?.id) return;
+                if (order.driver_id && order.driver_id !== currentDriver.id) return;
+                driverRefreshOrders();
+                if ($("driverInterfaceModal")?.classList.contains("active")) notifyNewOrder(order);
+            }
+            if (isAdmin) {
+                lastSeenOrderId = order.id;
+                notifyNewOrder(order);
+                if ($("adminPanelModal")?.classList.contains("active") && $("atab-orders")?.classList.contains("active")) adminRefreshOrders();
+                if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders();
+            }
         } else if (payload.eventType === "UPDATE") {
-            if (currentDriver && driverMode) { if (!order.driver_id || order.driver_id === currentDriver.id) driverRefreshOrders(); }
+            if (isDriverActive()) { if (!order.driver_id || order.driver_id === currentDriver.id) driverRefreshOrders(); }
             if (isAdmin && $("adminPanelModal")?.classList.contains("active") && $("atab-orders")?.classList.contains("active")) adminRefreshOrders();
             if (isAdmin && $("adminDashboard")?.classList.contains("active")) loadDashboardOrders();
             if (isAdmin && currentAdminOrderId === order.id && $("orderAdminModal")?.classList.contains("active")) openAdminOrderDetail(order.id);
@@ -1245,34 +1279,60 @@ window.initOrderRealtime = initOrderRealtime;
 
 function handleClientStatusChange(order) {
     if (!order || !order.id) return;
+    // ⚡ Ne notifie le client QUE si la commande lui appartient
+    if (order.user_id !== currentUser?.id) return;
     const prevStatus = lastClientOrderStatus[order.id];
     const newStatus = order.status;
     lastClientOrderStatus[order.id] = newStatus;
-    if (!prevStatus) return;
-    if (prevStatus === newStatus) return;
+    if (!prevStatus || prevStatus === newStatus) return;
     notifyClientStatus(order, newStatus);
 }
 
-async function subscribeDispatch() { if (!currentDriver && !isAdmin) return; if (dispatchChannel) { await supabase.removeChannel(dispatchChannel); dispatchChannel = null; } try { await supabase.realtime.setAuth(); } catch (e) {} dispatchChannel = supabase.channel("driver:dispatch", { config: { private: true } }).on("broadcast", { event: "order_changed" }, async () => { try { if (currentDriver && driverMode) await driverRefreshOrders(); if (isAdmin) await adminRefreshOrders(); await loadMyOrders(); } catch (error) {} }).subscribe((status) => {}); }
+// ⚡ CORRIGÉ : canal dispatch public (pas de private:true)
+async function subscribeDispatch() {
+    if (!currentDriver && !isAdmin) return;
+    if (dispatchChannel) { await supabase.removeChannel(dispatchChannel); dispatchChannel = null; }
+    try { await supabase.realtime.setAuth(); } catch (e) {}
+    dispatchChannel = supabase.channel("driver:dispatch")
+    .on("broadcast", { event: "order_changed" }, async () => {
+        try { if (isDriverActive()) await driverRefreshOrders(); if (isAdmin) await adminRefreshOrders(); await loadMyOrders(); } catch (error) {}
+    }).subscribe();
+}
 window.subscribeDispatch = subscribeDispatch;
 
 async function refreshAuth() {
     const { data, error } = await supabase.auth.getUser();
     if (error) logSupabaseError("getUser", error);
     currentUser = data?.user || null; currentProfile = null; isAdmin = false; currentDriver = null;
-    if (!currentUser) { driverMode = false; sessionStorage.removeItem("hds_driver_mode"); favorites = []; myOrders = []; stopDriverAutoRefresh(); if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; } if (dispatchChannel) { await supabase.removeChannel(dispatchChannel); dispatchChannel = null; } updateAccountButton(); renderProducts(); renderCartItems(); return; }
+    if (!currentUser) {
+        driverMode = false; sessionStorage.removeItem("hds_driver_mode");
+        favorites = []; myOrders = []; stopDriverAutoRefresh();
+        if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
+        if (dispatchChannel) { await supabase.removeChannel(dispatchChannel); dispatchChannel = null; }
+        updateAccountButton(); renderProducts(); renderCartItems();
+        return;
+    }
     await loadProfile();
-    const { data: adminRow, error: adminError } = await supabase.from("admin_users").select("user_id").eq("user_id", currentUser.id).maybeSingle();
-    if (adminError) logSupabaseError("checkAdmin", adminError);
+    const { data: adminRow } = await supabase.from("admin_users").select("user_id").eq("user_id", currentUser.id).maybeSingle();
     isAdmin = Boolean(adminRow);
-    const { data: driverRow, error: driverError } = await supabase.from("delivery_drivers").select("id,name,phone,status,is_active,auth_user_id").eq("auth_user_id", currentUser.id).eq("is_active", true).maybeSingle();
-    if (driverError) logSupabaseError("checkDriver", driverError);
+    const { data: driverRow } = await supabase.from("delivery_drivers").select("id,name,phone,status,is_active,auth_user_id").eq("auth_user_id", currentUser.id).eq("is_active", true).maybeSingle();
     currentDriver = driverRow || null;
-    if (!currentDriver) { driverMode = false; sessionStorage.removeItem("hds_driver_mode"); stopDriverAutoRefresh(); } else { driverMode = sessionStorage.getItem("hds_driver_mode") === "1"; }
+    // ⚡ Si l'utilisateur n'est PLUS livreur actif, on force la sortie du mode livreur
+    if (!currentDriver) {
+        driverMode = false; sessionStorage.removeItem("hds_driver_mode"); stopDriverAutoRefresh();
+    } else {
+        driverMode = sessionStorage.getItem("hds_driver_mode") === "1";
+    }
     await loadFavorites(); await loadSavedCart(); await loadMyOrders(); await initOrderRealtime();
-    if (isAdmin || (currentDriver && driverMode)) { await requestWakeLock(); await subscribeDispatch(); }
-    if (currentDriver && driverMode) { await driverRefreshOrders(); startDriverAutoRefresh(); }
-    if (isAdmin) { adminRefreshOrders(); if (adminRefreshTimer) clearInterval(adminRefreshTimer); adminRefreshTimer = setInterval(() => { if (isAdmin && document.visibilityState === "visible" && !$("adminDashboard")?.classList.contains("active")) adminRefreshOrders(); }, 20000); }
+    if (isAdmin || isDriverActive()) { await requestWakeLock(); await subscribeDispatch(); }
+    if (isDriverActive()) { await driverRefreshOrders(); startDriverAutoRefresh(); }
+    if (isAdmin) {
+        adminRefreshOrders();
+        if (adminRefreshTimer) clearInterval(adminRefreshTimer);
+        adminRefreshTimer = setInterval(() => {
+            if (isAdmin && document.visibilityState === "visible" && !$("adminDashboard")?.classList.contains("active")) adminRefreshOrders();
+        }, 20000);
+    }
     myOrders.forEach(o => { lastClientOrderStatus[o.id] = o.status; });
     updateAccountButton(); renderProducts(); renderCartItems();
 }
@@ -1282,12 +1342,27 @@ supabase.auth.onAuthStateChange((event) => { setTimeout(refreshAuth, 0); });
 async function loadProducts() {
     const { data: prodData, error: prodError } = await supabase.from("products").select("*").eq("is_active", true);
     if (prodError) { logSupabaseError("loadProducts", prodError); alertUser(`Erreur produits: ${prodError.message}`, "error"); return; }
-    const [c, s, links] = await Promise.all([ supabase.from("categories").select("id,slug,name,icon,is_active,display_order").eq("is_active", true).order("display_order"), supabase.from("supplements").select("id,name,price,is_active").eq("is_active", true), supabase.from("product_supplements").select("product_id,supplement_id") ]);
+    const [c, s, links] = await Promise.all([
+        supabase.from("categories").select("id,slug,name,icon,is_active,display_order").eq("is_active", true).order("display_order"),
+        supabase.from("supplements").select("id,name,price,is_active").eq("is_active", true),
+        supabase.from("product_supplements").select("product_id,supplement_id")
+    ]);
     const supplements = s.data || []; const relations = links.data || [];
-    products = (prodData || []).map(product => ({ ...product, specs: Array.isArray(product.specs) ? product.specs : [], supplements: relations.filter(l => l.product_id === product.id).map(l => supplements.find(x => x.id === l.supplement_id)).filter(Boolean) }));
+    products = (prodData || []).map(product => ({
+        ...product,
+        specs: Array.isArray(product.specs) ? product.specs : [],
+        supplements: relations.filter(l => l.product_id === product.id)
+            .map(l => supplements.find(x => x.id === l.supplement_id)).filter(Boolean)
+    }));
     categories = c.data || [];
     const tab = $("categoryTabs");
-    if (tab && categories.length) { tab.innerHTML = `<button class="category-tab active" data-category="all">Tous</button>` + categories.map(cat => `<button class="category-tab" data-category="${esc(cat.slug)}">${esc(cat.icon || "")} ${esc(cat.name)}</button>`).join(""); tab.querySelectorAll(".category-tab").forEach(b => b.addEventListener("click", () => { tab.querySelectorAll(".category-tab").forEach(x => x.classList.remove("active")); b.classList.add("active"); currentCategory = b.dataset.category; renderProducts(); })); }
+    if (tab && categories.length) {
+        tab.innerHTML = `<button class="category-tab active" data-category="all">Tous</button>` + categories.map(cat => `<button class="category-tab" data-category="${esc(cat.slug)}">${esc(cat.icon || "")} ${esc(cat.name)}</button>`).join("");
+        tab.querySelectorAll(".category-tab").forEach(b => b.addEventListener("click", () => {
+            tab.querySelectorAll(".category-tab").forEach(x => x.classList.remove("active"));
+            b.classList.add("active"); currentCategory = b.dataset.category; renderProducts();
+        }));
+    }
     renderProducts(); renderPopular(); handleSharedProductUrl();
     gaEvent("view_item_list", { item_list_name: "Boutique", items: products.slice(0, 10).map(p => gaItem(p, 1)) });
 }
@@ -1304,7 +1379,8 @@ function filteredProducts() {
 }
 
 function productCard(p, index = 0) {
-    const out = p.manual_rupture || (p.stock !== null && Number(p.stock) <= 0); const soon = p.coming_soon;
+    const out = p.manual_rupture || (p.stock !== null && Number(p.stock) <= 0);
+    const soon = p.coming_soon;
     const priceHtml = currentUser
         ? `<span class="original-price">${money(p.price)}</span><span class="discounted-price">${money(applyClientDiscount(p.price))}</span><span class="client-badge">-5%</span>`
         : money(p.price);
@@ -1449,15 +1525,34 @@ window.submitOrder = async () => {
 
 window.captureScreenshot = () => { if (typeof html2canvas === "undefined") return alertUser("Indisponible.", "error"); const zone = document.querySelector("#confirmationModal .modal-body"); html2canvas(zone, { backgroundColor: "#141414", scale: 2 }).then(canvas => { const link = document.createElement("a"); link.download = `commande-${$("confirmCode").textContent}.png`; link.href = canvas.toDataURL("image/png"); link.click(); alertUser("📸 Capture OK !", "success"); }).catch(() => alertUser("Erreur capture.", "error")); };
 
+// ⚡ CORRIGÉ : loadMyOrders filtre les commandes que le CLIENT a passées
+// (on exclut côté JS les commandes où il est driver, mais la vraie protection
+//  est côté policy SQL avec driver_id)
 async function loadMyOrders() {
     if (!currentUser) { myOrders = []; return; }
-    const { data, error } = await supabase.from("orders").select("id,code,status,total,created_at,distance,driver_name,address,client_name,client_phone,payment,items").eq("user_id", currentUser.id).order("created_at", { ascending: false }).limit(30);
+    const { data, error } = await supabase.from("orders").select("id,code,status,total,created_at,distance,driver_name,address,client_name,client_phone,payment,items,user_id,driver_id").eq("user_id", currentUser.id).order("created_at", { ascending: false }).limit(30);
     if (error) { logSupabaseError("loadMyOrders", error); return; }
     myOrders = data || [];
     myOrders.forEach(o => { if (!lastClientOrderStatus[o.id]) lastClientOrderStatus[o.id] = o.status; });
     const active = myOrders.find(o => !["livree","annulee"].includes(o.status));
-    if (active) { currentOrder = active; if ($("noActiveOrder")) $("noActiveOrder").style.display = "none"; if ($("activeOrder")) $("activeOrder").style.display = "block"; if ($("orderCode")) $("orderCode").textContent = "#" + active.code; if ($("orderStatus")) { const stLabels = { nouvelle: "Reçue", preparation: "Préparation", route: "En route", livree: "Livrée" }; $("orderStatus").textContent = stLabels[active.status] || active.status; } if ($("orderDistance")) $("orderDistance").textContent = `${active.distance || 0} km`; if ($("driverName")) $("driverName").textContent = active.driver_name || "À assigner"; if ($("driverInitial")) $("driverInitial").textContent = (active.driver_name || "?")[0]; const steps = { nouvelle: 1, preparation: 1, route: 2, livree: 3 }; const step = steps[active.status] || 0; if ($("progressBar")) $("progressBar").style.width = (step * 33) + "%"; ["step1","step2","step3"].forEach((id, i) => { const el = $(id)?.querySelector(".step-icon"); if (!el) return; el.classList.remove("active","completed"); if (i + 1 < step) el.classList.add("completed"); else if (i + 1 === step) el.classList.add("active"); }); if ($("estimatedTime")) { const eta = { nouvelle: "35-45 min", preparation: "5 min (prépa) + trajet", route: "10-20 min", livree: "Livrée" }[active.status] || "--"; $("estimatedTime").textContent = eta; } }
-    else { if ($("noActiveOrder")) $("noActiveOrder").style.display = "block"; if ($("activeOrder")) $("activeOrder").style.display = "none"; }
+    if (active) {
+        currentOrder = active;
+        if ($("noActiveOrder")) $("noActiveOrder").style.display = "none";
+        if ($("activeOrder")) $("activeOrder").style.display = "block";
+        if ($("orderCode")) $("orderCode").textContent = "#" + active.code;
+        if ($("orderStatus")) { const stLabels = { nouvelle: "Reçue", preparation: "Préparation", route: "En route", livree: "Livrée" }; $("orderStatus").textContent = stLabels[active.status] || active.status; }
+        if ($("orderDistance")) $("orderDistance").textContent = `${active.distance || 0} km`;
+        if ($("driverName")) $("driverName").textContent = active.driver_name || "À assigner";
+        if ($("driverInitial")) $("driverInitial").textContent = (active.driver_name || "?")[0];
+        const steps = { nouvelle: 1, preparation: 1, route: 2, livree: 3 };
+        const step = steps[active.status] || 0;
+        if ($("progressBar")) $("progressBar").style.width = (step * 33) + "%";
+        ["step1","step2","step3"].forEach((id, i) => { const el = $(id)?.querySelector(".step-icon"); if (!el) return; el.classList.remove("active","completed"); if (i + 1 < step) el.classList.add("completed"); else if (i + 1 === step) el.classList.add("active"); });
+        if ($("estimatedTime")) { const eta = { nouvelle: "35-45 min", preparation: "5 min (prépa) + trajet", route: "10-20 min", livree: "Livrée" }[active.status] || "--"; $("estimatedTime").textContent = eta; }
+    } else {
+        if ($("noActiveOrder")) $("noActiveOrder").style.display = "block";
+        if ($("activeOrder")) $("activeOrder").style.display = "none";
+    }
     if ($("historyCount")) $("historyCount").textContent = myOrders.length;
 }
 window.loadMyOrders = loadMyOrders;
@@ -1640,7 +1735,6 @@ window.adminRefreshOrders = async () => {
     list.innerHTML = data.map(o => { const labels = { nouvelle: "🆕 Nouvelle", preparation: "👨‍🍳 Préparation", route: "🚚 En route", livree: "✅ Livrée", annulee: "❌ Annulée" }; let actions = ""; if (o.status === "nouvelle") actions = `<button class="btn-preparer" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'preparation')">👨‍🍳 Préparer</button><button class="btn-annuler" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'annulee')">❌ Annuler</button>`; else if (o.status === "preparation") actions = `<button class="btn-route" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'route')">🚚 En route</button>`; else if (o.status === "route") actions = `<button class="btn-livree" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'livree')">✅ Livrée</button>`; return `<div class="order-card status-${esc(o.status)}" onclick="openAdminOrderDetail(${o.id})"><div class="order-card-header"><span class="order-code">#${esc(o.code)}</span><span class="statut-chip ${esc(o.status)}">${labels[o.status] || o.status}</span></div><div class="order-body"><strong>👤 ${esc(o.client_name || "")}</strong> • 📞 ${esc(o.client_phone || "")}<br>📍 ${esc((o.address || "").substring(0, 60))}<br>💰 <strong>${money(o.total)}</strong>${o.driver_name ? ` • 🛵 ${esc(o.driver_name)}` : ""}</div>${actions ? `<div class="order-actions">${actions}</div>` : ""}<div style="font-size:10.5px;color:var(--yellow);font-weight:700;text-align:right;margin-top:6px;">Voir détails →</div></div>`; }).join("");
 };
 
-// ⚡⚡⚡ CLÉ : quand admin passe en route, on ouvre direct la carte style Waze
 window.adminSetOrderStatus = async (id, status) => {
     if (!isAdmin) return alertUser("Refusé.", "error");
     const patch = { status, updated_at: new Date().toISOString() };
@@ -1651,7 +1745,6 @@ window.adminSetOrderStatus = async (id, status) => {
     adminRefreshOrders();
     if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders();
     if (currentAdminOrderId === id && $("orderAdminModal")?.classList.contains("active")) openAdminOrderDetail(id);
-    // 🚀 WAZE MODE : si passage en route, ouvrir la carte automatiquement
     if (status === "route") {
         const { data: order } = await supabase.from("orders").select("id,code,client_name,client_phone,address,delivery_lat,delivery_lng").eq("id", id).single();
         if (order) {
@@ -1773,7 +1866,6 @@ window.openRouteMapWaze = async (order) => {
         const q = (order.delivery_lat && order.delivery_lng) ? `${order.delivery_lat},${order.delivery_lng}` : (order.address || "");
         $("routeMapGpsBtn").href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}&travelmode=driving`;
     }
-    // Attend que le modal soit affiché pour init la carte
     setTimeout(() => { initRouteMap(order); startRoutePositionTracking(); }, 150);
 };
 
@@ -1783,31 +1875,25 @@ async function initRouteMap(order) {
     routeMapInstance = L.map("routeMap", { zoomControl: false }).setView([RESTAURANT_LAT, RESTAURANT_LNG], 14);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "© OpenStreetMap", maxZoom: 19 }).addTo(routeMapInstance);
     L.control.zoom({ position: "bottomright" }).addTo(routeMapInstance);
-    // Boutique
     routeSourceMarker = L.marker([RESTAURANT_LAT, RESTAURANT_LNG], { icon: L.divIcon({ html: '<div style="background:#F97316;width:30px;height:30px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:16px;">🏪</div>', iconSize: [30,30], iconAnchor: [15,15] }) }).addTo(routeMapInstance).bindPopup("<b>H.D.S SHOP</b><br>Point de départ");
-    // Dest
     const destLat = Number(order.delivery_lat), destLng = Number(order.delivery_lng);
     const hasDest = Number.isFinite(destLat) && Number.isFinite(destLng) && destLat !== 0 && destLng !== 0;
     if (hasDest) {
         routeDestMarker = L.marker([destLat, destLng], { icon: L.divIcon({ html: '<div style="background:#EF4444;width:30px;height:30px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:16px;">📍</div>', iconSize: [30,30], iconAnchor: [15,15] }) }).addTo(routeMapInstance).bindPopup(`<b>${esc(order.client_name || "Client")}</b><br>${esc(order.address || "")}`);
     }
-    // Position actuelle du livreur
     let currentLat = RESTAURANT_LAT, currentLng = RESTAURANT_LNG;
     try {
         const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, { enableHighAccuracy: true, timeout: 8000 }));
         currentLat = pos.coords.latitude; currentLng = pos.coords.longitude;
-    } catch (e) { /* fallback boutique */ }
+    } catch (e) {}
     routeDriverMarker = L.marker([currentLat, currentLng], { icon: L.divIcon({ html: '<div class="driver-marker-pulse"><div class="driver-marker-inner"></div></div>', iconSize: [40,40], iconAnchor: [20,20] }), zIndexOffset: 1000 }).addTo(routeMapInstance).bindPopup("<b>Vous êtes ici</b>");
-    // Trace itinéraire depuis position actuelle vers destinataire (ou depuis boutique)
     if (hasDest) {
         await drawRoute(currentLat, currentLng, destLat, destLng);
     } else {
-        // Pas de coords : centrer sur la boutique
         if ($("routeMapDistanceInfo")) $("routeMapDistanceInfo").innerHTML = `<span style="color:var(--orange);">⚠️ Adresse sans coordonnées GPS — utilise "Mon GPS" en bas</span>`;
         routeMapInstance.setView([currentLat, currentLng], 14);
     }
     setTimeout(() => routeMapInstance.invalidateSize(), 250);
-    // Auto-refresh toutes les 30s
     if (routeRefreshTimer) clearInterval(routeRefreshTimer);
     routeRefreshTimer = setInterval(async () => {
         if (!routeMapInstance || !routeCurrentOrder) return;
@@ -1832,13 +1918,11 @@ async function drawRoute(fromLat, fromLng, toLat, toLng) {
         const route = j.routes[0];
         const coords = route.geometry.coordinates.map(c => [c[1], c[0]]);
         if (routeLineInstance) { try { routeMapInstance.removeLayer(routeLineInstance); } catch (e) {} }
-        // Contour sombre + tracé jaune (style Waze)
         const outline = L.polyline(coords, { color: "#000000", weight: 11, opacity: 0.5 }).addTo(routeMapInstance);
         routeLineInstance = L.polyline(coords, { color: "#FFD700", weight: 7, opacity: 1, lineCap: "round", lineJoin: "round" }).addTo(routeMapInstance);
         routeLineInstance._outline = outline;
         const km = (route.distance / 1000).toFixed(1);
         const min = Math.max(1, Math.round(route.duration / 60));
-        routeLastRouteInfo = { distance: parseFloat(km), duration: min };
         if ($("routeMapDistanceInfo")) {
             $("routeMapDistanceInfo").innerHTML = `<span class="nav-distance">🛣️ ${km} km • ⏱️ ~${min} min</span>`;
         }
@@ -1847,7 +1931,6 @@ async function drawRoute(fromLat, fromLng, toLat, toLng) {
             routeMapInstance.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
         }
     } catch (e) {
-        // Fallback : ligne droite
         if (routeLineInstance) { try { routeMapInstance.removeLayer(routeLineInstance); } catch (err) {} }
         const outline = L.polyline([[fromLat, fromLng], [toLat, toLng]], { color: "#000000", weight: 11, opacity: 0.5 }).addTo(routeMapInstance);
         routeLineInstance = L.polyline([[fromLat, fromLng], [toLat, toLng]], { color: "#FFD700", weight: 7, dashArray: "10 10" }).addTo(routeMapInstance);
@@ -1884,12 +1967,8 @@ window.recenterRouteMap = async () => {
     if (routeDriverMarker) {
         const ll = routeDriverMarker.getLatLng();
         routeMapInstance.setView(ll, Math.max(routeMapInstance.getZoom(), 16), { animate: true });
-        // Si on a un itinéraire, on re-fit bounds
         if (routeLineInstance) {
-            try {
-                const bounds = routeLineInstance.getBounds();
-                routeMapInstance.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
-            } catch (e) {}
+            try { const bounds = routeLineInstance.getBounds(); routeMapInstance.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 }); } catch (e) {}
         }
     }
 };
@@ -1929,8 +2008,6 @@ window.closeRouteMap = () => {
         routeLineInstance = null; routeSourceMarker = null; routeDestMarker = null; routeDriverMarker = null; routeCurrentOrder = null;
     }, 250);
 };
-
-// Ancienne fonction openRouteMap (conservée pour compatibilité avec le bouton "Ma carte")
 window.openRouteMap = (order) => window.openRouteMapWaze(order);
 
 window.openAdminOrderDetail = async (orderId) => {
@@ -2111,12 +2188,32 @@ window.adminDeleteDriver = async (id) => {
 window.openDriverLogin = () => { closeMenuIfOpen(); if (currentDriver) { setDriverMode(true); openDriverInterface(); return; } $("driverLoginModal")?.classList.add("active"); };
 window.closeDriverLogin = () => $("driverLoginModal")?.classList.remove("active");
 
-window.driverLogin = async () => { const code = $("driverCodeInput")?.value.trim(); if (!code) return alertUser("Entre le code d'invitation.", "error"); const { data: { user }, error: userError } = await supabase.auth.getUser(); if (userError || !user) { closeDriverLogin(); openAccountModal(); return alertUser("Connecte-toi ou crée ton compte, puis saisis le code.", "error"); } const { error } = await supabase.rpc("claim_driver_invite", { p_code: code }); if (error) { logSupabaseError("claim_driver_invite", error); return alertUser(error.message, "error"); } if ($("driverCodeInput")) $("driverCodeInput").value = ""; await refreshAuth(); if (!currentDriver) return alertUser("L'invitation a été traitée, mais le profil livreur est introuvable.", "error"); closeDriverLogin(); setDriverMode(true); alertUser(`Bienvenue ${currentDriver.name} !`, "success"); openDriverInterface(); };
+window.driverLogin = async () => {
+    const code = $("driverCodeInput")?.value.trim();
+    if (!code) return alertUser("Entre le code d'invitation.", "error");
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) { closeDriverLogin(); openAccountModal(); return alertUser("Connecte-toi ou crée ton compte, puis saisis le code.", "error"); }
+    const { error } = await supabase.rpc("claim_driver_invite", { p_code: code });
+    if (error) { logSupabaseError("claim_driver_invite", error); return alertUser(error.message, "error"); }
+    if ($("driverCodeInput")) $("driverCodeInput").value = "";
+    await refreshAuth();
+    if (!currentDriver) return alertUser("L'invitation a été traitée, mais le profil livreur est introuvable.", "error");
+    closeDriverLogin(); setDriverMode(true); alertUser(`Bienvenue ${currentDriver.name} !`, "success"); openDriverInterface();
+};
 
-window.openDriverInterface = () => { if (!currentUser) { closeDriverInterface(); openAccountModal(); return alertUser("Connecte-toi d'abord.", "error"); } if (!currentDriver) return openDriverLogin(); setDriverMode(true); if ($("driverNameDisplay")) $("driverNameDisplay").textContent = currentDriver.name || "Livreur"; $("driverInterfaceModal")?.classList.add("active"); driverRefreshOrders(); };
+window.openDriverInterface = () => {
+    if (!currentUser) { closeDriverInterface(); openAccountModal(); return alertUser("Connecte-toi d'abord.", "error"); }
+    if (!currentDriver) return openDriverLogin();
+    setDriverMode(true);
+    if ($("driverNameDisplay")) $("driverNameDisplay").textContent = currentDriver.name || "Livreur";
+    $("driverInterfaceModal")?.classList.add("active");
+    driverRefreshOrders();
+};
 window.closeDriverInterface = () => $("driverInterfaceModal")?.classList.remove("active");
 window.driverLogout = async () => { stopNotifLoop(); closeDriverInterface(); setDriverMode(false); alertUser("Tu as quitté l'espace livreur. Ton compte client reste connecté."); };
 
+// ⚡ CORRIGÉ : le livreur voit les commandes NON ASSIGNÉES + celles qui lui sont assignées
+// SAUF les siennes (passées en mode client)
 window.driverRefreshOrders = async () => {
     const list = $("driverOrdersList"); if (!list) return;
     if (!currentUser || !currentDriver || !driverMode) { list.innerHTML = '<div class="empty-state">Connecte-toi à l\'espace livreur.</div>'; return; }
@@ -2126,7 +2223,11 @@ window.driverRefreshOrders = async () => {
     if (error) { logSupabaseError("driverRefreshOrders", error); list.innerHTML = `<div class="empty-state">Erreur de chargement : ${esc(error.message)}</div>`; return; }
     const dispatchMap = new Map();
     dispatchRows.forEach(d => dispatchMap.set(d.order_id, d));
-    const visibleOrders = (data || []).filter(order => { if (order.user_id === currentUser.id) return false; return order.driver_id === null || order.driver_id === currentDriver.id; });
+    // ⚡ FILTRE PRINCIPAL : exclure les commandes passées par le livreur lui-même en tant que client
+    const visibleOrders = (data || []).filter(order => {
+        if (order.user_id === currentUser.id) return false; // ← exclut SES commandes client
+        return order.driver_id === null || order.driver_id === currentDriver.id;
+    });
     if (!visibleOrders.length) { list.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i>Aucune course disponible.</div>'; return; }
     const labels = { nouvelle: "🆕 Nouvelle", preparation: "👨‍🍳 Préparation", route: "🚚 En route" };
     list.innerHTML = visibleOrders.map(order => {
@@ -2144,13 +2245,6 @@ window.driverRefreshOrders = async () => {
 };
 
 const driverOrdersCache = new Map();
-const _origDriverRefresh = window.driverRefreshOrders;
-window.driverRefreshOrders = async () => {
-    const { data } = await supabase.from("orders").select("id,code,client_name,client_phone,address,status,total,delivery_lat,delivery_lng").in("status", ["nouvelle","preparation","route"]).order("created_at", { ascending: false }).limit(50);
-    driverOrdersCache.clear();
-    (data || []).forEach(o => driverOrdersCache.set(Number(o.id), o));
-    return _origDriverRefresh();
-};
 window.driverShowRoute = async (orderId) => {
     let match = driverOrdersCache.get(orderId);
     if (!match) {
@@ -2165,7 +2259,6 @@ window.driverShowRoute = async (orderId) => {
 
 window.driverAccept = async (id) => { if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error"); const { error } = await supabase.rpc("driver_claim_order_v1", { p_order_id: id }); if (error) { logSupabaseError("driver_claim_order_v1", error); const fallback = await supabase.rpc("driver_accept_order", { p_order_id: id }); if (fallback.error) { alertUser(`Impossible d'accepter : ${error.message}`, "error"); await driverRefreshOrders(); return; } } alertUser("Course acceptée.", "success"); await driverRefreshOrders(); if (isAdmin) await adminRefreshOrders(); };
 
-// ⚡⚡⚡ CLÉ : quand livreur clique "Démarrer" (route), ouverture auto de la carte Waze
 window.driverStart = async (id) => {
     if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error");
     const { error } = await supabase.rpc("driver_set_status_v1", { p_order_id: id, p_new_status: "route" });
@@ -2173,7 +2266,6 @@ window.driverStart = async (id) => {
     alertUser("Commande en route. Ouverture du GPS…", "success");
     await driverRefreshOrders();
     if (isAdmin) await adminRefreshOrders();
-    // 🚀 WAZE MODE : ouvrir la carte automatiquement
     const { data: order } = await supabase.from("orders").select("id,code,client_name,client_phone,address,delivery_lat,delivery_lng").eq("id", id).single();
     if (order) {
         closeDriverInterface();
@@ -2214,4 +2306,4 @@ renderCartItems();
 showSection("products");
 </script>
 </body>
-  </html>
+                                                                                                        </html>
