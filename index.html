@@ -514,6 +514,31 @@ input,textarea,select{font-family:inherit}
 .video-admin-item .vai-infos span{font-size:10px;color:var(--text-dim);word-break:break-all}
 .video-admin-item .vai-actions{display:flex;gap:4px;flex-shrink:0}
 
+/* ============ WAZE-STYLE ROUTE MAP ============ */
+#routeMapModal .modal{max-width:760px;padding:0;overflow:hidden;background:#0A0A0A}
+#routeMapModal .modal-header{background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,152,0,0.1));border-bottom:1px solid rgba(255,215,0,0.3)}
+#routeMapModal .modal-body{padding:0;position:relative}
+#routeMap{width:100%;height:60vh;min-height:400px;background:#111;z-index:1}
+@media (min-width:768px){#routeMap{height:65vh;min-height:500px}}
+#routeMapInfo{padding:12px 16px;font-size:12.5px;color:var(--text);background:var(--card-hover);border-bottom:1px solid var(--border);line-height:1.6}
+#routeMapInfo strong{color:var(--yellow)}
+#routeMapInfo .nav-distance{display:inline-flex;align-items:center;gap:6px;background:rgba(255,215,0,0.15);border:1px solid var(--yellow);padding:4px 10px;border-radius:20px;font-weight:900;color:var(--yellow);margin-top:6px;font-size:13px}
+.route-map-actions{padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);background:var(--card)}
+.route-map-actions a,.route-map-actions button{flex:1;min-width:130px;margin:0;padding:12px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--r-md);font-weight:800;font-size:12.5px}
+.route-map-actions .btn-navigate{background:linear-gradient(135deg,var(--yellow),var(--gold));color:#000;border:none}
+.route-map-actions .btn-gps{background:var(--blue);color:white;border:none}
+.route-map-actions .btn-call{background:var(--green);color:white;border:none}
+.route-map-actions .btn-refresh{background:var(--card-hover);color:var(--text);border:1px solid var(--border)}
+.route-floating-controls{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:8px;z-index:10}
+.route-floating-controls button{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--yellow);color:var(--yellow);font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.6);cursor:pointer;transition:transform 0.15s}
+.route-floating-controls button:hover{transform:scale(1.08);background:var(--yellow);color:#000}
+.route-floating-controls button:active{transform:scale(0.95)}
+.route-status-badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,var(--green),#16A34A);color:white;padding:8px 14px;border-radius:20px;font-size:11px;font-weight:900;z-index:10;box-shadow:0 4px 16px rgba(34,197,94,0.6);display:flex;align-items:center;gap:6px;letter-spacing:0.3px}
+.route-status-badge .live-dot{width:8px;height:8px;background:white;border-radius:50%;animation:livePulse 1.2s infinite}
+.driver-marker-pulse{background:rgba(59,130,246,0.3);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;animation:pulseDriverMarker 1.5s infinite}
+@keyframes pulseDriverMarker{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:0.6}}
+.driver-marker-inner{background:#3B82F6;width:20px;height:20px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px #3B82F6}
+
 @media (max-width:380px){.products-grid{grid-template-columns:1fr}.header-title{font-size:18px}.admin-product-actions button{width:28px;height:28px;font-size:11px}.admin-stats{grid-template-columns:1fr 1fr}.notif-banner{max-width:calc(100vw - 32px);right:16px;left:16px}.cart-floating-bar{width:calc(100vw - 28px)}}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:3px}
@@ -657,7 +682,6 @@ input,textarea,select{font-family:inherit}
 </div>
 </div>
 
-<!-- SECTION VIDÉOS ENTREPRISE -->
 <div class="video-company-section" style="margin-top:20px;">
 <div class="video-company-header"><i class="fas fa-video"></i><h3>🎬 Découvrez H.D.S SHOP en vidéo</h3></div>
 <div class="video-grid" id="companyVideoGrid">
@@ -894,19 +918,28 @@ input,textarea,select{font-family:inherit}
 
 <div class="modal-overlay" id="driverInterfaceModal"><div class="modal wide"><div class="modal-header"><div class="modal-title"><i class="fas fa-motorcycle" style="color:var(--blue);"></i> Interface Livreur</div><button class="modal-close" onclick="closeDriverInterface()">×</button></div><div class="modal-body"><div class="driver-header"><h2>🛵 <span id="driverNameDisplay">Livreur</span></h2><p>Connecté • Prêt à livrer</p></div><div class="driver-location-box"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:700;color:var(--blue);"><i class="fas fa-map-marker-alt"></i> Ma position</span><button onclick="driverUpdateLocation()" style="padding:4px 8px;background:var(--blue);color:white;border-radius:6px;font-size:10px;font-weight:700;">🔄 Actualiser</button></div><div class="coords" id="driverCoords">Non localisé</div><div style="font-size:10.5px;color:var(--text-dim);margin-top:6px;" id="driverAddress">Clique sur 🔄 pour actualiser</div></div><button class="checkout-button green" onclick="enableNotifications()" style="margin-bottom:10px;font-size:12px;">🔔 Activer les notifications sonores</button><div style="font-weight:800;font-size:13px;margin-bottom:10px;"><i class="fas fa-clipboard-list" style="color:var(--yellow);"></i> Mes courses</div><div id="driverOrdersList"></div><button class="checkout-button secondary" onclick="driverRefreshOrders()" style="margin-top:10px;font-size:12px;">🔄 Rafraîchir</button><button class="checkout-button danger" onclick="driverLogout()" style="margin-top:8px;font-size:12px;">↩️ Quitter l'espace livreur</button></div></div></div>
 
-<!-- NOUVELLE MODAL : MA CARTE (itinéraire) -->
+<!-- MODAL ROUTE MAP - Style Waze -->
 <div class="modal-overlay" id="routeMapModal">
 <div class="modal wide">
 <div class="modal-header">
-<div class="modal-title"><i class="fas fa-route" style="color:var(--yellow);"></i> Itinéraire de livraison</div>
+<div class="modal-title"><i class="fas fa-route" style="color:var(--yellow);"></i> <span id="routeMapTitle">Itinéraire de livraison</span></div>
 <button class="modal-close" onclick="closeRouteMap()">×</button>
 </div>
-<div class="modal-body" style="padding:0;">
-<div id="routeMapInfo" style="padding:12px 16px;font-size:12px;color:var(--text-dim);border-bottom:1px solid var(--border);"></div>
-<div id="routeMap" style="width:100%;height:420px;background:#111;"></div>
-<div style="padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);">
-<a id="routeMapGpsBtn" href="#" class="checkout-button blue" style="flex:1;margin:0;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;"><i class="fas fa-location-arrow"></i> Ouvrir dans mon GPS</a>
-<a id="routeMapCallBtn" href="#" class="checkout-button green" style="flex:1;margin:0;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;"><i class="fas fa-phone"></i> Appeler client</a>
+<div class="modal-body">
+<div id="routeMapInfo">Chargement de l'itinéraire…</div>
+<div style="position:relative;">
+  <div class="route-status-badge"><span class="live-dot"></span> EN ROUTE</div>
+  <div class="route-floating-controls">
+    <button onclick="recenterRouteMap()" title="Recentrer sur ma position"><i class="fas fa-crosshairs"></i></button>
+    <button onclick="toggleFollowMode()" id="routeFollowBtn" title="Suivre ma position (Waze mode)"><i class="fas fa-location-arrow"></i></button>
+  </div>
+  <div id="routeMap"></div>
+</div>
+<div class="route-map-actions">
+  <button class="btn-navigate" onclick="openNativeNavigation()"><i class="fas fa-diamond-turn-right"></i> Naviguer</button>
+  <a id="routeMapGpsBtn" href="#" class="btn-gps" target="_blank" rel="noopener"><i class="fas fa-map-marker-alt"></i> Mon GPS</a>
+  <a id="routeMapCallBtn" href="#" class="btn-call"><i class="fas fa-phone"></i> Appeler</a>
+  <button class="btn-refresh" onclick="refreshRouteMap()"><i class="fas fa-sync-alt"></i> Actualiser</button>
 </div>
 </div>
 </div>
@@ -945,9 +978,20 @@ let dashboardRefreshTimer = null, dashboardClockTimer = null;
 let lastClientOrderStatus = {};
 let adminHistoryCache = [], adminHistoryFilter = "all";
 let companyVideos = [];
-let routeMapInstance = null, routeLineInstance = null, routeMarkers = [];
 const RESTAURANT_LAT = 43.3226, RESTAURANT_LNG = 5.4019;
 const DISCOUNT_CLIENT_PCT = 0.05;
+
+// ============ ROUTE MAP / WAZE MODE ============
+let routeMapInstance = null;
+let routeLineInstance = null;
+let routeSourceMarker = null;
+let routeDestMarker = null;
+let routeDriverMarker = null;
+let routeCurrentOrder = null;
+let routeWatchId = null;
+let routeFollowMode = true; // Waze mode : la carte suit la position
+let routeRefreshTimer = null;
+let routeLastRouteInfo = null;
 
 function sanitize(str) { if (typeof str !== "string") return ""; const d = document.createElement("div"); d.textContent = str; return d.innerHTML; }
 function isValidPhone(phone) { return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(phone).replace(/\s/g, "")); }
@@ -1092,9 +1136,7 @@ function showSection(section, scrollTop = false) {
     if (section === "alimentation") loadCompanyVideosPublic();
     closeMenuIfOpen();
     if (scrollTop) {
-        // Remonter en haut de la page quand on clique sur un onglet
         try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) { window.scrollTo(0, 0); }
-        // fallback pour certains navigateurs qui n'ont pas le smooth
         setTimeout(() => { if (window.scrollY > 5) window.scrollTo({ top: 0, behavior: "smooth" }); }, 60);
     }
     gaEvent("view_section", { section_name: section });
@@ -1180,7 +1222,7 @@ window.editClientProfile = () => { if (!currentUser) return showLoginView(); ["l
 
 async function initOrderRealtime() {
     if (!currentUser) return;
-    if (!isAdmin && !(currentDriver && driverMode)) { if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; } return; }
+    if (!isAdmin && !(currentDriver && driverMode) && !myOrders.some(o => !["livree","annulee"].includes(o.status))) { if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; } return; }
     if (realtimeChannel) { await supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
     try { const { data: last } = await supabase.from("orders").select("id").order("id", { ascending: false }).limit(1).maybeSingle(); lastSeenOrderId = last?.id || 0; } catch { lastSeenOrderId = 0; }
     realtimeChannel = supabase.channel("orders-live").on("postgres_changes", { event: "*", schema: "public", table: "orders" }, (payload) => {
@@ -1402,7 +1444,7 @@ window.submitOrder = async () => {
     if ($("confirmCode")) $("confirmCode").textContent = data.code;
     if ($("confirmTotal")) $("confirmTotal").textContent = money(data.total);
     if ($("confirmRecap")) { $("confirmRecap").innerHTML = currentOrder.items.map(i => `<div class="line"><span>${esc(i.product_name)} × ${i.quantity}</span><span>${money(i.unit_price * i.quantity)}</span></div>`).join(""); }
-    $("confirmationModal")?.classList.add("active"); await loadMyOrders(); alertUser(`Commande ${data.code} enregistrée.`, "success");
+    $("confirmationModal")?.classList.add("active"); await loadMyOrders(); await initOrderRealtime(); alertUser(`Commande ${data.code} enregistrée.`, "success");
 };
 
 window.captureScreenshot = () => { if (typeof html2canvas === "undefined") return alertUser("Indisponible.", "error"); const zone = document.querySelector("#confirmationModal .modal-body"); html2canvas(zone, { backgroundColor: "#141414", scale: 2 }).then(canvas => { const link = document.createElement("a"); link.download = `commande-${$("confirmCode").textContent}.png`; link.href = canvas.toDataURL("image/png"); link.click(); alertUser("📸 Capture OK !", "success"); }).catch(() => alertUser("Erreur capture.", "error")); };
@@ -1598,7 +1640,28 @@ window.adminRefreshOrders = async () => {
     list.innerHTML = data.map(o => { const labels = { nouvelle: "🆕 Nouvelle", preparation: "👨‍🍳 Préparation", route: "🚚 En route", livree: "✅ Livrée", annulee: "❌ Annulée" }; let actions = ""; if (o.status === "nouvelle") actions = `<button class="btn-preparer" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'preparation')">👨‍🍳 Préparer</button><button class="btn-annuler" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'annulee')">❌ Annuler</button>`; else if (o.status === "preparation") actions = `<button class="btn-route" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'route')">🚚 En route</button>`; else if (o.status === "route") actions = `<button class="btn-livree" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'livree')">✅ Livrée</button>`; return `<div class="order-card status-${esc(o.status)}" onclick="openAdminOrderDetail(${o.id})"><div class="order-card-header"><span class="order-code">#${esc(o.code)}</span><span class="statut-chip ${esc(o.status)}">${labels[o.status] || o.status}</span></div><div class="order-body"><strong>👤 ${esc(o.client_name || "")}</strong> • 📞 ${esc(o.client_phone || "")}<br>📍 ${esc((o.address || "").substring(0, 60))}<br>💰 <strong>${money(o.total)}</strong>${o.driver_name ? ` • 🛵 ${esc(o.driver_name)}` : ""}</div>${actions ? `<div class="order-actions">${actions}</div>` : ""}<div style="font-size:10.5px;color:var(--yellow);font-weight:700;text-align:right;margin-top:6px;">Voir détails →</div></div>`; }).join("");
 };
 
-window.adminSetOrderStatus = async (id, status) => { if (!isAdmin) return alertUser("Refusé.", "error"); const patch = { status, updated_at: new Date().toISOString() }; if (status === "livree") patch.delivered_at = new Date().toISOString(); const { error } = await supabase.from("orders").update(patch).eq("id", id); if (error) return alertUser(error.message, "error"); alertUser("Statut mis à jour.", "success"); adminRefreshOrders(); if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders(); if (currentAdminOrderId === id && $("orderAdminModal")?.classList.contains("active")) openAdminOrderDetail(id); };
+// ⚡⚡⚡ CLÉ : quand admin passe en route, on ouvre direct la carte style Waze
+window.adminSetOrderStatus = async (id, status) => {
+    if (!isAdmin) return alertUser("Refusé.", "error");
+    const patch = { status, updated_at: new Date().toISOString() };
+    if (status === "livree") patch.delivered_at = new Date().toISOString();
+    const { error } = await supabase.from("orders").update(patch).eq("id", id);
+    if (error) return alertUser(error.message, "error");
+    alertUser("Statut mis à jour.", "success");
+    adminRefreshOrders();
+    if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders();
+    if (currentAdminOrderId === id && $("orderAdminModal")?.classList.contains("active")) openAdminOrderDetail(id);
+    // 🚀 WAZE MODE : si passage en route, ouvrir la carte automatiquement
+    if (status === "route") {
+        const { data: order } = await supabase.from("orders").select("id,code,client_name,client_phone,address,delivery_lat,delivery_lng").eq("id", id).single();
+        if (order) {
+            closeOrderAdminModal();
+            closeAdminPanel();
+            await new Promise(r => setTimeout(r, 200));
+            openRouteMapWaze(order);
+        }
+    }
+};
 
 /* ============ HISTORIQUE ADMIN ============ */
 window.adminLoadHistory = async () => {
@@ -1698,52 +1761,177 @@ window.adminDeleteVideo = async (id) => {
     await loadCompanyVideosPublic();
 };
 
-/* ============ MA CARTE / ITINÉRAIRE LIVRAISON ============ */
-window.openRouteMap = (order) => {
-    if (typeof L === "undefined") return alertUser("Carte indisponible.", "error");
+/* ============ ROUTE MAP - WAZE STYLE ============ */
+window.openRouteMapWaze = async (order) => {
+    if (typeof L === "undefined") return alertUser("Carte indisponible. Réessaie dans 2s.", "error");
+    routeCurrentOrder = order;
     $("routeMapModal")?.classList.add("active");
-    setTimeout(() => {
-        if ($("routeMapInfo")) $("routeMapInfo").innerHTML = `<strong>#${esc(order.code || "")}</strong> • 👤 ${esc(order.client_name || "Client")}<br>📍 ${esc(order.address || "—")}`;
-        if ($("routeMapGpsBtn")) $("routeMapGpsBtn").href = `geo:0,0?q=${encodeURIComponent(order.address || "")}`;
-        if ($("routeMapCallBtn")) $("routeMapCallBtn").href = `tel:${(order.client_phone || "").replace(/\s/g, "")}`;
-        if (routeMapInstance) { routeMapInstance.remove(); routeMapInstance = null; }
-        routeMarkers = []; routeLineInstance = null;
-        routeMapInstance = L.map("routeMap").setView([RESTAURANT_LAT, RESTAURANT_LNG], 13);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "© OpenStreetMap" }).addTo(routeMapInstance);
-        // Marqueur boutique
-        L.marker([RESTAURANT_LAT, RESTAURANT_LNG]).addTo(routeMapInstance).bindPopup("<b>H.D.S SHOP</b><br>Point de départ").openPopup();
-        // Marqueur client
-        const lat = Number(order.delivery_lat);
-        const lng = Number(order.delivery_lng);
-        if (Number.isFinite(lat) && Number.isFinite(lng) && lat !== 0 && lng !== 0) {
-            L.marker([lat, lng], { icon: L.divIcon({ html: '<div style="background:#3B82F6;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 0 8px rgba(0,0,0,0.6);"></div>', iconSize: [24,24] }) }).addTo(routeMapInstance).bindPopup(`<b>${esc(order.client_name || "Client")}</b><br>${esc(order.address || "")}`);
-            // Trajet en ligne droite (fallback). Si l'API OSRM répond, on remplace.
-            routeLineInstance = L.polyline([[RESTAURANT_LAT, RESTAURANT_LNG],[lat, lng]], { color: "#FFD700", weight: 4, dashArray: "8 8" }).addTo(routeMapInstance);
-            routeMapInstance.fitBounds([[RESTAURANT_LAT, RESTAURANT_LNG],[lat, lng]], { padding: [40, 40] });
-            (async () => {
-                try {
-                    const r = await fetch(`https://router.project-osrm.org/route/v1/driving/${RESTAURANT_LNG},${RESTAURANT_LAT};${lng},${lat}?overview=full&geometries=geojson`);
-                    const j = await r.json();
-                    if (j && j.routes && j.routes[0] && j.routes[0].geometry && routeMapInstance) {
-                        const coords = j.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
-                        if (routeLineInstance) routeLineInstance.remove();
-                        routeLineInstance = L.polyline(coords, { color: "#FFD700", weight: 5 }).addTo(routeMapInstance);
-                        routeMapInstance.fitBounds(routeLineInstance.getBounds(), { padding: [40, 40] });
-                        const dKm = (j.routes[0].distance / 1000).toFixed(1);
-                        const dMin = Math.round(j.routes[0].duration / 60);
-                        if ($("routeMapInfo")) $("routeMapInfo").innerHTML += `<br><strong style="color:var(--yellow);">🛣️ ${dKm} km • ⏱️ ~${dMin} min</strong>`;
-                    }
-                } catch (e) {}
-            })();
-        } else {
-            // Pas de coordonnées GPS, on centre sur la boutique
-            routeMapInstance.setView([RESTAURANT_LAT, RESTAURANT_LNG], 14);
-            if ($("routeMapInfo")) $("routeMapInfo").innerHTML += `<br><span style="color:var(--orange);">⚠️ Adresse sans coordonnées GPS — utilise le bouton "Ouvrir dans mon GPS"</span>`;
-        }
-        routeMapInstance.invalidateSize();
-    }, 120);
+    if ($("routeMapTitle")) $("routeMapTitle").textContent = `Livraison #${order.code || ""}`;
+    if ($("routeMapInfo")) $("routeMapInfo").innerHTML = `<div><i class="fas fa-user" style="color:var(--yellow);"></i> <strong>${esc(order.client_name || "Client")}</strong></div><div style="margin-top:4px;"><i class="fas fa-map-marker-alt" style="color:var(--blue);"></i> ${esc(order.address || "—")}</div><div id="routeMapDistanceInfo" style="margin-top:6px;"></div>`;
+    if ($("routeMapCallBtn")) $("routeMapCallBtn").href = `tel:${(order.client_phone || "").replace(/\s/g, "")}`;
+    if ($("routeMapGpsBtn")) {
+        const q = (order.delivery_lat && order.delivery_lng) ? `${order.delivery_lat},${order.delivery_lng}` : (order.address || "");
+        $("routeMapGpsBtn").href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}&travelmode=driving`;
+    }
+    // Attend que le modal soit affiché pour init la carte
+    setTimeout(() => { initRouteMap(order); startRoutePositionTracking(); }, 150);
 };
-window.closeRouteMap = () => { $("routeMapModal")?.classList.remove("active"); if (routeMapInstance) { setTimeout(() => { try { routeMapInstance.remove(); } catch (e) {} routeMapInstance = null; }, 200); } };
+
+async function initRouteMap(order) {
+    const mapDiv = $("routeMap"); if (!mapDiv) return;
+    if (routeMapInstance) { try { routeMapInstance.remove(); } catch (e) {} routeMapInstance = null; }
+    routeMapInstance = L.map("routeMap", { zoomControl: false }).setView([RESTAURANT_LAT, RESTAURANT_LNG], 14);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "© OpenStreetMap", maxZoom: 19 }).addTo(routeMapInstance);
+    L.control.zoom({ position: "bottomright" }).addTo(routeMapInstance);
+    // Boutique
+    routeSourceMarker = L.marker([RESTAURANT_LAT, RESTAURANT_LNG], { icon: L.divIcon({ html: '<div style="background:#F97316;width:30px;height:30px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:16px;">🏪</div>', iconSize: [30,30], iconAnchor: [15,15] }) }).addTo(routeMapInstance).bindPopup("<b>H.D.S SHOP</b><br>Point de départ");
+    // Dest
+    const destLat = Number(order.delivery_lat), destLng = Number(order.delivery_lng);
+    const hasDest = Number.isFinite(destLat) && Number.isFinite(destLng) && destLat !== 0 && destLng !== 0;
+    if (hasDest) {
+        routeDestMarker = L.marker([destLat, destLng], { icon: L.divIcon({ html: '<div style="background:#EF4444;width:30px;height:30px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:16px;">📍</div>', iconSize: [30,30], iconAnchor: [15,15] }) }).addTo(routeMapInstance).bindPopup(`<b>${esc(order.client_name || "Client")}</b><br>${esc(order.address || "")}`);
+    }
+    // Position actuelle du livreur
+    let currentLat = RESTAURANT_LAT, currentLng = RESTAURANT_LNG;
+    try {
+        const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, { enableHighAccuracy: true, timeout: 8000 }));
+        currentLat = pos.coords.latitude; currentLng = pos.coords.longitude;
+    } catch (e) { /* fallback boutique */ }
+    routeDriverMarker = L.marker([currentLat, currentLng], { icon: L.divIcon({ html: '<div class="driver-marker-pulse"><div class="driver-marker-inner"></div></div>', iconSize: [40,40], iconAnchor: [20,20] }), zIndexOffset: 1000 }).addTo(routeMapInstance).bindPopup("<b>Vous êtes ici</b>");
+    // Trace itinéraire depuis position actuelle vers destinataire (ou depuis boutique)
+    if (hasDest) {
+        await drawRoute(currentLat, currentLng, destLat, destLng);
+    } else {
+        // Pas de coords : centrer sur la boutique
+        if ($("routeMapDistanceInfo")) $("routeMapDistanceInfo").innerHTML = `<span style="color:var(--orange);">⚠️ Adresse sans coordonnées GPS — utilise "Mon GPS" en bas</span>`;
+        routeMapInstance.setView([currentLat, currentLng], 14);
+    }
+    setTimeout(() => routeMapInstance.invalidateSize(), 250);
+    // Auto-refresh toutes les 30s
+    if (routeRefreshTimer) clearInterval(routeRefreshTimer);
+    routeRefreshTimer = setInterval(async () => {
+        if (!routeMapInstance || !routeCurrentOrder) return;
+        if (document.hidden) return;
+        const o = routeCurrentOrder;
+        const dLat = Number(o.delivery_lat), dLng = Number(o.delivery_lng);
+        if (!Number.isFinite(dLat) || dLat === 0) return;
+        let cLat = currentLat, cLng = currentLng;
+        try { const p = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, { timeout: 5000 })); cLat = p.coords.latitude; cLng = p.coords.longitude; } catch (e) {}
+        if (routeDriverMarker) routeDriverMarker.setLatLng([cLat, cLng]);
+        await drawRoute(cLat, cLng, dLat, dLng);
+    }, 30000);
+}
+
+async function drawRoute(fromLat, fromLng, toLat, toLng) {
+    if (!routeMapInstance) return;
+    try {
+        const url = `https://router.project-osrm.org/route/v1/driving/${fromLng},${fromLat};${toLng},${toLat}?overview=full&geometries=geojson`;
+        const r = await fetch(url);
+        const j = await r.json();
+        if (!j || !j.routes || !j.routes[0]) throw new Error("Pas d'itinéraire");
+        const route = j.routes[0];
+        const coords = route.geometry.coordinates.map(c => [c[1], c[0]]);
+        if (routeLineInstance) { try { routeMapInstance.removeLayer(routeLineInstance); } catch (e) {} }
+        // Contour sombre + tracé jaune (style Waze)
+        const outline = L.polyline(coords, { color: "#000000", weight: 11, opacity: 0.5 }).addTo(routeMapInstance);
+        routeLineInstance = L.polyline(coords, { color: "#FFD700", weight: 7, opacity: 1, lineCap: "round", lineJoin: "round" }).addTo(routeMapInstance);
+        routeLineInstance._outline = outline;
+        const km = (route.distance / 1000).toFixed(1);
+        const min = Math.max(1, Math.round(route.duration / 60));
+        routeLastRouteInfo = { distance: parseFloat(km), duration: min };
+        if ($("routeMapDistanceInfo")) {
+            $("routeMapDistanceInfo").innerHTML = `<span class="nav-distance">🛣️ ${km} km • ⏱️ ~${min} min</span>`;
+        }
+        if (routeFollowMode) {
+            const bounds = L.latLngBounds(coords);
+            routeMapInstance.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
+        }
+    } catch (e) {
+        // Fallback : ligne droite
+        if (routeLineInstance) { try { routeMapInstance.removeLayer(routeLineInstance); } catch (err) {} }
+        const outline = L.polyline([[fromLat, fromLng], [toLat, toLng]], { color: "#000000", weight: 11, opacity: 0.5 }).addTo(routeMapInstance);
+        routeLineInstance = L.polyline([[fromLat, fromLng], [toLat, toLng]], { color: "#FFD700", weight: 7, dashArray: "10 10" }).addTo(routeMapInstance);
+        routeLineInstance._outline = outline;
+        routeMapInstance.fitBounds([[fromLat, fromLng], [toLat, toLng]], { padding: [50, 50] });
+        if ($("routeMapDistanceInfo")) $("routeMapDistanceInfo").innerHTML = `<span style="color:var(--orange);">⚠️ Itinéraire direct (mode hors-ligne)</span>`;
+    }
+}
+
+function startRoutePositionTracking() {
+    stopRoutePositionTracking();
+    if (!navigator.geolocation) return;
+    try {
+        routeWatchId = navigator.geolocation.watchPosition(
+            (pos) => {
+                if (!routeMapInstance || !routeDriverMarker) return;
+                const lat = pos.coords.latitude, lng = pos.coords.longitude;
+                routeDriverMarker.setLatLng([lat, lng]);
+                if (routeFollowMode) routeMapInstance.panTo([lat, lng], { animate: true, duration: 0.8 });
+            },
+            () => {},
+            { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 }
+        );
+    } catch (e) {}
+}
+function stopRoutePositionTracking() {
+    if (routeWatchId !== null) { try { navigator.geolocation.clearWatch(routeWatchId); } catch (e) {} routeWatchId = null; }
+}
+
+window.recenterRouteMap = async () => {
+    if (!routeMapInstance) return;
+    routeFollowMode = true;
+    if ($("routeFollowBtn")) $("routeFollowBtn").style.background = "";
+    if (routeDriverMarker) {
+        const ll = routeDriverMarker.getLatLng();
+        routeMapInstance.setView(ll, Math.max(routeMapInstance.getZoom(), 16), { animate: true });
+        // Si on a un itinéraire, on re-fit bounds
+        if (routeLineInstance) {
+            try {
+                const bounds = routeLineInstance.getBounds();
+                routeMapInstance.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
+            } catch (e) {}
+        }
+    }
+};
+window.toggleFollowMode = () => {
+    routeFollowMode = !routeFollowMode;
+    const btn = $("routeFollowBtn");
+    if (btn) btn.style.background = routeFollowMode ? "" : "rgba(255,255,255,0.1)";
+    alertUser(routeFollowMode ? "🧭 Suivi GPS ACTIVÉ" : "🧭 Suivi GPS désactivé", "success");
+};
+window.refreshRouteMap = async () => {
+    if (!routeCurrentOrder || !routeMapInstance) return;
+    try {
+        const { data: fresh } = await supabase.from("orders").select("id,code,client_name,client_phone,address,delivery_lat,delivery_lng").eq("id", routeCurrentOrder.id).single();
+        if (fresh) { routeCurrentOrder = fresh; await initRouteMap(fresh); }
+    } catch (e) {}
+    alertUser("Itinéraire actualisé.", "success");
+};
+window.openNativeNavigation = () => {
+    if (!routeCurrentOrder) return;
+    const o = routeCurrentOrder;
+    const lat = o.delivery_lat, lng = o.delivery_lng;
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    let url;
+    if (lat && lng) {
+        url = isIOS ? `maps://?daddr=${lat},${lng}&dirflg=d` : `geo:0,0?q=${lat},${lng}(${encodeURIComponent(o.client_name || "Client")})`;
+    } else {
+        url = isIOS ? `maps://?daddr=${encodeURIComponent(o.address || "")}&dirflg=d` : `geo:0,0?q=${encodeURIComponent(o.address || "")}`;
+    }
+    window.location.href = url;
+};
+window.closeRouteMap = () => {
+    $("routeMapModal")?.classList.remove("active");
+    stopRoutePositionTracking();
+    if (routeRefreshTimer) { clearInterval(routeRefreshTimer); routeRefreshTimer = null; }
+    setTimeout(() => {
+        if (routeMapInstance) { try { routeMapInstance.remove(); } catch (e) {} routeMapInstance = null; }
+        routeLineInstance = null; routeSourceMarker = null; routeDestMarker = null; routeDriverMarker = null; routeCurrentOrder = null;
+    }, 250);
+};
+
+// Ancienne fonction openRouteMap (conservée pour compatibilité avec le bouton "Ma carte")
+window.openRouteMap = (order) => window.openRouteMapWaze(order);
 
 window.openAdminOrderDetail = async (orderId) => {
     if (!isAdmin) return alertUser("Admin requis.", "error");
@@ -1801,10 +1989,11 @@ window.openAdminOrderDetail = async (orderId) => {
 window.closeOrderAdminModal = () => { $("orderAdminModal")?.classList.remove("active"); currentAdminOrderId = null; };
 
 window.openRouteMapFromAdmin = async (orderId) => {
-    // on récupère la commande complète pour avoir delivery_lat/lng
-    const { data: order, error } = await supabase.from("orders").select("code,client_name,client_phone,address,delivery_lat,delivery_lng").eq("id", orderId).single();
+    const { data: order, error } = await supabase.from("orders").select("id,code,client_name,client_phone,address,delivery_lat,delivery_lng").eq("id", orderId).single();
     if (error) return alertUser(error.message, "error");
-    window.openRouteMap(order);
+    closeOrderAdminModal();
+    await new Promise(r => setTimeout(r, 150));
+    openRouteMapWaze(order);
 };
 
 window.adminLoadProducts = async () => { if (!isAdmin) return; const { data, error } = await supabase.from("products").select("*").order("name"); if (error) return alertUser(`Erreur: ${error.message}`, "error"); const list = $("adminProductList"); if (!list) return; if (!data?.length) { list.innerHTML = '<div class="empty-state">Aucun produit.</div>'; return; } list.innerHTML = data.map(p => { const stock = p.stock ?? 0; const cls = stock === 0 ? "rupture" : stock <= 3 ? "low" : "ok"; const label = stock === 0 ? "⚠️ RUPTURE" : stock <= 3 ? `⚠️ ${stock}` : `✅ ${stock}`; const isMasked = !p.is_active; return `<div class="admin-product-item" style="opacity:${isMasked ? 0.5 : 1};"><div class="admin-product-info"><strong>${esc(p.name)} <span class="stock-badge ${cls}">${label}</span> ${isMasked ? '<span style="color:var(--red);font-size:9.5px;">🚫 MASQUÉ</span>' : ''}</strong><span>${esc(p.category || "")} · ${money(p.price)}</span></div><div class="admin-product-actions"><button class="btn-view" title="Voir" onclick="adminViewProduct(${p.id})"><i class="fas fa-eye"></i></button><button class="btn-edit" title="Modifier" onclick="adminEditProduct(${p.id})"><i class="fas fa-pencil-alt"></i></button><button class="btn-mask ${isMasked ? 'masked' : ''}" title="${isMasked ? 'Afficher' : 'Masquer'}" onclick="adminToggleMask(${p.id}, ${p.is_active})"><i class="fas fa-eye-slash"></i></button><button class="btn-delete" title="Supprimer" onclick="adminDeleteProduct(${p.id})"><i class="fas fa-trash"></i></button></div></div>`; }).join(""); };
@@ -1842,7 +2031,6 @@ window.adminLoadShares = async () => {
 
 window.adminInviteDriver = async () => { if (!isAdmin) return alertUser("Refusé.", "error"); const name = prompt("Prénom du livreur :")?.trim(); if (!name) return; const { data: driver, error: driverError } = await supabase.from("delivery_drivers").insert({ name, status: "dispo", is_active: true }).select("id,name").single(); if (driverError) return alertUser(driverError.message, "error"); const { data: code, error: inviteError } = await supabase.rpc("create_driver_invite", { p_driver_id: driver.id, p_expires_hours: 48 }); if (inviteError) { await supabase.from("delivery_drivers").update({ is_active: false }).eq("id", driver.id); return alertUser(inviteError.message, "error"); } const message = `Bonjour ${driver.name}, voici ton code d'invitation H.D.S SHOP : ${code}. Connecte-toi sur le site, puis saisis ce code dans « Espace Livreur ».`; alertUser(`Code : ${code}`, "success"); window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank"); adminLoadDrivers(); };
 
-/* ============ GESTION LIVREURS (révoquer / bloquer / supprimer) ============ */
 window.adminLoadDrivers = async () => {
     if (!isAdmin) return;
     const [inv, drv] = await Promise.all([
@@ -1948,21 +2136,14 @@ window.driverRefreshOrders = async () => {
         const takenByOther = dispatch && dispatch.assigned_driver_name && !assignedToMe;
         let actions = "";
         if (order.driver_id === null && (order.status === "nouvelle" || order.status === "preparation" || availableFromDispatch)) actions = `<button class="btn-preparer" onclick="driverAccept(${Number(order.id)})">✅ Accepter</button>`;
-        else if (order.status === "preparation" && assignedToMe) actions = `<button class="btn-route" onclick="driverStart(${Number(order.id)})">🚚 Démarrer</button><button class="btn-route" style="background:var(--yellow);color:#000;border-color:var(--gold);" onclick="driverShowRoute(${Number(order.id)})">🗺️ Ma carte</button>`;
+        else if (order.status === "preparation" && assignedToMe) actions = `<button class="btn-route" onclick="driverStart(${Number(order.id)})">🚚 Démarrer</button>`;
         else if (order.status === "route" && assignedToMe) actions = `<button class="btn-livree" onclick="driverDeliver(${Number(order.id)})">✅ Livrée</button><button class="btn-route" style="background:var(--yellow);color:#000;border-color:var(--gold);" onclick="driverShowRoute(${Number(order.id)})">🗺️ Ma carte</button><a href="tel:${(order.client_phone || "").replace(/\s/g, "")}" class="btn-appeler">📞</a>`;
         const statusBadge = takenByOther ? `<span class="statut-chip" style="background:rgba(249,115,22,0.2);color:var(--orange);">⚠️ Prise par ${esc(dispatch.assigned_driver_name)}</span>` : `<span class="statut-chip ${esc(order.status)}">${labels[order.status] || esc(order.status)}</span>`;
         return `<div class="order-card status-${esc(order.status)}"><div class="order-card-header"><span class="order-code">#${esc(order.code)}</span>${statusBadge}</div><div class="order-body">👤 ${esc(order.client_name || "Client")} • 📞 ${esc(order.client_phone || "")}<br>📍 ${esc((order.address || "").substring(0, 100))}<br>💰 <strong>${money(order.total)}</strong> • 📏 ${esc(order.distance ?? 0)} km</div>${actions ? `<div class="order-actions">${actions}</div>` : ""}</div>`;
     }).join("");
 };
 
-window.driverShowRoute = (orderId) => {
-    const match = driverOrdersCache.get(orderId);
-    if (!match) return alertUser("Commande introuvable.", "error");
-    window.openRouteMap(match);
-};
-// cache pour retrouver la commande dans driverShowRoute
 const driverOrdersCache = new Map();
-// On stocke les commandes visibles à chaque refresh (hook après appel)
 const _origDriverRefresh = window.driverRefreshOrders;
 window.driverRefreshOrders = async () => {
     const { data } = await supabase.from("orders").select("id,code,client_name,client_phone,address,status,total,delivery_lat,delivery_lng").in("status", ["nouvelle","preparation","route"]).order("created_at", { ascending: false }).limit(50);
@@ -1970,9 +2151,37 @@ window.driverRefreshOrders = async () => {
     (data || []).forEach(o => driverOrdersCache.set(Number(o.id), o));
     return _origDriverRefresh();
 };
+window.driverShowRoute = async (orderId) => {
+    let match = driverOrdersCache.get(orderId);
+    if (!match) {
+        const { data } = await supabase.from("orders").select("id,code,client_name,client_phone,address,delivery_lat,delivery_lng").eq("id", orderId).single();
+        match = data;
+    }
+    if (!match) return alertUser("Commande introuvable.", "error");
+    closeDriverInterface();
+    await new Promise(r => setTimeout(r, 150));
+    openRouteMapWaze(match);
+};
 
 window.driverAccept = async (id) => { if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error"); const { error } = await supabase.rpc("driver_claim_order_v1", { p_order_id: id }); if (error) { logSupabaseError("driver_claim_order_v1", error); const fallback = await supabase.rpc("driver_accept_order", { p_order_id: id }); if (fallback.error) { alertUser(`Impossible d'accepter : ${error.message}`, "error"); await driverRefreshOrders(); return; } } alertUser("Course acceptée.", "success"); await driverRefreshOrders(); if (isAdmin) await adminRefreshOrders(); };
-window.driverStart = async (id) => { if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error"); const { error } = await supabase.rpc("driver_set_status_v1", { p_order_id: id, p_new_status: "route" }); if (error) { logSupabaseError("driver_set_status_v1_route", error); const fallback = await supabase.rpc("driver_set_order_status", { p_order_id: id, p_status: "route", p_latitude: null, p_longitude: null }); if (fallback.error) return alertUser(error.message, "error"); } alertUser("Commande en route.", "success"); await driverRefreshOrders(); if (isAdmin) await adminRefreshOrders(); };
+
+// ⚡⚡⚡ CLÉ : quand livreur clique "Démarrer" (route), ouverture auto de la carte Waze
+window.driverStart = async (id) => {
+    if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error");
+    const { error } = await supabase.rpc("driver_set_status_v1", { p_order_id: id, p_new_status: "route" });
+    if (error) { logSupabaseError("driver_set_status_v1_route", error); const fallback = await supabase.rpc("driver_set_order_status", { p_order_id: id, p_status: "route", p_latitude: null, p_longitude: null }); if (fallback.error) return alertUser(error.message, "error"); }
+    alertUser("Commande en route. Ouverture du GPS…", "success");
+    await driverRefreshOrders();
+    if (isAdmin) await adminRefreshOrders();
+    // 🚀 WAZE MODE : ouvrir la carte automatiquement
+    const { data: order } = await supabase.from("orders").select("id,code,client_name,client_phone,address,delivery_lat,delivery_lng").eq("id", id).single();
+    if (order) {
+        closeDriverInterface();
+        await new Promise(r => setTimeout(r, 200));
+        openRouteMapWaze(order);
+    }
+};
+
 window.driverDeliver = async (id) => { if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error"); const { error } = await supabase.rpc("driver_set_status_v1", { p_order_id: id, p_new_status: "livree" }); if (error) { logSupabaseError("driver_set_status_v1_livree", error); const fallback = await supabase.rpc("driver_set_order_status", { p_order_id: id, p_status: "livree", p_latitude: null, p_longitude: null }); if (fallback.error) return alertUser(error.message, "error"); } alertUser("Commande livrée.", "success"); await driverRefreshOrders(); if (isAdmin) await adminRefreshOrders(); };
 
 window.driverUpdateLocation = () => { if (!navigator.geolocation) return alertUser("Géoloc indisponible.", "error"); const c = $("driverCoords"); if (c) c.textContent = "⏳..."; navigator.geolocation.getCurrentPosition(async pos => { const lat = pos.coords.latitude, lng = pos.coords.longitude; if (c) c.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`; await supabase.rpc("record_driver_location", { p_latitude: lat, p_longitude: lng }); try { const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fr`); const j = await r.json(); if ($("driverAddress")) $("driverAddress").textContent = j.display_name || "GPS"; } catch {} }, () => { if (c) c.textContent = "❌ GPS"; }, { enableHighAccuracy: true, timeout: 10000 }); };
@@ -2005,4 +2214,4 @@ renderCartItems();
 showSection("products");
 </script>
 </body>
-                                                     </html>
+  </html>
