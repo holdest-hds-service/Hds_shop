@@ -15,10 +15,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 
-<!-- ✅ GOOGLE TAG MANAGER (chargé UNE seule fois) -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KKLRBZN7');</script>
-
-<!-- ✅ GOOGLE ANALYTICS 4 (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6J7XVTN4FC"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -32,7 +29,7 @@
 :root{--yellow:#FFD700;--gold:#FFB800;--green:#22C55E;--red:#EF4444;--blue:#3B82F6;--orange:#F97316;--whatsapp:#25D366;--whatsapp-dark:#128C7E;--bg:#0A0A0A;--card:#141414;--card-hover:#1C1C1C;--text:#FAFAFA;--text-dim:#A1A1AA;--border:rgba(255,255,255,0.08);--shadow-md:0 8px 24px rgba(0,0,0,0.4);--shadow-lg:0 20px 48px rgba(0,0,0,0.5);--r-sm:8px;--r-md:12px;--r-lg:18px;--r-xl:24px;--t-fast:150ms cubic-bezier(0.4,0,0.2,1);--t-base:250ms cubic-bezier(0.4,0,0.2,1)}
 body.light-mode{--bg:#F4F5F7;--card:#FFFFFF;--card-hover:#FAFAFA;--text:#111827;--text-dim:#6B7280;--border:rgba(0,0,0,0.08);--shadow-md:0 8px 24px rgba(0,0,0,0.08);--shadow-lg:0 20px 48px rgba(0,0,0,0.12)}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;justify-content:center;padding:10px;transition:background var(--t-base),color var(--t-base);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;justify-content:center;padding:10px;padding-bottom:calc(90px + env(safe-area-inset-bottom, 0px));transition:background var(--t-base),color var(--t-base);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;transition:transform var(--t-fast),opacity var(--t-fast),box-shadow var(--t-fast),background var(--t-fast)}
 button:active{transform:scale(0.96)}
@@ -168,13 +165,20 @@ input,textarea,select{font-family:inherit}
 .step-icon.completed::after{content:'✓'}
 .no-order{text-align:center;padding:40px 20px;color:var(--text-dim)}
 .no-order i{font-size:44px;margin-bottom:12px;opacity:0.4}
-.cart-button{position:fixed;bottom:20px;right:20px;width:56px;height:56px;background:linear-gradient(135deg,var(--yellow),var(--gold));border-radius:50%;display:flex;justify-content:center;align-items:center;box-shadow:var(--shadow-lg);z-index:1000;border:2px solid var(--card);color:#000;font-size:20px}
-.cart-button:hover{filter:brightness(1.1);transform:scale(1.05)}
-.cart-button.bump{animation:bump 0.4s ease}
-@keyframes bump{0%,100%{transform:scale(1)}30%{transform:scale(1.2)}60%{transform:scale(0.95)}}
-.cart-count{position:absolute;top:-4px;right:-4px;background:var(--red);color:white;min-width:22px;height:22px;border-radius:11px;font-size:11px;font-weight:800;display:flex;justify-content:center;align-items:center;border:2px solid var(--card);padding:0 5px}
-.whatsapp-float{position:fixed;bottom:88px;right:20px;width:56px;height:56px;background:linear-gradient(135deg,#25D366,#128C7E);border-radius:50%;display:flex;justify-content:center;align-items:center;z-index:999;border:2px solid var(--card);text-decoration:none;color:white;font-size:24px}
-.whatsapp-float:hover{filter:brightness(1.1);transform:scale(1.05)}
+
+.whatsapp-inline{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#25D366,#128C7E);color:white;padding:12px 18px;border-radius:var(--r-md);font-size:13px;font-weight:700;text-decoration:none;margin:12px 0;width:100%}
+.whatsapp-inline:hover{filter:brightness(1.1)}
+
+.cart-floating-bar{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom, 0px));left:50%;transform:translateX(-50%) translateY(200%);width:calc(100% - 28px);max-width:500px;background:linear-gradient(135deg,var(--yellow),var(--gold));color:#000;border-radius:var(--r-lg);padding:11px 16px;box-shadow:0 12px 32px rgba(255,215,0,0.55);z-index:1001;display:flex;align-items:center;gap:12px;cursor:pointer;border:2px solid #000;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);font-weight:800}
+.cart-floating-bar.visible{transform:translateX(-50%) translateY(0)}
+.cart-floating-bar:hover{filter:brightness(1.05)}
+.cart-floating-bar .fb-icon-wrap{position:relative;width:38px;height:38px;background:rgba(0,0,0,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cart-floating-bar .fb-count-badge{position:absolute;top:-4px;right:-4px;background:#DC2626;color:white;min-width:20px;height:20px;border-radius:10px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid var(--yellow);padding:0 4px}
+.cart-floating-bar .fb-info{flex:1;min-width:0}
+.cart-floating-bar .fb-items{font-size:11px;font-weight:700;opacity:0.8;line-height:1.15}
+.cart-floating-bar .fb-total{font-size:15px;font-weight:900;line-height:1.15}
+.cart-floating-bar .fb-cta{background:#000;color:var(--yellow);padding:9px 14px;border-radius:var(--r-sm);font-size:12px;font-weight:900;white-space:nowrap;display:flex;align-items:center;gap:6px}
+
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);z-index:2000;padding:12px}
 .modal-overlay.active{display:flex;justify-content:center;align-items:center}
 .modal{background:var(--card);border-radius:var(--r-lg);width:100%;max-width:420px;max-height:88vh;overflow-y:auto;border:1px solid var(--border);animation:modalIn 0.25s ease}
@@ -372,7 +376,6 @@ input,textarea,select{font-family:inherit}
 .admin-floating-btn:hover{filter:brightness(1.1);transform:scale(1.05)}
 .admin-floating-btn.show{display:flex}
 .admin-floating-btn .badge{position:absolute;top:-4px;right:-4px;background:var(--red);min-width:22px;height:22px;border-radius:11px;font-size:11px;font-weight:800;display:flex;justify-content:center;align-items:center;border:2px solid var(--card);padding:0 5px}
-/* ===== INTERFACE DÉDIÉE COMMANDE ADMIN ===== */
 #orderAdminModal .modal{max-width:540px}
 .order-detail-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--border);font-size:12.5px}
 .order-detail-row:last-child{border-bottom:none}
@@ -389,21 +392,61 @@ input,textarea,select{font-family:inherit}
 .order-admin-actions button,.order-admin-actions a{padding:12px 8px;border-radius:var(--r-md);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;text-align:center}
 .order-admin-actions .btn-appeler{background:var(--green);color:white}
 .order-admin-actions .btn-gps{background:var(--blue);color:white}
-@media (max-width:380px){.products-grid{grid-template-columns:1fr}.header-title{font-size:18px}.admin-product-actions button{width:28px;height:28px;font-size:11px}.admin-stats{grid-template-columns:1fr 1fr}.notif-banner{max-width:calc(100vw - 32px);right:16px;left:16px}}
+
+.admin-dashboard{position:fixed;top:0;left:0;width:100vw;height:100vh;background:radial-gradient(circle at top,#141414,#000);z-index:7000;display:none;flex-direction:column;overflow-y:auto;color:var(--text);padding:12px;gap:12px}
+.admin-dashboard.active{display:flex}
+.admin-dashboard-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:linear-gradient(135deg,rgba(249,115,22,0.2),rgba(220,38,38,0.1));border:1px solid rgba(249,115,22,0.5);border-radius:var(--r-md)}
+.admin-dashboard-header h1{font-size:15px;font-weight:900;display:flex;align-items:center;gap:8px;color:var(--orange)}
+.admin-dashboard-header .live-dot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:livePulse 1.2s infinite;box-shadow:0 0 12px var(--green)}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+.admin-dashboard-header .dash-clock{font-family:monospace;font-size:18px;font-weight:800;color:var(--yellow)}
+.dash-exit-btn{background:rgba(239,68,68,0.2);color:var(--red);border:1px solid var(--red);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px}
+.dash-exit-btn:hover{background:var(--red);color:white}
+.dash-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media (min-width:600px){.dash-kpis{grid-template-columns:repeat(4,1fr)}}
+.dash-kpi{background:var(--card-hover);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 10px;text-align:center;position:relative;overflow:hidden}
+.dash-kpi .kpi-num{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+.dash-kpi .kpi-lbl{font-size:10px;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.dash-kpi.kpi-new{border-color:var(--orange);background:linear-gradient(135deg,rgba(249,115,22,0.15),rgba(249,115,22,0.05))}
+.dash-kpi.kpi-new .kpi-num{color:var(--orange)}
+.dash-kpi.kpi-prep{border-color:var(--yellow);background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,215,0,0.03))}
+.dash-kpi.kpi-prep .kpi-num{color:var(--yellow)}
+.dash-kpi.kpi-route{border-color:var(--blue);background:linear-gradient(135deg,rgba(59,130,246,0.12),rgba(59,130,246,0.03))}
+.dash-kpi.kpi-route .kpi-num{color:var(--blue)}
+.dash-kpi.kpi-today{border-color:var(--green);background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.03))}
+.dash-kpi.kpi-today .kpi-num{color:var(--green)}
+.dash-section{background:rgba(20,20,20,0.7);border:1px solid var(--border);border-radius:var(--r-md);padding:12px}
+.dash-section h2{font-size:13px;font-weight:900;margin-bottom:10px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:0.5px;color:var(--yellow)}
+.dash-orders-list{display:flex;flex-direction:column;gap:8px;max-height:50vh;overflow-y:auto}
+.dash-order-card{padding:12px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--card-hover);cursor:pointer;transition:transform var(--t-fast)}
+.dash-order-card:hover{transform:scale(1.01)}
+.dash-order-card.status-nouvelle{border-left:5px solid var(--orange);background:linear-gradient(90deg,rgba(249,115,22,0.15),var(--card-hover));animation:newOrderPulse 1.5s infinite}
+.dash-order-card.status-preparation{border-left:5px solid var(--yellow)}
+.dash-order-card.status-route{border-left:5px solid var(--blue)}
+.dash-order-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.dash-order-code{font-weight:900;color:var(--yellow);font-size:15px}
+.dash-order-total{font-weight:900;color:var(--green);font-size:15px}
+.dash-order-client{font-size:12px;color:var(--text);font-weight:700;margin-bottom:3px}
+.dash-order-meta{font-size:11px;color:var(--text-dim);line-height:1.5}
+.dash-order-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.dash-order-actions button{flex:1;min-width:80px;padding:8px 6px;border-radius:6px;font-size:11px;font-weight:800;border:1px solid}
+.dash-order-actions .btn-appeler{background:var(--green);color:white;border-color:var(--green)}
+.dash-empty{text-align:center;padding:20px;color:var(--text-dim);font-size:12px}
+.dash-footer-note{text-align:center;font-size:10.5px;color:var(--text-dim);padding:8px;line-height:1.5}
+
+@media (max-width:380px){.products-grid{grid-template-columns:1fr}.header-title{font-size:18px}.admin-product-actions button{width:28px;height:28px;font-size:11px}.admin-stats{grid-template-columns:1fr 1fr}.notif-banner{max-width:calc(100vw - 32px);right:16px;left:16px}.cart-floating-bar{width:calc(100vw - 28px)}}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:3px}
 </style>
 </head>
 <body>
 
-<!-- ✅ GTM noscript -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KKLRBZN7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="alert-modal" id="alertModal" role="alert" aria-live="polite">
 <i class="fas fa-check-circle" id="alertIcon"></i><span id="alertMessage"></span>
 </div>
 
-<!-- ✅ NOTIFICATION ORANGE ADMIN : détails complets -->
 <div class="notif-banner" id="orderNotifBanner" onclick="onNotifClick()" role="alert">
 <button class="notif-close" onclick="event.stopPropagation();dismissNotifBanner()" aria-label="Fermer">×</button>
 <div class="notif-icon"><i class="fas fa-bell"></i></div>
@@ -414,10 +457,42 @@ input,textarea,select{font-family:inherit}
 </div>
 </div>
 
-<button class="admin-floating-btn" id="adminFloatingBtn" onclick="openAdminPanel()" title="Panneau Admin" aria-label="Panneau Admin">
+<button class="admin-floating-btn" id="adminFloatingBtn" onclick="openAdminDashboard()" title="Tableau de bord Admin" aria-label="Tableau de bord Admin">
 <i class="fas fa-shield-alt"></i>
 <span class="badge" id="adminFloatingBadge" style="display:none;">0</span>
 </button>
+
+<div class="cart-floating-bar" id="cartFloatingBar" onclick="openCart()" role="button" aria-label="Voir le panier">
+<div class="fb-icon-wrap"><i class="fas fa-shopping-cart"></i><span class="fb-count-badge" id="cartCount">0</span></div>
+<div class="fb-info">
+<div class="fb-items" id="cartItemsFB">0 article</div>
+<div class="fb-total" id="cartTotalFB">0,00€</div>
+</div>
+<div class="fb-cta"><i class="fas fa-arrow-right"></i> Voir</div>
+</div>
+
+<div class="admin-dashboard" id="adminDashboard">
+<div class="admin-dashboard-header">
+<h1><span class="live-dot"></span> HDS LIVE</h1>
+<div class="dash-clock" id="dashClock">--:--:--</div>
+<button class="dash-exit-btn" onclick="closeAdminDashboard()" aria-label="Fermer"><i class="fas fa-times"></i></button>
+</div>
+<div class="dash-kpis">
+<div class="dash-kpi kpi-new"><div class="kpi-num" id="dashKpiNew">0</div><div class="kpi-lbl">Nouvelles</div></div>
+<div class="dash-kpi kpi-prep"><div class="kpi-num" id="dashKpiPrep">0</div><div class="kpi-lbl">Prépa</div></div>
+<div class="dash-kpi kpi-route"><div class="kpi-num" id="dashKpiRoute">0</div><div class="kpi-lbl">En route</div></div>
+<div class="dash-kpi kpi-today"><div class="kpi-num" id="dashKpiToday">0€</div><div class="kpi-lbl">CA du jour</div></div>
+</div>
+<div class="dash-section">
+<h2><i class="fas fa-bolt"></i> Commandes actives <button onclick="loadDashboardOrders()" style="margin-left:auto;color:var(--yellow);font-size:12px;font-weight:800;"><i class="fas fa-sync-alt"></i></button></h2>
+<div class="dash-orders-list" id="dashOrdersList"><div class="dash-empty">Chargement…</div></div>
+</div>
+<div class="dash-section">
+<h2><i class="fas fa-bell"></i> Alertes</h2>
+<button class="checkout-button green" onclick="enableNotifications()" style="margin:0;font-size:12px;"><i class="fas fa-bell"></i> Activer alertes sonores</button>
+<div class="dash-footer-note" style="margin-top:10px;">💡 Pour recevoir les alertes sonores quand tu es sur une autre appli, laisse cette page ouverte.</div>
+</div>
+</div>
 
 <div class="main-container">
 <div class="app-shell">
@@ -556,6 +631,7 @@ input,textarea,select{font-family:inherit}
 <strong style="color:var(--yellow);">💡 Réduction client connecté :</strong> -5%
 </div>
 </div>
+<a href="https://wa.me/33744892782?text=Bonjour%20H.D.S%20SHOP%20!" target="_blank" rel="noopener" class="whatsapp-inline"><i class="fab fa-whatsapp"></i> Nous contacter sur WhatsApp</a>
 <div class="aide-livreur-card">
 <h4><i class="fas fa-hands-helping"></i> Aide aux Livreurs</h4>
 <div class="aide-item"><i class="fas fa-clock"></i><div><strong>Horaires de livraison</strong><span>7j/7 de 10h à 2h du matin</span></div></div>
@@ -587,10 +663,6 @@ input,textarea,select{font-family:inherit}
 </footer>
 </div>
 </div>
-
-<a href="https://wa.me/33744892782?text=Bonjour%20H.D.S%20SHOP%20!" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-
-<button class="cart-button" id="cartButton" onclick="openCart()" aria-label="Panier"><i class="fas fa-shopping-cart"></i><div class="cart-count" id="cartCount">0</div></button>
 
 <div class="menu-backdrop" id="menuBackdrop" onclick="toggleMenu()"></div>
 <aside class="vertical-menu" id="verticalMenu">
@@ -629,7 +701,6 @@ input,textarea,select{font-family:inherit}
 
 <div class="modal-overlay" id="orderDetailModal"><div class="modal"><div class="modal-header"><div class="modal-title"><i class="fas fa-receipt"></i> Détail commande</div><button class="modal-close" onclick="closeOrderDetailModal()">×</button></div><div class="modal-body" id="orderDetailBody"></div></div></div>
 
-<!-- ✅ INTERFACE ADMIN DÉDIÉE POUR UNE COMMANDE -->
 <div class="modal-overlay" id="orderAdminModal">
 <div class="modal wide">
 <div class="modal-header">
@@ -731,7 +802,10 @@ let adminUploadedImageUrl = null, audioCtx = null, notifPermission = (typeof Not
 let realtimeChannel = null, dispatchChannel = null, lastSeenOrderId = null, notifClickTarget = null, notifLoopTimer = null, wakeLock = null, newOrdersCount = 0;
 let driverAutoRefreshTimer = null, adminRefreshTimer = null;
 let currentAdminOrderId = null;
+let dashboardRefreshTimer = null, dashboardClockTimer = null;
+let lastClientOrderStatus = {};
 const RESTAURANT_LAT = 43.3226, RESTAURANT_LNG = 5.4019;
+const DISCOUNT_CLIENT_PCT = 0.05;
 
 function sanitize(str) { if (typeof str !== "string") return ""; const d = document.createElement("div"); d.textContent = str; return d.innerHTML; }
 function isValidPhone(phone) { return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(phone).replace(/\s/g, "")); }
@@ -740,6 +814,7 @@ function logSupabaseError(label, error) { if (!error) return; console.error(`[Su
 function getMyReferralCode() { if (currentProfile?.referral_code) return currentProfile.referral_code; let anon = localStorage.getItem("hds_share_token"); if (!anon) { anon = "ANON" + Math.random().toString(36).substring(2, 8).toUpperCase(); localStorage.setItem("hds_share_token", anon); } return anon; }
 function getMyDisplayName() { return currentProfile?.first_name || "Un ami"; }
 function buildShareUrl(productId, refCode) { const base = location.origin + location.pathname; const code = refCode || getMyReferralCode(); return `${base}?p=${productId}&ref=${encodeURIComponent(code)}&n=${encodeURIComponent(getMyDisplayName())}`; }
+function applyClientDiscount(amount) { return currentUser ? Number(amount) * (1 - DISCOUNT_CLIENT_PCT) : Number(amount); }
 
 function alertUser(text, type = "default") {
     const box = $("alertModal"); if (!box) return window.alert(text);
@@ -756,7 +831,9 @@ document.addEventListener("click", unlockAudio, { once: true });
 document.addEventListener("touchstart", unlockAudio, { once: true });
 
 function playNotifSound() { try { unlockAudio(); if (!audioCtx) return; const now = audioCtx.currentTime; const playTone = (freq, start, dur, vol = 0.5, type = "square") => { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = type; osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + start); gain.gain.linearRampToValueAtTime(vol, now + start + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + start + dur); osc.connect(gain).connect(audioCtx.destination); osc.start(now + start); osc.stop(now + start + dur + 0.05); }; playTone(1318.51, 0, 0.15, 0.45); playTone(1760.00, 0.18, 0.15, 0.45); playTone(1318.51, 0.36, 0.15, 0.45); playTone(1760.00, 0.54, 0.30, 0.50); playTone(2093.00, 0.95, 0.20, 0.50); playTone(2637.02, 1.20, 0.20, 0.50); playTone(2093.00, 1.45, 0.20, 0.50); playTone(2637.02, 1.70, 0.50, 0.55); } catch (e) {} }
+function playClientStatusSound() { try { unlockAudio(); if (!audioCtx) return; const now = audioCtx.currentTime; const playTone = (freq, start, dur, vol = 0.4, type = "sine") => { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = type; osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + start); gain.gain.linearRampToValueAtTime(vol, now + start + 0.02); gain.gain.exponentialRampToValueAtTime(0.001, now + start + dur); osc.connect(gain).connect(audioCtx.destination); osc.start(now + start); osc.stop(now + start + dur + 0.05); }; playTone(880, 0, 0.12, 0.35); playTone(1174.66, 0.15, 0.12, 0.35); playTone(1567.98, 0.30, 0.20, 0.40); } catch (e) {} }
 function vibrateNotif() { try { if (navigator.vibrate) navigator.vibrate([300,100,300,100,300,100,300,500]); } catch (e) {} }
+function vibrateClientNotif() { try { if (navigator.vibrate) navigator.vibrate([150,80,150,80,250]); } catch (e) {} }
 function startNotifLoop() { stopNotifLoop(); let count = 0; playNotifSound(); vibrateNotif(); count++; notifLoopTimer = setInterval(() => { if (count >= 3) { stopNotifLoop(); return; } playNotifSound(); vibrateNotif(); count++; }, 4000); }
 function stopNotifLoop() { if (notifLoopTimer) { clearInterval(notifLoopTimer); notifLoopTimer = null; } }
 async function requestNotifPermission() { if (typeof Notification === "undefined") return "denied"; if (Notification.permission === "granted") return "granted"; try { const perm = await Notification.requestPermission(); notifPermission = perm; return perm; } catch (e) { return "denied"; } }
@@ -774,9 +851,8 @@ window.enableNotifications = async () => {
 };
 
 async function requestWakeLock() { if (!isAdmin && !(currentDriver && driverMode)) return; if (!("wakeLock" in navigator)) return; try { wakeLock = await navigator.wakeLock.request("screen"); } catch (e) {} }
-document.addEventListener("visibilitychange", async () => { if (document.visibilityState === "visible" && (isAdmin || (currentDriver && driverMode))) { await requestWakeLock(); if (currentDriver && driverMode) driverRefreshOrders(); if (isAdmin) adminRefreshOrders(); } });
+document.addEventListener("visibilitychange", async () => { if (document.visibilityState === "visible" && (isAdmin || (currentDriver && driverMode))) { await requestWakeLock(); if (currentDriver && driverMode) driverRefreshOrders(); if (isAdmin) { adminRefreshOrders(); if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders(); } } });
 
-/* ✅ NOTIFICATION ORANGE ADMIN : détails complets */
 function showNotifBanner(title, htmlContent, onClickTarget, ctaText) {
     const banner = $("orderNotifBanner"); if (!banner) return;
     if ($("orderNotifTitle")) $("orderNotifTitle").textContent = title;
@@ -802,56 +878,66 @@ function updateAdminFloatingBadge() { const btn = $("adminFloatingBtn"), badge =
 
 async function notifyNewOrder(order) {
     if (isAdmin) { newOrdersCount++; updateAdminFloatingBadge(); }
-
-    // Récupérer le détail des articles + totaux pour la bannière riche
     let items = [];
     let deliveryFee = Number(order.delivery_fee || 0);
-    try {
-        const { data: orderItems } = await supabase.from("order_items").select("product_name,quantity,unit_price").eq("order_id", order.id);
-        items = orderItems || [];
-    } catch (e) {}
-
+    try { const { data: orderItems } = await supabase.from("order_items").select("product_name,quantity,unit_price").eq("order_id", order.id); items = orderItems || []; } catch (e) {}
     const subtotal = items.reduce((s, i) => s + (Number(i.unit_price || 0) * Number(i.quantity || 1)), 0);
     const discount = Number(order.discount || 0);
     const total = Number(order.total || 0);
-
-    const itemsList = items.length
-        ? items.map(i => `• ${esc(i.product_name)} ×${i.quantity}`).join("<br>")
-        : "• Articles (détail indisponible)";
-
+    const itemsList = items.length ? items.map(i => `• ${esc(i.product_name)} ×${i.quantity}`).join("<br>") : "• Articles (détail indisponible)";
     const html = `
         <div class="notif-line"><i class="fas fa-receipt"></i><span><strong>#${esc(order.code)}</strong></span></div>
         <div class="notif-line"><i class="fas fa-user"></i><span>${esc(order.client_name || "Client")}</span></div>
         <div class="notif-line"><i class="fas fa-phone"></i><span>${esc(order.client_phone || "—")}</span></div>
         <div class="notif-line"><i class="fas fa-map-marker-alt"></i><span>${esc((order.address || "").substring(0, 70))}</span></div>
         <div style="margin:6px 0;padding:6px 0;border-top:1px solid rgba(255,255,255,0.25);border-bottom:1px solid rgba(255,255,255,0.25);font-size:11.5px;line-height:1.55;">
-            <div style="font-weight:800;margin-bottom:2px;">🛒 Articles :</div>
-            ${itemsList}
+            <div style="font-weight:800;margin-bottom:2px;">🛒 Articles :</div>${itemsList}
         </div>
         <div class="notif-line"><i class="fas fa-calculator"></i><span>Sous-total : <strong>${money(subtotal || (total + discount - deliveryFee))}</strong></span></div>
-        ${deliveryFee > 0
-            ? `<div class="notif-line"><i class="fas fa-truck"></i><span>Livraison : <strong>${money(deliveryFee)}</strong></span></div>`
-            : `<div class="notif-line"><i class="fas fa-truck"></i><span>Livraison : <strong>GRATUITE</strong></span></div>`}
-        ${discount > 0
-            ? `<div class="notif-line"><i class="fas fa-tag"></i><span>Réduction : <strong>−${money(discount)}</strong></span></div>`
-            : ``}
-        <div class="notif-line" style="font-size:13.5px;margin-top:4px;"><i class="fas fa-coins"></i><span>TOTAL : <strong>${money(total)}</strong></span></div>
-    `;
-
+        ${deliveryFee > 0 ? `<div class="notif-line"><i class="fas fa-truck"></i><span>Livraison : <strong>${money(deliveryFee)}</strong></span></div>` : `<div class="notif-line"><i class="fas fa-truck"></i><span>Livraison : <strong>GRATUITE</strong></span></div>`}
+        ${discount > 0 ? `<div class="notif-line"><i class="fas fa-tag"></i><span>Réduction : <strong>−${money(discount)}</strong></span></div>` : ``}
+        <div class="notif-line" style="font-size:13.5px;margin-top:4px;"><i class="fas fa-coins"></i><span>TOTAL : <strong>${money(total)}</strong></span></div>`;
     showNotifBanner("🔔 NOUVELLE COMMANDE !", html, isAdmin ? "admin" : (currentDriver && driverMode ? "driver" : null), "👆 Ouvrir la commande");
-
     if (notifPermission === "granted" && typeof Notification !== "undefined") {
         try {
-            const n = new Notification("🔔 H.D.S SHOP — Nouvelle commande", {
-                body: `${order.code} • ${order.client_name || "Client"}\n${order.address || ""}\nTOTAL : ${money(total)}`,
-                icon: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png",
-                tag: "hds-order-" + order.id,
-                requireInteraction: true,
-                vibrate: [300,100,300,100,300,100,300,500]
-            });
+            const n = new Notification("🔔 H.D.S SHOP — Nouvelle commande", { body: `${order.code} • ${order.client_name || "Client"}\n${order.address || ""}\nTOTAL : ${money(total)}`, icon: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png", tag: "hds-order-" + order.id, requireInteraction: true, vibrate: [300,100,300,100,300,100,300,500] });
             n.onclick = () => { window.focus(); stopNotifLoop(); if (isAdmin) openAdminPanel(); else if (currentDriver && driverMode) openDriverInterface(); n.close(); };
         } catch (e) {}
     }
+}
+
+function notifyClientStatus(order, newStatus) {
+    const labels = { nouvelle: "🆕 Commande reçue", preparation: "👨‍🍳 En préparation", route: "🚚 En route vers vous", livree: "✅ Livrée !", annulee: "❌ Commande annulée" };
+    const messages = {
+        preparation: "Votre commande est en préparation. Comptez environ 5 minutes avant l'expédition.",
+        route: "Votre commande est en route ! Vous serez livré dans quelques minutes.",
+        livree: "Votre commande a été livrée. Bon appétit ! 🍔",
+        annulee: "Votre commande a été annulée. Contactez-nous si vous avez une question."
+    };
+    const title = labels[newStatus] || newStatus;
+    const body = messages[newStatus] || `Statut : ${newStatus}`;
+    playClientStatusSound();
+    vibrateClientNotif();
+    showClientStatusBanner(title, body, order);
+    if (notifPermission === "granted" && typeof Notification !== "undefined") {
+        try { new Notification(`🛒 ${title}`, { body, icon: "https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png", tag: "hds-client-" + order.id + "-" + newStatus, vibrate: [150,80,150,80,250] }); } catch (e) {}
+    }
+}
+
+function showClientStatusBanner(title, body, order) {
+    let el = $("clientStatusBanner");
+    if (!el) {
+        el = document.createElement("div");
+        el.id = "clientStatusBanner";
+        el.style.cssText = "position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-150px);background:linear-gradient(135deg,var(--blue),#2563EB);color:white;padding:12px 18px;border-radius:12px;z-index:6001;display:flex;align-items:center;gap:12px;font-weight:700;box-shadow:0 12px 32px rgba(59,130,246,0.7);max-width:420px;width:calc(100% - 24px);transition:transform 0.35s ease;cursor:pointer;border:2px solid white";
+        el.onclick = () => { el.style.transform = "translateX(-50%) translateY(-150px)"; showSection("tracking"); };
+        document.body.appendChild(el);
+    }
+    el.innerHTML = `<div style="width:38px;height:38px;background:rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="fas fa-truck"></i></div><div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:900;margin-bottom:2px;">${esc(title)}</div><div style="font-size:11.5px;font-weight:600;opacity:0.95;">${esc(body)}</div></div>`;
+    void el.offsetWidth;
+    el.style.transform = "translateX(-50%) translateY(0)";
+    clearTimeout(el._timer);
+    el._timer = setTimeout(() => { el.style.transform = "translateX(-50%) translateY(-150px)"; }, 9000);
 }
 
 function showSection(section) {
@@ -929,7 +1015,7 @@ async function logoutClient() {
     sessionStorage.removeItem("hds_driver_mode");
     localStorage.removeItem("hds_cart_guest"); localStorage.removeItem("hds_driver");
     stopDriverAutoRefresh(); stopNotifLoop();
-    closeAccountModal(); closeAdminPanel(); closeDriverInterface();
+    closeAccountModal(); closeAdminPanel(); closeDriverInterface(); closeAdminDashboard();
     if (realtimeChannel) { supabase.removeChannel(realtimeChannel); realtimeChannel = null; }
     if (dispatchChannel) { supabase.removeChannel(dispatchChannel); dispatchChannel = null; }
     if (wakeLock) { try { await wakeLock.release(); } catch {} wakeLock = null; }
@@ -954,16 +1040,27 @@ async function initOrderRealtime() {
             if (lastSeenOrderId && order.id <= lastSeenOrderId) return;
             if (!isAdmin && order.user_id === currentUser?.id) return;
             if (currentDriver && driverMode) { if (order.user_id === currentUser?.id) return; if (order.driver_id && order.driver_id !== currentDriver.id) return; driverRefreshOrders(); if ($("driverInterfaceModal")?.classList.contains("active")) notifyNewOrder(order); }
-            if (isAdmin) { lastSeenOrderId = order.id; notifyNewOrder(order); if ($("adminPanelModal")?.classList.contains("active") && $("atab-orders")?.classList.contains("active")) adminRefreshOrders(); }
+            if (isAdmin) { lastSeenOrderId = order.id; notifyNewOrder(order); if ($("adminPanelModal")?.classList.contains("active") && $("atab-orders")?.classList.contains("active")) adminRefreshOrders(); if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders(); }
         } else if (payload.eventType === "UPDATE") {
             if (currentDriver && driverMode) { if (!order.driver_id || order.driver_id === currentDriver.id) driverRefreshOrders(); }
             if (isAdmin && $("adminPanelModal")?.classList.contains("active") && $("atab-orders")?.classList.contains("active")) adminRefreshOrders();
+            if (isAdmin && $("adminDashboard")?.classList.contains("active")) loadDashboardOrders();
             if (isAdmin && currentAdminOrderId === order.id && $("orderAdminModal")?.classList.contains("active")) openAdminOrderDetail(order.id);
-            if (currentUser && order.user_id === currentUser.id) loadMyOrders();
+            if (currentUser && order.user_id === currentUser.id) { loadMyOrders(); handleClientStatusChange(order); }
         }
     }).subscribe((status) => { if (status === "SUBSCRIBED") console.log("[Realtime] orders-live actif"); });
 }
 window.initOrderRealtime = initOrderRealtime;
+
+function handleClientStatusChange(order) {
+    if (!order || !order.id) return;
+    const prevStatus = lastClientOrderStatus[order.id];
+    const newStatus = order.status;
+    lastClientOrderStatus[order.id] = newStatus;
+    if (!prevStatus) return;
+    if (prevStatus === newStatus) return;
+    notifyClientStatus(order, newStatus);
+}
 
 async function subscribeDispatch() { if (!currentDriver && !isAdmin) return; if (dispatchChannel) { await supabase.removeChannel(dispatchChannel); dispatchChannel = null; } try { await supabase.realtime.setAuth(); } catch (e) {} dispatchChannel = supabase.channel("driver:dispatch", { config: { private: true } }).on("broadcast", { event: "order_changed" }, async () => { try { if (currentDriver && driverMode) await driverRefreshOrders(); if (isAdmin) await adminRefreshOrders(); await loadMyOrders(); } catch (error) {} }).subscribe((status) => {}); }
 window.subscribeDispatch = subscribeDispatch;
@@ -984,7 +1081,8 @@ async function refreshAuth() {
     await loadFavorites(); await loadSavedCart(); await loadMyOrders(); await initOrderRealtime();
     if (isAdmin || (currentDriver && driverMode)) { await requestWakeLock(); await subscribeDispatch(); }
     if (currentDriver && driverMode) { await driverRefreshOrders(); startDriverAutoRefresh(); }
-    if (isAdmin) { adminRefreshOrders(); if (adminRefreshTimer) clearInterval(adminRefreshTimer); adminRefreshTimer = setInterval(() => { if (isAdmin && document.visibilityState === "visible") adminRefreshOrders(); }, 20000); }
+    if (isAdmin) { adminRefreshOrders(); if (adminRefreshTimer) clearInterval(adminRefreshTimer); adminRefreshTimer = setInterval(() => { if (isAdmin && document.visibilityState === "visible" && !$("adminDashboard")?.classList.contains("active")) adminRefreshOrders(); }, 20000); }
+    myOrders.forEach(o => { lastClientOrderStatus[o.id] = o.status; });
     updateAccountButton(); renderProducts(); renderCartItems();
 }
 window.refreshAuth = refreshAuth;
@@ -1017,12 +1115,12 @@ function filteredProducts() {
 function productCard(p, index = 0) {
     const out = p.manual_rupture || (p.stock !== null && Number(p.stock) <= 0); const soon = p.coming_soon;
     const priceHtml = currentUser
-        ? `<span class="original-price">${money(p.price)}</span><span class="discounted-price">${money(Number(p.price) * 0.95)}</span><span class="client-badge">-5%</span>`
+        ? `<span class="original-price">${money(p.price)}</span><span class="discounted-price">${money(applyClientDiscount(p.price))}</span><span class="client-badge">-5%</span>`
         : money(p.price);
     return `<article class="product-card ${soon ? "coming-soon-overlay" : ""} ${out ? "out-of-stock-overlay" : ""}" style="animation-delay:${Math.min(index * 25, 250)}ms">
         ${p.popular ? '<div class="product-badge">🔥 TOP</div>' : ""}
         <button class="share-btn-card" onclick="event.stopPropagation();shareProduct(${p.id})"><i class="fas fa-share-alt"></i></button>
-        <button class="fav-btn ${favorites.includes(p.id) ? "active" : ""}" onclick="event.stopPropagation();toggleFavorite(${p.id})"><i class="fas fa-heart"></i></button>
+        <button class="fav-btn ${favorites.includes(p.id) ? "active" : ""}" onclick="event.stopPropagation();toggleFavorite(${p.id}, this)"><i class="fas fa-heart"></i></button>
         <div class="product-image-container" onclick="openProductDetail(${p.id})"><img class="product-image" loading="lazy" src="${esc(p.image || "")}" alt="${esc(p.name)}" onerror="this.src='https://via.placeholder.com/200?text=HDS'"></div>
         <div class="product-name">${esc(p.name)}</div>
         <div class="product-price">${priceHtml}</div>
@@ -1042,7 +1140,7 @@ window.openProductDetail = (id) => {
     currentProduct = products.find(p => p.id === Number(id)); if (!currentProduct) return;
     $("detailImage").src = currentProduct.image || ""; $("detailName").textContent = currentProduct.name;
     $("detailPrice").innerHTML = currentUser
-        ? `<span class="original-price">${money(currentProduct.price)}</span> <span class="discounted-price">${money(Number(currentProduct.price) * 0.95)}</span> <span class="client-badge">-5%</span>`
+        ? `<span class="original-price">${money(currentProduct.price)}</span> <span class="discounted-price">${money(applyClientDiscount(currentProduct.price))}</span> <span class="client-badge">-5%</span>`
         : money(currentProduct.price);
     $("detailDescription").textContent = currentProduct.description || ""; $("detailSpecs").innerHTML = (currentProduct.specs || []).map(x => `<div>${esc(x)}</div>`).join(""); $("detailQty").value = 1;
     const sups = currentProduct.supplements || [];
@@ -1058,11 +1156,10 @@ window.closeImageModal = () => $("imageModal")?.classList.remove("active");
 
 function selectedSupplements() { return [...document.querySelectorAll("#supplementsList .supplement-checkbox:checked")].map(x => x.value); }
 function addProductToCart(product, quantity = 1, supplementIds = []) { const key = `${product.id}:${supplementIds.slice().sort().join(",")}`; const ex = cart.find(i => i.key === key); if (ex) ex.quantity += quantity; else cart.push({ key, product_id: product.id, quantity, supplements: supplementIds }); persistCart(); trackAddToCart(product, quantity); }
-window.addToCart = (id, button) => { const p = products.find(x => x.id === Number(id)); if (!p) return; const qty = Number(button?.closest(".product-card")?.querySelector(".quantity-input")?.value || 1); addProductToCart(p, qty); alertUser("Produit ajouté.", "success"); bumpCartButton(); };
-window.addFromDetail = () => { if (!currentProduct) return; addProductToCart(currentProduct, Number($("detailQty").value || 1), selectedSupplements()); $("productModal").classList.remove("active"); alertUser("Produit ajouté.", "success"); bumpCartButton(); };
+window.addToCart = (id, button) => { const p = products.find(x => x.id === Number(id)); if (!p) return; const qty = Number(button?.closest(".product-card")?.querySelector(".quantity-input")?.value || 1); addProductToCart(p, qty); alertUser("Produit ajouté.", "success"); };
+window.addFromDetail = () => { if (!currentProduct) return; addProductToCart(currentProduct, Number($("detailQty").value || 1), selectedSupplements()); $("productModal").classList.remove("active"); alertUser("Produit ajouté.", "success"); };
 window.incrementDetail = () => $("detailQty").value = Number($("detailQty").value) + 1;
 window.decrementDetail = () => $("detailQty").value = Math.max(1, Number($("detailQty").value) - 1);
-function bumpCartButton() { const b = $("cartButton"); if (!b) return; b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); setTimeout(() => b.classList.remove("bump"), 500); }
 
 let cartSyncTimer = null;
 function persistCart() { localStorage.setItem("hds_cart_guest", JSON.stringify(cart)); renderCartItems(); if (!currentUser) return; clearTimeout(cartSyncTimer); cartSyncTimer = setTimeout(() => syncCartToDatabase(), 800); }
@@ -1072,18 +1169,32 @@ async function loadSavedCart() { const { data } = await supabase.from("cart_item
 function getCartProduct(i) { return products.find(p => p.id === Number(i.product_id)); }
 function cartSubtotal() { return cart.reduce((s, i) => { const p = getCartProduct(i); if (!p) return s; const add = (p.supplements || []).filter(x => (i.supplements || []).includes(x.id)).reduce((v,x) => v + Number(x.price), 0); return s + (Number(p.price) + add) * i.quantity; }, 0); }
 
+function updateFloatingCartBar() {
+    const bar = $("cartFloatingBar"); if (!bar) return;
+    const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
+    if (totalItems === 0) { bar.classList.remove("visible"); return; }
+    bar.classList.add("visible");
+    const st = cartSubtotal();
+    const stWithDiscount = applyClientDiscount(st);
+    if ($("cartCount")) $("cartCount").textContent = totalItems;
+    if ($("cartItemsFB")) $("cartItemsFB").textContent = `${totalItems} article${totalItems > 1 ? "s" : ""}`;
+    if ($("cartTotalFB")) $("cartTotalFB").textContent = money(stWithDiscount);
+}
+
 function renderCartItems() {
     const c = $("cartItems"); if (!c) return;
-    if ($("cartCount")) $("cartCount").textContent = cart.reduce((s,i) => s + i.quantity, 0);
+    updateFloatingCartBar();
     if (!cart.length) { c.innerHTML = '<div class="empty-state">Panier vide.</div>'; if ($("cartSummary")) $("cartSummary").style.display = "none"; if ($("cartTotal")) $("cartTotal").style.display = "none"; if ($("checkoutBtn")) $("checkoutBtn").style.display = "none"; return; }
     c.innerHTML = cart.map((i, idx) => { const p = getCartProduct(i); if (!p) return ""; const addons = (p.supplements || []).filter(x => (i.supplements || []).includes(x.id)); return `<div class="cart-item"><div class="cart-item-details"><div class="cart-item-name">${esc(p.name)}</div>${addons.length ? `<div class="cart-item-supplements">${addons.map(a => esc(a.name)).join(", ")}</div>` : ""}<div class="cart-item-meta">${i.quantity} × ${money(p.price)}</div></div><strong>${money(Number(p.price) * i.quantity)}</strong><button class="cart-item-remove" onclick="removeFromCart(${idx})">×</button></div>`; }).join("");
     const st = cartSubtotal();
+    const discountAmt = currentUser ? st * DISCOUNT_CLIENT_PCT : 0;
+    const stWithDiscount = st - discountAmt;
     if ($("subtotal")) $("subtotal").textContent = money(st);
-    if ($("discount")) $("discount").textContent = currentUser ? `-${money(st * 0.05)}` : money(0);
-    if ($("deliveryCost")) $("deliveryCost").textContent = st >= 35 ? "GRATUITE ✓" : (st >= 15 ? "Calculée à la commande" : `Minimum 15€ (${money(15 - st)} de plus)`);
-    if ($("cartTotal")) $("cartTotal").textContent = `Total : ${money(st)}`;
+    if ($("discount")) $("discount").textContent = currentUser ? `-${money(discountAmt)}` : money(0);
+    if ($("deliveryCost")) $("deliveryCost").textContent = stWithDiscount >= 35 ? "GRATUITE ✓" : (stWithDiscount >= 15 ? "Calculée à la commande" : `Minimum 15€ (${money(15 - stWithDiscount)} de plus)`);
+    if ($("cartTotal")) $("cartTotal").textContent = `Total : ${money(stWithDiscount)}`;
     if ($("cartSummary")) $("cartSummary").style.display = "block"; if ($("cartTotal")) $("cartTotal").style.display = "block";
-    if ($("checkoutBtn")) { $("checkoutBtn").style.display = "block"; const minOk = st >= 15; $("checkoutBtn").disabled = !minOk; $("checkoutBtn").textContent = minOk ? "🔒 Commander" : `Minimum 15€ (${money(15 - st)} de plus)`; }
+    if ($("checkoutBtn")) { $("checkoutBtn").style.display = "block"; const minOk = stWithDiscount >= 15; $("checkoutBtn").disabled = !minOk; $("checkoutBtn").textContent = minOk ? "🔒 Commander" : `Minimum 15€ (${money(15 - stWithDiscount)} de plus)`; }
 }
 window.renderCartItems = renderCartItems;
 window.removeFromCart = (idx) => { const item = cart[idx]; const p = item ? getCartProduct(item) : null; if (p) trackRemoveFromCart(p, item.quantity); cart.splice(idx, 1); persistCart(); };
@@ -1093,7 +1204,7 @@ window.closeCart = () => $("cartModal")?.classList.remove("active");
 window.checkout = () => {
     if (!currentUser) { closeCart(); openAccountModal(); return alertUser("Connecte-toi."); }
     if (!cart.length) return alertUser("Panier vide.", "error");
-    const st = cartSubtotal(); if (st < 15) return alertUser(`Minimum 15€.`, "error");
+    const stWithDiscount = applyClientDiscount(cartSubtotal()); if (stWithDiscount < 15) return alertUser(`Minimum 15€.`, "error");
     closeCart(); $("checkoutModal")?.classList.add("active");
     if (currentProfile) { if ($("orderFirstName")) $("orderFirstName").value = currentProfile.first_name || ""; if ($("orderLastName")) $("orderLastName").value = currentProfile.last_name || ""; if ($("orderPhone")) $("orderPhone").value = currentProfile.phone || ""; if ($("orderAddress") && currentProfile.address && !$("orderAddress").value) $("orderAddress").value = currentProfile.address; }
     trackBeginCheckout(cart.map(i => { const p = getCartProduct(i); return p ? gaItem(p, i.quantity) : null; }).filter(Boolean));
@@ -1123,7 +1234,7 @@ window.locateForCheckout = async () => {
 window.submitOrder = async () => {
     if (!currentUser) return alertUser("Connecte-toi.", "error");
     if (!cart.length) return alertUser("Panier vide.", "error");
-    const st = cartSubtotal(); if (st < 15) return alertUser(`Minimum 15€.`, "error");
+    const stWithDiscount = applyClientDiscount(cartSubtotal()); if (stWithDiscount < 15) return alertUser(`Minimum 15€.`, "error");
     if (!userCoords) return alertUser("Clique sur Me localiser.", "error");
     const address = sanitize($("orderAddress")?.value.trim() || ""); const firstName = sanitize($("orderFirstName")?.value.trim() || ""); const lastName = sanitize($("orderLastName")?.value.trim() || ""); const phone = $("orderPhone")?.value.trim() || "";
     if (!address || !firstName || !lastName || !phone) return alertUser("Complète tous les champs.", "error");
@@ -1152,8 +1263,9 @@ async function loadMyOrders() {
     const { data, error } = await supabase.from("orders").select("id,code,status,total,created_at,distance,driver_name,address,client_name,client_phone,payment,items").eq("user_id", currentUser.id).order("created_at", { ascending: false }).limit(30);
     if (error) { logSupabaseError("loadMyOrders", error); return; }
     myOrders = data || [];
+    myOrders.forEach(o => { if (!lastClientOrderStatus[o.id]) lastClientOrderStatus[o.id] = o.status; });
     const active = myOrders.find(o => !["livree","annulee"].includes(o.status));
-    if (active) { currentOrder = active; if ($("noActiveOrder")) $("noActiveOrder").style.display = "none"; if ($("activeOrder")) $("activeOrder").style.display = "block"; if ($("orderCode")) $("orderCode").textContent = "#" + active.code; if ($("orderStatus")) $("orderStatus").textContent = active.status; if ($("orderDistance")) $("orderDistance").textContent = `${active.distance || 0} km`; if ($("driverName")) $("driverName").textContent = active.driver_name || "À assigner"; if ($("driverInitial")) $("driverInitial").textContent = (active.driver_name || "?")[0]; const steps = { nouvelle: 1, preparation: 1, route: 2, livree: 3 }; const step = steps[active.status] || 0; if ($("progressBar")) $("progressBar").style.width = (step * 33) + "%"; ["step1","step2","step3"].forEach((id, i) => { const el = $(id)?.querySelector(".step-icon"); if (!el) return; el.classList.remove("active","completed"); if (i + 1 < step) el.classList.add("completed"); else if (i + 1 === step) el.classList.add("active"); }); if ($("estimatedTime")) { const eta = { nouvelle: "35-45 min", preparation: "25-35 min", route: "10-20 min" }[active.status] || "--"; $("estimatedTime").textContent = eta; } }
+    if (active) { currentOrder = active; if ($("noActiveOrder")) $("noActiveOrder").style.display = "none"; if ($("activeOrder")) $("activeOrder").style.display = "block"; if ($("orderCode")) $("orderCode").textContent = "#" + active.code; if ($("orderStatus")) { const stLabels = { nouvelle: "Reçue", preparation: "Préparation", route: "En route", livree: "Livrée" }; $("orderStatus").textContent = stLabels[active.status] || active.status; } if ($("orderDistance")) $("orderDistance").textContent = `${active.distance || 0} km`; if ($("driverName")) $("driverName").textContent = active.driver_name || "À assigner"; if ($("driverInitial")) $("driverInitial").textContent = (active.driver_name || "?")[0]; const steps = { nouvelle: 1, preparation: 1, route: 2, livree: 3 }; const step = steps[active.status] || 0; if ($("progressBar")) $("progressBar").style.width = (step * 33) + "%"; ["step1","step2","step3"].forEach((id, i) => { const el = $(id)?.querySelector(".step-icon"); if (!el) return; el.classList.remove("active","completed"); if (i + 1 < step) el.classList.add("completed"); else if (i + 1 === step) el.classList.add("active"); }); if ($("estimatedTime")) { const eta = { nouvelle: "35-45 min", preparation: "5 min (prépa) + trajet", route: "10-20 min", livree: "Livrée" }[active.status] || "--"; $("estimatedTime").textContent = eta; } }
     else { if ($("noActiveOrder")) $("noActiveOrder").style.display = "block"; if ($("activeOrder")) $("activeOrder").style.display = "none"; }
     if ($("historyCount")) $("historyCount").textContent = myOrders.length;
 }
@@ -1215,7 +1327,7 @@ window.locateUser = () => {
 };
 
 async function loadFavorites() { if (!currentUser) { favorites = []; return; } const { data } = await supabase.from("favorites").select("product_id").eq("user_id", currentUser.id); favorites = (data || []).map(r => r.product_id); if ($("favCount")) $("favCount").textContent = favorites.length; }
-window.toggleFavorite = async (id) => { if (!currentUser) { alertUser("Connecte-toi.", "error"); return openAccountModal(); } const ex = favorites.includes(Number(id)); const q = ex ? supabase.from("favorites").delete().eq("user_id", currentUser.id).eq("product_id", id) : supabase.from("favorites").insert({ user_id: currentUser.id, product_id: id }); const { error } = await q; if (error) return alertUser(error.message, "error"); await loadFavorites(); renderProducts(); };
+window.toggleFavorite = async (id, btnEl) => { if (!currentUser) { alertUser("Connecte-toi.", "error"); return openAccountModal(); } const ex = favorites.includes(Number(id)); const q = ex ? supabase.from("favorites").delete().eq("user_id", currentUser.id).eq("product_id", id) : supabase.from("favorites").insert({ user_id: currentUser.id, product_id: id }); const { error } = await q; if (error) return alertUser(error.message, "error"); await loadFavorites(); if (btnEl) { btnEl.classList.toggle("active", !ex); } else { renderProducts(); } };
 
 window.showFavorites = () => { closeMenuIfOpen(); if (!currentUser) { openAccountModal(); return alertUser("Connecte-toi.", "error"); } $("favoritesModal")?.classList.add("active"); renderFavoritesList(); };
 window.closeFavoritesModal = () => $("favoritesModal")?.classList.remove("active");
@@ -1226,9 +1338,9 @@ function renderFavoritesList() {
     if (!favProducts.length) { list.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><p>Aucun favori.</p></div>'; return; }
     list.innerHTML = favProducts.map(p => { const out = p.manual_rupture || (p.stock !== null && Number(p.stock) <= 0); return `<div class="cart-item"><img src="${esc(p.image || "")}" style="width:52px;height:52px;object-fit:contain;background:var(--card);border-radius:8px;margin-right:10px;" onerror="this.src='https://via.placeholder.com/60?text=HDS'"><div class="cart-item-details"><div class="cart-item-name">${esc(p.name)}</div><div class="cart-item-meta" style="color:var(--yellow);font-weight:800;">${money(p.price)}</div></div><button class="buy-button" ${out ? "disabled" : ""} onclick="addFavoriteToCart(${p.id})" style="height:30px;padding:0 10px;font-size:11px;">${out ? "Rupture" : "+ Panier"}</button><button class="cart-item-remove" onclick="toggleFavorite(${p.id});renderFavoritesList();">×</button></div>`; }).join("");
 }
-window.addFavoriteToCart = (id) => { const p = products.find(x => x.id === Number(id)); if (!p) return; addProductToCart(p, 1); alertUser("Ajouté.", "success"); bumpCartButton(); };
+window.addFavoriteToCart = (id) => { const p = products.find(x => x.id === Number(id)); if (!p) return; addProductToCart(p, 1); alertUser("Ajouté.", "success"); };
 
-async function recordShare(productId, channel) { const channelMap = { native: "other", view_referral: "other", qrcode: "qr" }; const allowed = new Set(["whatsapp","facebook","twitter","instagram","copy","qr","other"]); const safe = channelMap[channel] || channel; const finalCh = allowed.has(safe) ? safe : "other"; await supabase.from("shares").insert({ user_id: currentUser?.id || null, product_id: productId, channel: finalCh, referrer_code: getMyReferralCode(), referrer_name: getMyDisplayName() }); gaEvent("share", { method: finalCh, content_type: "product", item_id: String(productId) }); }
+async function recordShare(productId, channel) { const channelMap = { native: "other", view_referral: "other", qrcode: "qr" }; const allowed = new Set(["whatsapp","facebook","twitter","instagram","copy","qr","other"]); const safe = channelMap[channel] || channel; const finalCh = allowed.has(safe) ? safe : "other"; const safeName = sanitize(getMyDisplayName()); await supabase.from("shares").insert({ user_id: currentUser?.id || null, product_id: productId, channel: finalCh, referrer_code: getMyReferralCode(), referrer_name: safeName }); gaEvent("share", { method: finalCh, content_type: "product", item_id: String(productId) }); }
 
 window.shareProduct = async (id) => { const p = products.find(x => x.id === Number(id)); if (!p) return; const url = buildShareUrl(p.id); currentProduct = p; await recordShare(p.id, "native"); if (navigator.share) { try { await navigator.share({ title: `${p.name} — H.D.S SHOP`, text: `${getMyDisplayName()} te recommande ce produit :`, url }); return; } catch {} } openShareModalForProduct(p); };
 window.shareProductDetail = () => currentProduct && window.shareProduct(currentProduct.id);
@@ -1243,9 +1355,81 @@ window.shareQRCode = async () => { if (!currentProduct) return; const url = buil
 window.closeQrModal = () => $("qrModal")?.classList.remove("active");
 window.downloadQR = async () => { const img = $("qrImage"); try { const r = await fetch(img.dataset.url); const b = await r.blob(); const u = URL.createObjectURL(b); const a = document.createElement("a"); a.href = u; a.download = img.dataset.name || "QR.png"; a.click(); setTimeout(() => URL.revokeObjectURL(u), 1000); } catch { window.open(img.dataset.url, "_blank"); } };
 
-function showRecommendBanner(referrerName, product) { recommendedBy = { name: referrerName, code: new URLSearchParams(location.search).get("ref") || null }; sharedProductId = product.id; if ($("recommendBanner")) { $("recommendBanner").style.display = "flex"; if ($("recoName")) $("recoName").textContent = `🎁 ${referrerName} te recommande !`; if ($("recoSub")) $("recoSub").textContent = `${product.name} — ${money(product.price)}`; } }
-window.addRecommendedToCart = () => { if (!sharedProductId) return; const p = products.find(x => x.id === Number(sharedProductId)); if (!p) return; addProductToCart(p, 1); alertUser("Ajouté.", "success"); bumpCartButton(); if ($("recommendBanner")) $("recommendBanner").style.display = "none"; };
+function showRecommendBanner(referrerName, product) { recommendedBy = { name: referrerName, code: new URLSearchParams(location.search).get("ref") || null }; sharedProductId = product.id; if ($("recommendBanner")) { $("recommendBanner").style.display = "flex"; if ($("recoName")) $("recoName").textContent = `🎁 ${sanitize(referrerName)} te recommande !`; if ($("recoSub")) $("recoSub").textContent = `${product.name} — ${money(product.price)}`; } }
+window.addRecommendedToCart = () => { if (!sharedProductId) return; const p = products.find(x => x.id === Number(sharedProductId)); if (!p) return; addProductToCart(p, 1); alertUser("Ajouté.", "success"); if ($("recommendBanner")) $("recommendBanner").style.display = "none"; };
 window.reshareRecommended = () => { if (!sharedProductId) return; const p = products.find(x => x.id === Number(sharedProductId)); if (!p) return; shareProduct(p.id); };
+
+function openAdminDashboard() {
+    if (!isAdmin) return alertUser("Admin requis.", "error");
+    closeMenuIfOpen(); newOrdersCount = 0; updateAdminFloatingBadge(); stopNotifLoop();
+    $("adminDashboard")?.classList.add("active");
+    document.body.style.overflow = "hidden";
+    updateDashClock();
+    if (dashboardClockTimer) clearInterval(dashboardClockTimer);
+    dashboardClockTimer = setInterval(updateDashClock, 1000);
+    loadDashboardOrders();
+    if (dashboardRefreshTimer) clearInterval(dashboardRefreshTimer);
+    dashboardRefreshTimer = setInterval(() => { if (document.visibilityState === "visible") loadDashboardOrders(); }, 12000);
+    requestWakeLock();
+    gaEvent("admin_dashboard_open");
+}
+window.openAdminDashboard = openAdminDashboard;
+window.closeAdminDashboard = () => {
+    $("adminDashboard")?.classList.remove("active");
+    document.body.style.overflow = "";
+    if (dashboardRefreshTimer) { clearInterval(dashboardRefreshTimer); dashboardRefreshTimer = null; }
+    if (dashboardClockTimer) { clearInterval(dashboardClockTimer); dashboardClockTimer = null; }
+};
+function updateDashClock() { const el = $("dashClock"); if (!el) return; const d = new Date(); el.textContent = [d.getHours(), d.getMinutes(), d.getSeconds()].map(n => String(n).padStart(2, "0")).join(":"); }
+
+async function loadDashboardOrders() {
+    if (!isAdmin) return;
+    const { data, error } = await supabase.from("orders").select("id,code,client_name,client_phone,address,status,total,created_at,driver_name").in("status", ["nouvelle","preparation","route"]).order("created_at", { ascending: false }).limit(30);
+    if (error) { const el = $("dashOrdersList"); if (el) el.innerHTML = `<div class="dash-empty">Erreur : ${esc(error.message)}</div>`; return; }
+    const newCount = (data || []).filter(o => o.status === "nouvelle").length;
+    const prepCount = (data || []).filter(o => o.status === "preparation").length;
+    const routeCount = (data || []).filter(o => o.status === "route").length;
+    if ($("dashKpiNew")) $("dashKpiNew").textContent = newCount;
+    if ($("dashKpiPrep")) $("dashKpiPrep").textContent = prepCount;
+    if ($("dashKpiRoute")) $("dashKpiRoute").textContent = routeCount;
+    try {
+        const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+        const { data: todayOrders } = await supabase.from("orders").select("total,status,created_at").gte("created_at", todayStart.toISOString()).neq("status", "annulee");
+        const todayRevenue = (todayOrders || []).reduce((s, o) => s + Number(o.total || 0), 0);
+        if ($("dashKpiToday")) $("dashKpiToday").textContent = money(todayRevenue);
+    } catch {}
+    const list = $("dashOrdersList"); if (!list) return;
+    if (!data?.length) { list.innerHTML = '<div class="dash-empty">✅ Aucune commande active en ce moment</div>'; return; }
+    const labels = { nouvelle: "🆕 Nouvelle", preparation: "👨‍🍳 En prépa", route: "🚚 En route" };
+    list.innerHTML = data.map(o => {
+        const phoneClean = (o.client_phone || "").replace(/\s/g, "");
+        let actions = `<button class="btn-appeler" onclick="event.stopPropagation();window.location.href='tel:${phoneClean}'"><i class="fas fa-phone"></i> Appeler</button>`;
+        if (o.status === "nouvelle") actions += `<button class="btn-preparer" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'preparation')">👨‍🍳 Préparer</button>`;
+        else if (o.status === "preparation") actions += `<button class="btn-route" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'route')">🚚 En route</button>`;
+        else if (o.status === "route") actions += `<button class="btn-livree" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'livree')">✅ Livrée</button>`;
+        actions += `<button class="btn-annuler" onclick="event.stopPropagation();adminCancelOrder(${o.id})">❌ Annuler</button>`;
+        return `<div class="dash-order-card status-${esc(o.status)}" onclick="openAdminOrderDetail(${o.id})">
+            <div class="dash-order-top">
+                <span class="dash-order-code">#${esc(o.code)}</span>
+                <span class="dash-order-total">${money(o.total)}</span>
+            </div>
+            <div class="dash-order-client">👤 ${esc(o.client_name || "Client")}</div>
+            <div class="dash-order-meta">📍 ${esc((o.address || "").substring(0, 60))}<br>📞 ${esc(o.client_phone || "—")} • ${labels[o.status] || o.status}${o.driver_name ? ` • 🛵 ${esc(o.driver_name)}` : ""}</div>
+            <div class="dash-order-actions">${actions}</div>
+        </div>`;
+    }).join("");
+}
+window.loadDashboardOrders = loadDashboardOrders;
+
+window.adminCancelOrder = async (id) => {
+    if (!isAdmin) return alertUser("Refusé.", "error");
+    if (!confirm("❌ Confirmer l'annulation de cette commande ?\n\nLe client sera notifié.")) return;
+    const { error } = await supabase.from("orders").update({ status: "annulee", updated_at: new Date().toISOString() }).eq("id", id);
+    if (error) return alertUser(error.message, "error");
+    alertUser("Commande annulée. Client notifié.", "success");
+    loadDashboardOrders();
+    if ($("adminPanelModal")?.classList.contains("active")) adminRefreshOrders();
+};
 
 function openAdminPanel() { if (!isAdmin) return alertUser("Admin requis.", "error"); closeMenuIfOpen(); newOrdersCount = 0; updateAdminFloatingBadge(); stopNotifLoop(); $("adminPanelModal")?.classList.add("active"); switchAdminTab("orders"); }
 window.openAdminPanel = openAdminPanel;
@@ -1265,9 +1449,8 @@ window.adminRefreshOrders = async () => {
     list.innerHTML = data.map(o => { const labels = { nouvelle: "🆕 Nouvelle", preparation: "👨‍🍳 Préparation", route: "🚚 En route", livree: "✅ Livrée", annulee: "❌ Annulée" }; let actions = ""; if (o.status === "nouvelle") actions = `<button class="btn-preparer" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'preparation')">👨‍🍳 Préparer</button><button class="btn-annuler" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'annulee')">❌ Annuler</button>`; else if (o.status === "preparation") actions = `<button class="btn-route" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'route')">🚚 En route</button>`; else if (o.status === "route") actions = `<button class="btn-livree" onclick="event.stopPropagation();adminSetOrderStatus(${o.id},'livree')">✅ Livrée</button>`; return `<div class="order-card status-${esc(o.status)}" onclick="openAdminOrderDetail(${o.id})"><div class="order-card-header"><span class="order-code">#${esc(o.code)}</span><span class="statut-chip ${esc(o.status)}">${labels[o.status] || o.status}</span></div><div class="order-body"><strong>👤 ${esc(o.client_name || "")}</strong> • 📞 ${esc(o.client_phone || "")}<br>📍 ${esc((o.address || "").substring(0, 60))}<br>💰 <strong>${money(o.total)}</strong>${o.driver_name ? ` • 🛵 ${esc(o.driver_name)}` : ""}</div>${actions ? `<div class="order-actions">${actions}</div>` : ""}<div style="font-size:10.5px;color:var(--yellow);font-weight:700;text-align:right;margin-top:6px;">Voir détails →</div></div>`; }).join("");
 };
 
-window.adminSetOrderStatus = async (id, status) => { if (!isAdmin) return alertUser("Refusé.", "error"); const patch = { status, updated_at: new Date().toISOString() }; if (status === "livree") patch.delivered_at = new Date().toISOString(); const { error } = await supabase.from("orders").update(patch).eq("id", id); if (error) return alertUser(error.message, "error"); alertUser("Statut mis à jour.", "success"); adminRefreshOrders(); if (currentAdminOrderId === id && $("orderAdminModal")?.classList.contains("active")) openAdminOrderDetail(id); };
+window.adminSetOrderStatus = async (id, status) => { if (!isAdmin) return alertUser("Refusé.", "error"); const patch = { status, updated_at: new Date().toISOString() }; if (status === "livree") patch.delivered_at = new Date().toISOString(); const { error } = await supabase.from("orders").update(patch).eq("id", id); if (error) return alertUser(error.message, "error"); alertUser("Statut mis à jour.", "success"); adminRefreshOrders(); if ($("adminDashboard")?.classList.contains("active")) loadDashboardOrders(); if (currentAdminOrderId === id && $("orderAdminModal")?.classList.contains("active")) openAdminOrderDetail(id); };
 
-/* ✅ INTERFACE ADMIN DÉDIÉE POUR UNE COMMANDE */
 window.openAdminOrderDetail = async (orderId) => {
     if (!isAdmin) return alertUser("Admin requis.", "error");
     currentAdminOrderId = orderId;
@@ -1275,46 +1458,28 @@ window.openAdminOrderDetail = async (orderId) => {
     body.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Chargement…</p></div>';
     $("orderAdminCode").textContent = "#—";
     $("orderAdminModal")?.classList.add("active");
-
     const { data: order, error } = await supabase.from("orders").select("*").eq("id", orderId).single();
     if (error) { body.innerHTML = `<div class="empty-state">Erreur : ${esc(error.message)}</div>`; return; }
     $("orderAdminCode").textContent = "#" + order.code;
-
     let items = [];
     try { const { data: orderItems } = await supabase.from("order_items").select("product_name,quantity,unit_price,supplements").eq("order_id", orderId); items = orderItems || []; } catch (e) {}
     if (!items.length && order.items) { try { const arr = typeof order.items === "string" ? JSON.parse(order.items) : order.items; items = arr.map(i => ({ product_name: i.product_name, quantity: i.quantity, unit_price: i.unit_price, supplements: [] })); } catch {} }
-
     const subtotal = items.reduce((s, i) => s + (Number(i.unit_price || 0) * Number(i.quantity || 1)), 0);
     const discount = Number(order.discount || 0);
     const delivery = Number(order.delivery_fee || order.delivery_cost || 0);
     const total = Number(order.total || 0);
     const labels = { nouvelle: "🆕 Nouvelle", preparation: "👨‍🍳 En préparation", route: "🚚 En route", livree: "✅ Livrée", annulee: "❌ Annulée" };
-
-    const itemsHtml = items.length ? items.map(i => {
-        const qty = Number(i.quantity || 1); const unit = Number(i.unit_price || 0);
-        const sups = Array.isArray(i.supplements) && i.supplements.length ? `<div class="order-detail-item-sup">➕ ${i.supplements.map(s => esc(typeof s === 'string' ? s : s.name || '')).join(', ')}</div>` : "";
-        return `<div class="order-detail-item"><div class="order-detail-item-info"><div class="order-detail-item-name">${esc(i.product_name || "Produit")}</div>${sups}<div class="order-detail-item-qty">${qty} × ${money(unit)}</div></div><div class="order-detail-item-price">${money(unit * qty)}</div></div>`;
-    }).join("") : '<div style="color:var(--text-dim);text-align:center;padding:12px;">Aucun article détaillé</div>';
-
+    const itemsHtml = items.length ? items.map(i => { const qty = Number(i.quantity || 1); const unit = Number(i.unit_price || 0); const sups = Array.isArray(i.supplements) && i.supplements.length ? `<div class="order-detail-item-sup">➕ ${i.supplements.map(s => esc(typeof s === 'string' ? s : s.name || '')).join(', ')}</div>` : ""; return `<div class="order-detail-item"><div class="order-detail-item-info"><div class="order-detail-item-name">${esc(i.product_name || "Produit")}</div>${sups}<div class="order-detail-item-qty">${qty} × ${money(unit)}</div></div><div class="order-detail-item-price">${money(unit * qty)}</div></div>`; }).join("") : '<div style="color:var(--text-dim);text-align:center;padding:12px;">Aucun article détaillé</div>';
     let actionsHtml = "";
-    if (order.status === "nouvelle") {
-        actionsHtml = `<button class="btn-preparer" onclick="adminSetOrderStatus(${order.id},'preparation')">👨‍🍳 Préparer</button><button class="btn-annuler" onclick="adminSetOrderStatus(${order.id},'annulee')">❌ Annuler</button>`;
-    } else if (order.status === "preparation") {
-        actionsHtml = `<button class="btn-route" onclick="adminSetOrderStatus(${order.id},'route')">🚚 En route</button><button class="btn-annuler" onclick="adminSetOrderStatus(${order.id},'annulee')">❌ Annuler</button>`;
-    } else if (order.status === "route") {
-        actionsHtml = `<button class="btn-livree" onclick="adminSetOrderStatus(${order.id},'livree')">✅ Livrée</button>`;
-    } else if (order.status === "livree") {
-        actionsHtml = `<div style="grid-column:1/-1;text-align:center;padding:12px;color:var(--green);font-weight:800;">✅ Commande livrée le ${order.delivered_at ? new Date(order.delivered_at).toLocaleString("fr-FR") : "—"}</div>`;
-    } else if (order.status === "annulee") {
-        actionsHtml = `<div style="grid-column:1/-1;text-align:center;padding:12px;color:var(--red);font-weight:800;">❌ Commande annulée</div>`;
-    }
-
+    if (order.status === "nouvelle") actionsHtml = `<button class="btn-preparer" onclick="adminSetOrderStatus(${order.id},'preparation')">👨‍🍳 Préparer</button><button class="btn-annuler" onclick="adminSetOrderStatus(${order.id},'annulee')">❌ Annuler</button>`;
+    else if (order.status === "preparation") actionsHtml = `<button class="btn-route" onclick="adminSetOrderStatus(${order.id},'route')">🚚 En route</button><button class="btn-annuler" onclick="adminSetOrderStatus(${order.id},'annulee')">❌ Annuler</button>`;
+    else if (order.status === "route") actionsHtml = `<button class="btn-livree" onclick="adminSetOrderStatus(${order.id},'livree')">✅ Livrée</button>`;
+    else if (order.status === "livree") actionsHtml = `<div style="grid-column:1/-1;text-align:center;padding:12px;color:var(--green);font-weight:800;">✅ Commande livrée le ${order.delivered_at ? new Date(order.delivered_at).toLocaleString("fr-FR") : "—"}</div>`;
+    else if (order.status === "annulee") actionsHtml = `<div style="grid-column:1/-1;text-align:center;padding:12px;color:var(--red);font-weight:800;">❌ Commande annulée</div>`;
     const phoneClean = (order.client_phone || "").replace(/\s/g, "");
     const gpsLink = order.delivery_lat && order.delivery_lng ? `https://www.google.com/maps?q=${order.delivery_lat},${order.delivery_lng}` : `https://www.google.com/maps/search/${encodeURIComponent(order.address || "")}`;
-
     body.innerHTML = `
         <div class="code-hero" style="border-color:var(--yellow);"><div class="label">Statut</div><div class="code-big" style="font-size:18px;color:var(--yellow);letter-spacing:1px;">${labels[order.status] || order.status}</div><div class="hint">${order.created_at ? new Date(order.created_at).toLocaleString("fr-FR") : ""}</div></div>
-
         <div style="font-weight:800;font-size:13px;margin:14px 0 6px;">👤 Informations client</div>
         <div style="background:var(--card-hover);border-radius:var(--r-md);padding:8px 14px;">
             <div class="order-detail-row"><span>Client</span><span>${esc(order.client_name || "—")}</span></div>
@@ -1324,10 +1489,8 @@ window.openAdminOrderDetail = async (orderId) => {
             <div class="order-detail-row"><span>Paiement</span><span>${esc(order.payment || "Espèces")}</span></div>
             <div class="order-detail-row"><span>Livreur</span><span>${esc(order.driver_name || "À assigner")}</span></div>
         </div>
-
         <div style="font-weight:800;font-size:13px;margin:14px 0 6px;">🛒 Articles commandés</div>
         <div style="background:var(--card-hover);border-radius:var(--r-md);padding:4px 14px;">${itemsHtml}</div>
-
         <div style="font-weight:800;font-size:13px;margin:14px 0 6px;">💰 Détail des frais</div>
         <div style="background:var(--card-hover);border-radius:var(--r-md);padding:8px 14px;">
             <div class="order-detail-row"><span>Sous-total</span><span>${money(subtotal || (total + discount - delivery))}</span></div>
@@ -1335,15 +1498,12 @@ window.openAdminOrderDetail = async (orderId) => {
             ${discount > 0 ? `<div class="order-detail-row"><span>Réduction</span><span style="color:var(--green);">−${money(discount)}</span></div>` : ``}
             <div class="order-detail-row" style="font-size:17px;color:var(--yellow);font-weight:900;"><span>TOTAL</span><span>${money(total)}</span></div>
         </div>
-
         <div class="order-admin-actions">
             ${actionsHtml}
             <a class="btn-appeler" href="tel:${esc(phoneClean)}">📞 Appeler</a>
             <a class="btn-gps" href="${esc(gpsLink)}" target="_blank" rel="noopener">🗺️ GPS</a>
         </div>
-
-        <button class="checkout-button secondary" onclick="closeOrderAdminModal()" style="margin-top:12px;">Fermer</button>
-    `;
+        <button class="checkout-button secondary" onclick="closeOrderAdminModal()" style="margin-top:12px;">Fermer</button>`;
 };
 window.closeOrderAdminModal = () => { $("orderAdminModal")?.classList.remove("active"); currentAdminOrderId = null; };
 
@@ -1434,11 +1594,7 @@ window.clearSearch = () => { if ($("searchInput")) $("searchInput").value = ""; 
 
 window.showLoyaltyInfo = () => { closeMenuIfOpen(); alertUser(`🎁 Points : ${currentProfile?.loyalty_points || 0}\n100 points = 10€`); };
 
-window.showReferralInfo = () => {
-    closeMenuIfOpen();
-    const code = currentProfile?.referral_code || getMyReferralCode();
-    alertUser(`🤝 PARRAINAGE\n\nTon code : ${code}\n\nPartage-le à un ami.\nVous recevez 5€ chacun à sa 1ère commande !`, "success");
-};
+window.showReferralInfo = () => { closeMenuIfOpen(); const code = currentProfile?.referral_code || getMyReferralCode(); alertUser(`🤝 PARRAINAGE\n\nTon code : ${code}\n\nPartage-le à un ami.\nVous recevez 5€ chacun à sa 1ère commande !`, "success"); };
 
 function handleSharedProductUrl() { const params = new URLSearchParams(location.search); const p = params.get("p"); if (!p) return; const product = products.find(x => x.id === Number(p)); if (!product) return; const refCode = params.get("ref"); const refName = params.get("n") ? decodeURIComponent(params.get("n")) : null; $("sharedBannerText").textContent = product.name; $("sharedBanner").style.display = "flex"; if (refCode) { showRecommendBanner(refName || "Un ami", product); recordShare(product.id, "view_referral").catch(() => {}); } setTimeout(() => openProductDetail(product.id), 200); }
 window.backToShop = () => { $("sharedBanner").style.display = "none"; if ($("recommendBanner")) $("recommendBanner").style.display = "none"; history.replaceState(null, '', location.pathname); closeProductModal(); showSection("products"); };
