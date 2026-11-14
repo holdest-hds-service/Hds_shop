@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>H.D.S SHOP | Épicerie & Alimentation en ligne à Marseille - Livraison 24h/24</title>
-<meta name="description" content="🛒 H.D.S SHOP - Épicerie en ligne à Marseille 13014. Livraison 24h/24. Livraison GRATUITE dès 35€.">
+<meta name="description" content="🛒 H.D.S SHOP - Épicerie en ligne à Marseille 13014. Livraison 24h/24.">
 <meta name="theme-color" content="#0F0F0F">
 <link rel="icon" href="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d50854b0-898e-ab5f-223b-9edbe52065f5.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,19 +14,14 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
-
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KKLRBZN7');</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6J7XVTN4FC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-6J7XVTN4FC', { send_page_view: true });
-</script>
+<!-- QR Code Generator -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
+<!-- QR Code Scanner (jsQR) -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js" defer></script>
 
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--yellow:#FFD700;--gold:#FFB800;--green:#22C55E;--red:#EF4444;--blue:#3B82F6;--orange:#F97316;--whatsapp:#25D366;--whatsapp-dark:#128C7E;--bg:#0A0A0A;--card:#141414;--card-hover:#1C1C1C;--text:#FAFAFA;--text-dim:#A1A1AA;--border:rgba(255,255,255,0.08);--shadow-md:0 8px 24px rgba(0,0,0,0.4);--shadow-lg:0 20px 48px rgba(0,0,0,0.5);--r-sm:8px;--r-md:12px;--r-lg:18px;--r-xl:24px;--t-fast:150ms cubic-bezier(0.4,0,0.2,1);--t-base:250ms cubic-bezier(0.4,0,0.2,1)}
+:root{--yellow:#FFD700;--gold:#FFB800;--green:#22C55E;--red:#EF4444;--blue:#3B82F6;--orange:#F97316;--whatsapp:#25D366;--bg:#0A0A0A;--card:#141414;--card-hover:#1C1C1C;--text:#FAFAFA;--text-dim:#A1A1AA;--border:rgba(255,255,255,0.08);--shadow-md:0 8px 24px rgba(0,0,0,0.4);--shadow-lg:0 20px 48px rgba(0,0,0,0.5);--r-sm:8px;--r-md:12px;--r-lg:18px;--r-xl:24px;--t-fast:150ms cubic-bezier(0.4,0,0.2,1);--t-base:250ms cubic-bezier(0.4,0,0.2,1)}
 body.light-mode{--bg:#F4F5F7;--card:#FFFFFF;--card-hover:#FAFAFA;--text:#111827;--text-dim:#6B7280;--border:rgba(0,0,0,0.08);--shadow-md:0 8px 24px rgba(0,0,0,0.08);--shadow-lg:0 20px 48px rgba(0,0,0,0.12)}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;justify-content:center;padding:10px;padding-bottom:calc(90px + env(safe-area-inset-bottom, 0px));transition:background var(--t-base),color var(--t-base);overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -40,7 +35,7 @@ input,textarea,select{font-family:inherit}
 .app-shell::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--yellow),var(--orange),var(--yellow));background-size:200% 100%;animation:shimmer 4s linear infinite;z-index:1}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 @media (min-width:640px){body{padding:16px}.main-container{max-width:760px}.products-grid{grid-template-columns:repeat(3,1fr);gap:14px}.map-container{height:460px}}
-@media (min-width:1024px){body{padding:24px 32px}.main-container{max-width:1080px}.app-shell{border-radius:26px}.products-grid{grid-template-columns:repeat(4,1fr);gap:16px}.app-header{padding:22px 24px}.quick-nav{padding:10px 18px;gap:8px;justify-content:flex-start}.quick-nav-btn{padding:10px 16px;font-size:11.5px}.quick-nav-btn i{font-size:18px}.section-title{font-size:17px;margin:22px 24px 12px}.category-tabs{margin:0 24px 14px}.sort-bar{margin:0 24px 14px}.products-grid{padding:0 24px 24px}.search-bar{padding:12px 24px}.status-bar{margin:16px 24px}.modal{max-width:520px}.modal.wide{max-width:760px}.map-container{margin:16px 24px;height:520px}.location-section,.loyalty-banner,.tracker-container,#sharedBanner,#recommendBanner{margin-left:24px;margin-right:24px}footer{padding:32px 24px}}
+@media (min-width:1024px){body{padding:24px 32px}.main-container{max-width:1080px}.app-shell{border-radius:26px}.products-grid{grid-template-columns:repeat(4,1fr);gap:16px}.app-header{padding:22px 24px}.section-title{font-size:17px;margin:22px 24px 12px}.category-tabs{margin:0 24px 14px}.sort-bar{margin:0 24px 14px}.products-grid{padding:0 24px 24px}.search-bar{padding:12px 24px}.status-bar{margin:16px 24px}.modal{max-width:520px}.modal.wide{max-width:760px}.map-container{margin:16px 24px;height:520px}.location-section,.loyalty-banner,.tracker-container,#sharedBanner,#recommendBanner{margin-left:24px;margin-right:24px}footer{padding:32px 24px}}
 @media (min-width:1440px){.main-container{max-width:1240px}.products-grid{grid-template-columns:repeat(5,1fr)}}
 .app-header{padding:18px 16px;display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,var(--card) 0%,var(--card-hover) 100%);border-bottom:1px solid var(--border);position:relative}
 .logo-wrapper{width:56px;height:56px;flex-shrink:0;cursor:pointer}
@@ -126,11 +121,9 @@ input,textarea,select{font-family:inherit}
 .buy-button{flex:1;height:26px;background:linear-gradient(135deg,var(--yellow),var(--gold));color:#000;border-radius:var(--r-sm);font-size:11px;font-weight:800}
 .buy-button:hover:not(:disabled){filter:brightness(1.1);box-shadow:0 4px 12px rgba(255,215,0,0.4)}
 .buy-button:disabled{opacity:0.4;cursor:not-allowed}
-.coming-soon-overlay{position:relative;overflow:hidden}
 .coming-soon-overlay::after{content:'BIENTÔT';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);background:linear-gradient(135deg,var(--orange),#DC2626);color:white;padding:5px 14px;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:1.5px;z-index:5;white-space:nowrap}
 .coming-soon-overlay .product-image-container{filter:blur(2px) brightness(0.6)}
 .coming-soon-overlay .product-name,.coming-soon-overlay .product-price,.coming-soon-overlay .product-actions,.coming-soon-overlay .product-details-btn{opacity:0.4;pointer-events:none}
-.out-of-stock-overlay{position:relative;overflow:hidden}
 .out-of-stock-overlay::after{content:'RUPTURE';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);background:linear-gradient(135deg,var(--red),#DC2626);color:white;padding:6px 16px;border-radius:6px;font-size:11px;font-weight:900;letter-spacing:1.5px;z-index:5;white-space:nowrap}
 .out-of-stock-overlay .product-image-container{filter:grayscale(0.7) brightness(0.6)}
 .out-of-stock-overlay .buy-button{pointer-events:none;opacity:0.4}
@@ -190,7 +183,6 @@ input,textarea,select{font-family:inherit}
 .modal-close{background:rgba(255,255,255,0.08);border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center}
 .modal-close:hover{background:var(--red);color:white}
 .modal-body{padding:18px}
-.fullscreen-image{width:100%;max-height:220px;object-fit:contain;background:var(--card-hover);border-radius:var(--r-md);margin-bottom:12px;cursor:pointer}
 .cart-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
 .cart-item:last-child{border-bottom:none}
 .cart-item-details{flex:1;min-width:0;padding-right:10px}
@@ -348,6 +340,11 @@ input,textarea,select{font-family:inherit}
 .btn-annuler:hover{background:var(--red);color:white}
 .btn-appeler{background:var(--green);color:white}
 .btn-appeler:hover{filter:brightness(1.1)}
+/* ⚡ NOUVEAU : Style du bouton Scanner */
+.btn-scanner{background:linear-gradient(135deg,#8B5CF6,#6D28D9);color:white;border:1px solid #8B5CF6;font-weight:900;letter-spacing:0.3px;box-shadow:0 4px 12px rgba(139,92,246,0.4)}
+.btn-scanner:hover{filter:brightness(1.15);box-shadow:0 6px 20px rgba(139,92,246,0.6);transform:translateY(-1px)}
+.btn-sans-scan{background:rgba(161,161,170,0.15);color:var(--text-dim);border:1px solid var(--border);font-size:10px}
+.btn-sans-scan:hover{background:rgba(161,161,170,0.3);color:var(--text)}
 .statut-chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:800}
 .statut-chip.nouvelle{background:rgba(249,115,22,0.2);color:var(--orange)}
 .statut-chip.preparation{background:rgba(255,215,0,0.2);color:var(--yellow)}
@@ -467,12 +464,6 @@ input,textarea,select{font-family:inherit}
 .video-info{padding:10px 12px}
 .video-info h4{font-size:12.5px;font-weight:800;margin-bottom:3px;color:var(--text)}
 .video-info p{font-size:10.5px;color:var(--text-dim);line-height:1.4}
-.video-admin-list{max-height:400px;overflow-y:auto;margin-bottom:10px}
-.video-admin-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px;background:var(--card-hover);border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:6px}
-.video-admin-item .vai-infos{flex:1;min-width:0}
-.video-admin-item .vai-infos strong{display:block;font-size:11.5px;margin-bottom:1px}
-.video-admin-item .vai-infos span{font-size:10px;color:var(--text-dim);word-break:break-all}
-.video-admin-item .vai-actions{display:flex;gap:4px;flex-shrink:0}
 #routeMapModal .modal{max-width:760px;padding:0;overflow:hidden;background:#0A0A0A}
 #routeMapModal .modal-header{background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,152,0,0.1));border-bottom:1px solid rgba(255,215,0,0.3)}
 #routeMapModal .modal-body{padding:0;position:relative}
@@ -496,14 +487,123 @@ input,textarea,select{font-family:inherit}
 .driver-marker-pulse{background:rgba(59,130,246,0.3);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;animation:pulseDriverMarker 1.5s infinite}
 @keyframes pulseDriverMarker{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:0.6}}
 .driver-marker-inner{background:#3B82F6;width:20px;height:20px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px #3B82F6}
-@media (max-width:380px){.products-grid{grid-template-columns:1fr}.header-title{font-size:18px}.admin-product-actions button{width:28px;height:28px;font-size:11px}.admin-stats{grid-template-columns:1fr 1fr}.notif-banner{max-width:calc(100vw - 32px);right:16px;left:16px}.cart-floating-bar{width:calc(100vw - 28px)}}
+
+/* ⚡ NOUVEAU : Styles pour le QR Code Client (encadré jaune) */
+.qr-client-box{
+  background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,152,0,0.08));
+  border:2.5px solid var(--yellow);
+  border-radius:var(--r-lg);
+  padding:16px;
+  margin:14px 0;
+  text-align:center;
+  box-shadow:0 0 24px rgba(255,215,0,0.3);
+  animation:qrGlow 2s ease-in-out infinite;
+}
+@keyframes qrGlow{
+  0%,100%{box-shadow:0 0 24px rgba(255,215,0,0.3)}
+  50%{box-shadow:0 0 40px rgba(255,215,0,0.55)}
+}
+.qr-client-box .qr-header{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:13px;font-weight:900;color:var(--yellow);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;
+}
+.qr-client-box .qr-code-wrap{
+  background:#FFFFFF;padding:12px;border-radius:12px;
+  display:inline-block;margin:8px 0;
+}
+.qr-client-box #clientQrCanvas{
+  display:block;width:200px;height:200px;image-rendering:pixelated;
+}
+.qr-client-box .qr-code-text{
+  font-family:'Bungee Spice',cursive;
+  font-size:22px;font-weight:900;color:var(--yellow);
+  letter-spacing:3px;margin-top:10px;
+}
+.qr-client-box .qr-hint{
+  font-size:11px;color:var(--text-dim);
+  margin-top:6px;font-style:italic;line-height:1.4;
+}
+.qr-client-box .qr-code-digits{
+  background:rgba(0,0,0,0.3);padding:4px 10px;border-radius:20px;
+  display:inline-block;margin-top:8px;font-family:monospace;
+  font-weight:800;color:var(--yellow);font-size:12px;
+  letter-spacing:1px;
+}
+
+/* ⚡ NOUVEAU : Styles pour le Scanner Livreur */
+#qrScannerModal .modal-overlay{background:rgba(0,0,0,0.95)}
+#qrScannerModal .modal{max-width:520px;padding:0;background:#0A0A0A;border:2px solid var(--yellow)}
+#qrScannerModal .modal-header{background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(109,40,217,0.1));border-bottom:1px solid rgba(139,92,246,0.4)}
+#scannerVideoWrap{
+  position:relative;width:100%;aspect-ratio:1/1;
+  background:#000;overflow:hidden;
+  border-radius:0;
+}
+#scannerVideoWrap video{
+  width:100%;height:100%;object-fit:cover;
+  display:block;
+}
+#scannerOverlay{
+  position:absolute;inset:0;
+  pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+}
+#scannerFrame{
+  width:70%;height:70%;position:relative;
+  max-width:320px;max-height:320px;
+}
+#scannerFrame::before,
+#scannerFrame::after,
+#scannerFrame > .corner-bl::before,
+#scannerFrame > .corner-br::before{
+  content:'';position:absolute;width:40px;height:40px;
+  border:4px solid var(--yellow);
+}
+#scannerFrame::before{top:0;left:0;border-right:none;border-bottom:none;border-radius:12px 0 0 0}
+#scannerFrame::after{top:0;right:0;border-left:none;border-bottom:none;border-radius:0 12px 0 0}
+#scannerFrame > .corner-bl::before{bottom:0;left:0;border-right:none;border-top:none;border-radius:0 0 0 12px}
+#scannerFrame > .corner-br::before{bottom:0;right:0;border-left:none;border-top:none;border-radius:0 0 12px 0}
+#scannerLaser{
+  position:absolute;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--yellow),transparent);
+  box-shadow:0 0 12px var(--yellow);
+  animation:laserMove 2s ease-in-out infinite;
+}
+@keyframes laserMove{
+  0%,100%{top:10%}
+  50%{top:90%}
+}
+#scannerStatus{
+  padding:14px 16px;background:var(--card);text-align:center;
+  font-size:13px;font-weight:700;color:var(--yellow);
+  border-top:1px solid var(--border);
+}
+#scannerStatus.error{color:var(--red);background:rgba(239,68,68,0.15)}
+#scannerStatus.success{color:var(--green);background:rgba(34,197,94,0.15)}
+#scannerActions{padding:12px 16px;display:flex;gap:8px;background:var(--card);border-top:1px solid var(--border)}
+#scannerActions button{flex:1;padding:12px;border-radius:var(--r-md);font-size:13px;font-weight:800}
+#scannerCancelBtn{background:var(--card-hover);color:var(--text);border:1px solid var(--border)}
+#scannerCancelBtn:hover{background:var(--border)}
+#scannerManualBtn{background:rgba(139,92,246,0.15);color:#8B5CF6;border:1px solid #8B5CF6}
+#scannerManualBtn:hover{background:#8B5CF6;color:white}
+#scannerSuccessOverlay{
+  position:absolute;inset:0;background:rgba(34,197,94,0.9);
+  display:none;align-items:center;justify-content:center;
+  flex-direction:column;gap:12px;color:white;font-weight:900;font-size:22px;
+  z-index:100;animation:successFadeIn 0.4s ease;
+}
+#scannerSuccessOverlay.show{display:flex}
+#scannerSuccessOverlay i{font-size:72px;animation:successPop 0.5s ease}
+@keyframes successFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes successPop{0%{transform:scale(0.3);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+
+@media (max-width:380px){.products-grid{grid-template-columns:1fr}.header-title{font-size:18px}.admin-product-actions button{width:28px;height:28px;font-size:11px}.admin-stats{grid-template-columns:1fr 1fr}.notif-banner{max-width:calc(100vw - 32px);right:16px;left:16px}.cart-floating-bar{width:calc(100vw - 28px)}.qr-client-box #clientQrCanvas{width:160px;height:160px}}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:3px}
 </style>
 </head>
 <body>
-
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KKLRBZN7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="alert-modal" id="alertModal" role="alert" aria-live="polite">
 <i class="fas fa-check-circle" id="alertIcon"></i><span id="alertMessage"></span>
@@ -677,6 +777,20 @@ input,textarea,select{font-family:inherit}
 <div style="margin-top:12px;font-size:12px;background:var(--card);padding:10px;border-radius:var(--r-md);">
 <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="color:var(--text-dim);">Temps estimé:</span><span style="font-weight:700;" id="estimatedTime">--</span></div>
 <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-dim);">Distance:</span><span style="font-weight:700;" id="orderDistance">--</span></div>
+</div>
+</div>
+
+<!-- ⚡ NOUVEAU : Encadré QR Code client (visible uniquement en statut "En route") -->
+<div class="qr-client-box" id="clientQrBox" style="display:none;">
+<div class="qr-header"><i class="fas fa-qrcode"></i> Votre QR Code de livraison</div>
+<div class="qr-code-wrap">
+<canvas id="clientQrCanvas" width="200" height="200"></canvas>
+</div>
+<div class="qr-code-text" id="clientQrCodeText">—</div>
+<div class="qr-code-digits" id="clientQrCodeDigits">HDS-XXXX</div>
+<div class="qr-hint">
+📱 Présentez ce QR Code au livreur à son arrivée<br>
+Il le scannera pour valider la livraison
 </div>
 </div>
 </div>
@@ -902,6 +1016,35 @@ input,textarea,select{font-family:inherit}
 </div>
 </div>
 
+<!-- ⚡ NOUVEAU : Modal Scanner QR Code Livreur -->
+<div class="modal-overlay" id="qrScannerModal">
+<div class="modal">
+<div class="modal-header">
+<div class="modal-title"><i class="fas fa-camera" style="color:#8B5CF6;"></i> Scanner le QR Code client</div>
+<button class="modal-close" onclick="closeQrScanner()">×</button>
+</div>
+<div id="scannerVideoWrap">
+<video id="scannerVideo" playsinline autoplay muted></video>
+<div id="scannerOverlay">
+<div id="scannerFrame">
+<div id="scannerLaser"></div>
+<div class="corner-bl"></div>
+<div class="corner-br"></div>
+</div>
+</div>
+<div id="scannerSuccessOverlay">
+<i class="fas fa-check-circle"></i>
+<div>Livraison validée !</div>
+</div>
+</div>
+<div id="scannerStatus">📷 Placez le QR Code dans le cadre</div>
+<div id="scannerActions">
+<button id="scannerCancelBtn" onclick="closeQrScanner()">Annuler</button>
+<button id="scannerManualBtn" onclick="scannerManualInput()">⌨️ Saisir le code</button>
+</div>
+</div>
+</div>
+
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
@@ -913,46 +1056,7 @@ const $ = (id) => document.getElementById(id);
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const money = (v) => `${Number(v || 0).toFixed(2)}€`;
 
-/* ============================================================
-   ⚡ CORRECTIONS MAJEURES DE CETTE VERSION ⚡
-   1) Le livreur NE VOIT PLUS ses propres commandes client
-      - filtre côté JS dans driverRefreshOrders : o.user_id !== currentUser.id
-      - filtre côté adminSetOrderStatus & openAdminOrderDetail
-   2) Le livreur VOIT désormais les commandes non assignées
-      - la policy RLS "orders_self_read" doit inclure driver_id IS NULL
-        (voir SQL ci-dessous, à exécuter 1 fois)
-   3) Distinction claire entre mode "client" et mode "livreur"
-      - suppression de la bascule automatique isDriver si pas en mode driver
-      - setDriverMode() filtre loadMyOrders() pour exclure les commandes livreur
-   4) Realtime renforcé
-      - on n'ouvre le canal orders-live QUE si nécessaire
-      - subscribeDispatch en canal PUBLIC (pas de private:true)
-   5) Anti-doublon : empêche le même livreur de "prendre" sa propre commande
-   6) place_order RPC protégé (security definer déjà côté DB, mais on gère
-      le fallback si RLS bloque l'insertion côté client)
-   ============================================================ */
-
-// SQL À EXÉCUTER UNE FOIS (policy à corriger, car sinon le livreur ne voit pas
-// les commandes non assignées) :
-// ------------------------------------------------------------
-// drop policy if exists "orders_self_read" on public.orders;
-// create policy "orders_self_read" on public.orders for select using (
-//   auth.uid() = user_id
-//   or public.is_admin()
-//   or (
-//     exists (select 1 from public.delivery_drivers d where d.auth_user_id = auth.uid() and d.is_active)
-//     and (driver_id is null or driver_id = (select id from public.delivery_drivers where auth_user_id = auth.uid()))
-//   )
-// );
-// ------------------------------------------------------------
-// + policy d'UPDATE pour que driver_claim_order_v1 / driver_set_status_v1
-// fonctionnent (elles sont security definer, mais on sécurise quand même) :
-// drop policy if exists "orders_driver_update" on public.orders;
-// create policy "orders_driver_update" on public.orders for update using (
-//   exists (select 1 from public.delivery_drivers d where d.auth_user_id = auth.uid() and d.is_active
-//           and (driver_id is null or driver_id = d.id))
-// );
-
+// ==== VARIABLES GLOBALES ====
 let products = [], categories = [], currentUser = null, currentProfile = null;
 let isAdmin = false, currentDriver = null;
 let driverMode = sessionStorage.getItem("hds_driver_mode") === "1";
@@ -974,6 +1078,12 @@ let routeMapInstance = null, routeLineInstance = null, routeSourceMarker = null;
 let routeDestMarker = null, routeDriverMarker = null, routeCurrentOrder = null;
 let routeWatchId = null, routeFollowMode = true, routeRefreshTimer = null;
 
+// ⚡ NOUVEAU : Variables pour le scanner QR
+let qrScannerStream = null;
+let qrScannerAnimationFrame = null;
+let qrScannerCurrentOrderId = null;
+let qrScannerProcessing = false;
+
 function sanitize(str) { if (typeof str !== "string") return ""; const d = document.createElement("div"); d.textContent = str; return d.innerHTML; }
 function isValidPhone(phone) { return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(phone).replace(/\s/g, "")); }
 function calculateDistance(lat1, lon1, lat2, lon2) { const R = 6371; const dLat = (lat2-lat1)*Math.PI/180; const dLon = (lon2-lon1)*Math.PI/180; const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2; return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); }
@@ -982,8 +1092,6 @@ function getMyReferralCode() { if (currentProfile?.referral_code) return current
 function getMyDisplayName() { return currentProfile?.first_name || "Un ami"; }
 function buildShareUrl(productId, refCode) { const base = location.origin + location.pathname; const code = refCode || getMyReferralCode(); return `${base}?p=${productId}&ref=${encodeURIComponent(code)}&n=${encodeURIComponent(getMyDisplayName())}`; }
 function applyClientDiscount(amount) { return currentUser ? Number(amount) * (1 - DISCOUNT_CLIENT_PCT) : Number(amount); }
-
-// ⚡ NOUVEAU : helper pour savoir si on doit filtrer les commandes
 function isDriverActive() { return Boolean(currentDriver && driverMode); }
 
 function alertUser(text, type = "default") {
@@ -1002,8 +1110,10 @@ document.addEventListener("touchstart", unlockAudio, { once: true });
 
 function playNotifSound() { try { unlockAudio(); if (!audioCtx) return; const now = audioCtx.currentTime; const playTone = (freq, start, dur, vol = 0.5, type = "square") => { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = type; osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + start); gain.gain.linearRampToValueAtTime(vol, now + start + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + start + dur); osc.connect(gain).connect(audioCtx.destination); osc.start(now + start); osc.stop(now + start + dur + 0.05); }; playTone(1318.51, 0, 0.15, 0.45); playTone(1760.00, 0.18, 0.15, 0.45); playTone(1318.51, 0.36, 0.15, 0.45); playTone(1760.00, 0.54, 0.30, 0.50); } catch (e) {} }
 function playClientStatusSound() { try { unlockAudio(); if (!audioCtx) return; const now = audioCtx.currentTime; const playTone = (freq, start, dur, vol = 0.4, type = "sine") => { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = type; osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + start); gain.gain.linearRampToValueAtTime(vol, now + start + 0.02); gain.gain.exponentialRampToValueAtTime(0.001, now + start + dur); osc.connect(gain).connect(audioCtx.destination); osc.start(now + start); osc.stop(now + start + dur + 0.05); }; playTone(880, 0, 0.12, 0.35); playTone(1174.66, 0.15, 0.12, 0.35); playTone(1567.98, 0.30, 0.20, 0.40); } catch (e) {} }
+function playSuccessSound() { try { unlockAudio(); if (!audioCtx) return; const now = audioCtx.currentTime; const playTone = (freq, start, dur, vol = 0.5) => { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = "sine"; osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + start); gain.gain.linearRampToValueAtTime(vol, now + start + 0.02); gain.gain.exponentialRampToValueAtTime(0.001, now + start + dur); osc.connect(gain).connect(audioCtx.destination); osc.start(now + start); osc.stop(now + start + dur + 0.05); }; playTone(523.25, 0, 0.1); playTone(659.25, 0.1, 0.1); playTone(783.99, 0.2, 0.15); playTone(1046.50, 0.35, 0.3); } catch (e) {} }
 function vibrateNotif() { try { if (navigator.vibrate) navigator.vibrate([300,100,300,100,300,100,300,500]); } catch (e) {} }
 function vibrateClientNotif() { try { if (navigator.vibrate) navigator.vibrate([150,80,150,80,250]); } catch (e) {} }
+function vibrateError() { try { if (navigator.vibrate) navigator.vibrate([100,50,100,50,100]); } catch (e) {} }
 function startNotifLoop() { stopNotifLoop(); let count = 0; playNotifSound(); vibrateNotif(); count++; notifLoopTimer = setInterval(() => { if (count >= 3) { stopNotifLoop(); return; } playNotifSound(); vibrateNotif(); count++; }, 4000); }
 function stopNotifLoop() { if (notifLoopTimer) { clearInterval(notifLoopTimer); notifLoopTimer = null; } }
 async function requestNotifPermission() { if (typeof Notification === "undefined") return "denied"; if (Notification.permission === "granted") return "granted"; try { const perm = await Notification.requestPermission(); notifPermission = perm; return perm; } catch (e) { return "denied"; } }
@@ -1069,10 +1179,7 @@ async function notifyNewOrder(order) {
         <div style="margin:6px 0;padding:6px 0;border-top:1px solid rgba(255,255,255,0.25);border-bottom:1px solid rgba(255,255,255,0.25);font-size:11.5px;line-height:1.55;">
             <div style="font-weight:800;margin-bottom:2px;">🛒 Articles :</div>${itemsList}
         </div>
-        <div class="notif-line"><i class="fas fa-calculator"></i><span>Sous-total : <strong>${money(subtotal || (total + discount - deliveryFee))}</strong></span></div>
-        ${deliveryFee > 0 ? `<div class="notif-line"><i class="fas fa-truck"></i><span>Livraison : <strong>${money(deliveryFee)}</strong></span></div>` : `<div class="notif-line"><i class="fas fa-truck"></i><span>Livraison : <strong>GRATUITE</strong></span></div>`}
-        ${discount > 0 ? `<div class="notif-line"><i class="fas fa-tag"></i><span>Réduction : <strong>−${money(discount)}</strong></span></div>` : ``}
-        <div class="notif-line" style="font-size:13.5px;margin-top:4px;"><i class="fas fa-coins"></i><span>TOTAL : <strong>${money(total)}</strong></span></div>`;
+        <div class="notif-line"><i class="fas fa-coins"></i><span>TOTAL : <strong>${money(total)}</strong></span></div>`;
     showNotifBanner("🔔 NOUVELLE COMMANDE !", html, isAdmin ? "admin" : (isDriverActive() ? "driver" : null), "👆 Ouvrir la commande");
     if (notifPermission === "granted" && typeof Notification !== "undefined") {
         try {
@@ -1086,7 +1193,7 @@ function notifyClientStatus(order, newStatus) {
     const labels = { nouvelle: "🆕 Commande reçue", preparation: "👨‍🍳 En préparation", route: "🚚 En route vers vous", livree: "✅ Livrée !", annulee: "❌ Commande annulée" };
     const messages = {
         preparation: "Votre commande est en préparation. Comptez environ 5 minutes avant l'expédition.",
-        route: "Votre commande est en route ! Vous serez livré dans quelques minutes.",
+        route: "Votre commande est en route ! Votre QR Code est disponible dans l'onglet Suivi.",
         livree: "Votre commande a été livrée. Bon appétit ! 🍔",
         annulee: "Votre commande a été annulée. Contactez-nous si vous avez une question."
     };
@@ -1158,7 +1265,6 @@ function updateAccountButton() {
 function onAccountClick() { if (isAdmin) return openAdminPanel(); if (isDriverActive()) return openDriverInterface(); openAccountModal(); }
 window.onAccountClick = onAccountClick;
 
-// ⚡ CORRIGÉ : plus de "bascule auto" — le mode livreur est explicite
 function setDriverMode(enabled) {
     driverMode = Boolean(enabled);
     if (driverMode) sessionStorage.setItem("hds_driver_mode", "1");
@@ -1171,7 +1277,6 @@ function setDriverMode(enabled) {
         subscribeDispatch();
     } else {
         stopDriverAutoRefresh();
-        // Recharge le suivi client classique
         loadMyOrders();
     }
 }
@@ -1234,7 +1339,6 @@ window.saveProfile = async () => { if (!currentUser) return alertUser("Connecte-
 
 window.editClientProfile = () => { if (!currentUser) return showLoginView(); ["loginView","registerView","clientView"].forEach(id => { if ($(id)) $(id).style.display = "none"; }); if ($("editProfileView")) $("editProfileView").style.display = "block"; if ($("editFirstName")) $("editFirstName").value = currentProfile?.first_name || ""; if ($("editLastName")) $("editLastName").value = currentProfile?.last_name || ""; if ($("editPhone")) $("editPhone").value = currentProfile?.phone || ""; if ($("editAddress")) $("editAddress").value = currentProfile?.address || ""; };
 
-// ⚡ CORRIGÉ : realtime
 async function initOrderRealtime() {
     if (!currentUser) return;
     const hasActiveOrder = myOrders.some(o => !["livree","annulee"].includes(o.status));
@@ -1279,7 +1383,6 @@ window.initOrderRealtime = initOrderRealtime;
 
 function handleClientStatusChange(order) {
     if (!order || !order.id) return;
-    // ⚡ Ne notifie le client QUE si la commande lui appartient
     if (order.user_id !== currentUser?.id) return;
     const prevStatus = lastClientOrderStatus[order.id];
     const newStatus = order.status;
@@ -1288,7 +1391,6 @@ function handleClientStatusChange(order) {
     notifyClientStatus(order, newStatus);
 }
 
-// ⚡ CORRIGÉ : canal dispatch public (pas de private:true)
 async function subscribeDispatch() {
     if (!currentDriver && !isAdmin) return;
     if (dispatchChannel) { await supabase.removeChannel(dispatchChannel); dispatchChannel = null; }
@@ -1317,7 +1419,6 @@ async function refreshAuth() {
     isAdmin = Boolean(adminRow);
     const { data: driverRow } = await supabase.from("delivery_drivers").select("id,name,phone,status,is_active,auth_user_id").eq("auth_user_id", currentUser.id).eq("is_active", true).maybeSingle();
     currentDriver = driverRow || null;
-    // ⚡ Si l'utilisateur n'est PLUS livreur actif, on force la sortie du mode livreur
     if (!currentDriver) {
         driverMode = false; sessionStorage.removeItem("hds_driver_mode"); stopDriverAutoRefresh();
     } else {
@@ -1525,9 +1626,7 @@ window.submitOrder = async () => {
 
 window.captureScreenshot = () => { if (typeof html2canvas === "undefined") return alertUser("Indisponible.", "error"); const zone = document.querySelector("#confirmationModal .modal-body"); html2canvas(zone, { backgroundColor: "#141414", scale: 2 }).then(canvas => { const link = document.createElement("a"); link.download = `commande-${$("confirmCode").textContent}.png`; link.href = canvas.toDataURL("image/png"); link.click(); alertUser("📸 Capture OK !", "success"); }).catch(() => alertUser("Erreur capture.", "error")); };
 
-// ⚡ CORRIGÉ : loadMyOrders filtre les commandes que le CLIENT a passées
-// (on exclut côté JS les commandes où il est driver, mais la vraie protection
-//  est côté policy SQL avec driver_id)
+// ==== CHARGEMENT DES COMMANDES CLIENT ====
 async function loadMyOrders() {
     if (!currentUser) { myOrders = []; return; }
     const { data, error } = await supabase.from("orders").select("id,code,status,total,created_at,distance,driver_name,address,client_name,client_phone,payment,items,user_id,driver_id").eq("user_id", currentUser.id).order("created_at", { ascending: false }).limit(30);
@@ -1549,15 +1648,66 @@ async function loadMyOrders() {
         if ($("progressBar")) $("progressBar").style.width = (step * 33) + "%";
         ["step1","step2","step3"].forEach((id, i) => { const el = $(id)?.querySelector(".step-icon"); if (!el) return; el.classList.remove("active","completed"); if (i + 1 < step) el.classList.add("completed"); else if (i + 1 === step) el.classList.add("active"); });
         if ($("estimatedTime")) { const eta = { nouvelle: "35-45 min", preparation: "5 min (prépa) + trajet", route: "10-20 min", livree: "Livrée" }[active.status] || "--"; $("estimatedTime").textContent = eta; }
+
+        // ⚡ NOUVEAU : Afficher le QR Code UNIQUEMENT quand la commande est "En route"
+        const qrBox = $("clientQrBox");
+        if (qrBox) {
+            if (active.status === "route") {
+                qrBox.style.display = "block";
+                await renderClientQrCode(active.code);
+            } else {
+                qrBox.style.display = "none";
+            }
+        }
     } else {
         if ($("noActiveOrder")) $("noActiveOrder").style.display = "block";
         if ($("activeOrder")) $("activeOrder").style.display = "none";
+        const qrBox = $("clientQrBox");
+        if (qrBox) qrBox.style.display = "none";
     }
     if ($("historyCount")) $("historyCount").textContent = myOrders.length;
 }
 window.loadMyOrders = loadMyOrders;
 window.trackOrder = () => { $("confirmationModal")?.classList.remove("active"); showSection("tracking"); };
 window.closeConfirmation = () => $("confirmationModal")?.classList.remove("active");
+
+// ⚡ NOUVEAU : Génération du QR Code côté client
+async function renderClientQrCode(orderCode) {
+    const canvas = $("clientQrCanvas");
+    const textEl = $("clientQrCodeText");
+    const digitsEl = $("clientQrCodeDigits");
+    if (!canvas) return;
+    if (textEl) textEl.textContent = orderCode;
+    if (digitsEl) digitsEl.textContent = orderCode;
+
+    // Utilise la lib QRCode si dispo
+    if (typeof QRCode !== "undefined") {
+        try {
+            await QRCode.toCanvas(canvas, orderCode, {
+                width: 200,
+                margin: 1,
+                color: { dark: "#000000", light: "#FFFFFF" },
+                errorCorrectionLevel: "H"
+            });
+            return;
+        } catch (e) {
+            console.warn("[QR render]", e);
+        }
+    }
+    // Fallback : utilise l'API externe
+    try {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+            const ctx = canvas.getContext("2d");
+            canvas.width = 200; canvas.height = 200;
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, 200, 200);
+            ctx.drawImage(img, 0, 0, 200, 200);
+        };
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(orderCode)}&bgcolor=FFFFFF&color=000000&margin=1`;
+    } catch (e) { console.warn("[QR fallback]", e); }
+}
 
 window.showOrderHistory = async () => { closeMenuIfOpen(); if (!currentUser) { openAccountModal(); return alertUser("Connecte-toi.", "error"); } await loadMyOrders(); $("historyModal")?.classList.add("active"); renderHistoryList(); };
 window.closeHistoryModal = () => $("historyModal")?.classList.remove("active");
@@ -1756,7 +1906,6 @@ window.adminSetOrderStatus = async (id, status) => {
     }
 };
 
-/* ============ HISTORIQUE ADMIN ============ */
 window.adminLoadHistory = async () => {
     if (!isAdmin) return;
     const list = $("adminHistoryList"); if (!list) return;
@@ -1792,7 +1941,6 @@ window.adminFilterHistory = (filter) => {
     renderAdminHistory();
 };
 
-/* ============ VIDÉOS ENTREPRISE ============ */
 async function loadCompanyVideosPublic() {
     const grid = $("companyVideoGrid"); if (!grid) return;
     const { data, error } = await supabase.from("company_videos").select("id,title,description,video_url,display_order").eq("is_active", true).order("display_order", { ascending: true }).order("created_at", { ascending: false });
@@ -1854,7 +2002,6 @@ window.adminDeleteVideo = async (id) => {
     await loadCompanyVideosPublic();
 };
 
-/* ============ ROUTE MAP - WAZE STYLE ============ */
 window.openRouteMapWaze = async (order) => {
     if (typeof L === "undefined") return alertUser("Carte indisponible. Réessaie dans 2s.", "error");
     routeCurrentOrder = order;
@@ -2212,8 +2359,6 @@ window.openDriverInterface = () => {
 window.closeDriverInterface = () => $("driverInterfaceModal")?.classList.remove("active");
 window.driverLogout = async () => { stopNotifLoop(); closeDriverInterface(); setDriverMode(false); alertUser("Tu as quitté l'espace livreur. Ton compte client reste connecté."); };
 
-// ⚡ CORRIGÉ : le livreur voit les commandes NON ASSIGNÉES + celles qui lui sont assignées
-// SAUF les siennes (passées en mode client)
 window.driverRefreshOrders = async () => {
     const list = $("driverOrdersList"); if (!list) return;
     if (!currentUser || !currentDriver || !driverMode) { list.innerHTML = '<div class="empty-state">Connecte-toi à l\'espace livreur.</div>'; return; }
@@ -2223,9 +2368,8 @@ window.driverRefreshOrders = async () => {
     if (error) { logSupabaseError("driverRefreshOrders", error); list.innerHTML = `<div class="empty-state">Erreur de chargement : ${esc(error.message)}</div>`; return; }
     const dispatchMap = new Map();
     dispatchRows.forEach(d => dispatchMap.set(d.order_id, d));
-    // ⚡ FILTRE PRINCIPAL : exclure les commandes passées par le livreur lui-même en tant que client
     const visibleOrders = (data || []).filter(order => {
-        if (order.user_id === currentUser.id) return false; // ← exclut SES commandes client
+        if (order.user_id === currentUser.id) return false;
         return order.driver_id === null || order.driver_id === currentDriver.id;
     });
     if (!visibleOrders.length) { list.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i>Aucune course disponible.</div>'; return; }
@@ -2238,7 +2382,13 @@ window.driverRefreshOrders = async () => {
         let actions = "";
         if (order.driver_id === null && (order.status === "nouvelle" || order.status === "preparation" || availableFromDispatch)) actions = `<button class="btn-preparer" onclick="driverAccept(${Number(order.id)})">✅ Accepter</button>`;
         else if (order.status === "preparation" && assignedToMe) actions = `<button class="btn-route" onclick="driverStart(${Number(order.id)})">🚚 Démarrer</button>`;
-        else if (order.status === "route" && assignedToMe) actions = `<button class="btn-livree" onclick="driverDeliver(${Number(order.id)})">✅ Livrée</button><button class="btn-route" style="background:var(--yellow);color:#000;border-color:var(--gold);" onclick="driverShowRoute(${Number(order.id)})">🗺️ Ma carte</button><a href="tel:${(order.client_phone || "").replace(/\s/g, "")}" class="btn-appeler">📞</a>`;
+        else if (order.status === "route" && assignedToMe) {
+            // ⚡ NOUVEAU : Bouton Scanner au lieu de "Livrée"
+            actions = `<button class="btn-scanner" onclick="openQrScanner(${Number(order.id)}, '${esc(order.code)}')" style="flex:2;"><i class="fas fa-camera"></i> 📷 Scanner</button>` +
+                      `<button class="btn-sans-scan" onclick="driverDeliverSansScan(${Number(order.id)})" title="Valider sans scan (secours)">🛠️ Sans scan</button>` +
+                      `<button class="btn-route" style="background:var(--yellow);color:#000;border-color:var(--gold);" onclick="driverShowRoute(${Number(order.id)})">🗺️</button>` +
+                      `<a href="tel:${(order.client_phone || "").replace(/\s/g, "")}" class="btn-appeler">📞</a>`;
+        }
         const statusBadge = takenByOther ? `<span class="statut-chip" style="background:rgba(249,115,22,0.2);color:var(--orange);">⚠️ Prise par ${esc(dispatch.assigned_driver_name)}</span>` : `<span class="statut-chip ${esc(order.status)}">${labels[order.status] || esc(order.status)}</span>`;
         return `<div class="order-card status-${esc(order.status)}"><div class="order-card-header"><span class="order-code">#${esc(order.code)}</span>${statusBadge}</div><div class="order-body">👤 ${esc(order.client_name || "Client")} • 📞 ${esc(order.client_phone || "")}<br>📍 ${esc((order.address || "").substring(0, 100))}<br>💰 <strong>${money(order.total)}</strong> • 📏 ${esc(order.distance ?? 0)} km</div>${actions ? `<div class="order-actions">${actions}</div>` : ""}</div>`;
     }).join("");
@@ -2274,7 +2424,205 @@ window.driverStart = async (id) => {
     }
 };
 
-window.driverDeliver = async (id) => { if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error"); const { error } = await supabase.rpc("driver_set_status_v1", { p_order_id: id, p_new_status: "livree" }); if (error) { logSupabaseError("driver_set_status_v1_livree", error); const fallback = await supabase.rpc("driver_set_order_status", { p_order_id: id, p_status: "livree", p_latitude: null, p_longitude: null }); if (fallback.error) return alertUser(error.message, "error"); } alertUser("Commande livrée.", "success"); await driverRefreshOrders(); if (isAdmin) await adminRefreshOrders(); };
+// ⚡ NOUVEAU : Livraison validée après scan réussi
+async function driverDeliverAfterScan(id) {
+    if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error");
+    const { error } = await supabase.rpc("driver_set_status_v1", { p_order_id: id, p_new_status: "livree" });
+    if (error) {
+        logSupabaseError("driver_set_status_v1_livree", error);
+        const fallback = await supabase.rpc("driver_set_order_status", { p_order_id: id, p_status: "livree", p_latitude: null, p_longitude: null });
+        if (fallback.error) return alertUser(error.message, "error");
+    }
+    alertUser("✅ Livraison validée !", "success");
+    await driverRefreshOrders();
+    if (isAdmin) await adminRefreshOrders();
+}
+window.driverDeliverAfterScan = driverDeliverAfterScan;
+
+// ⚡ NOUVEAU : Bouton "Sans scan" (secours) - validation manuelle avec confirmation
+window.driverDeliverSansScan = async (id) => {
+    if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error");
+    if (!confirm("⚠️ Valider la livraison SANS scanner le QR Code ?\n\nCette action contourne la vérification de sécurité. À n'utiliser qu'en cas de force majeure (caméra HS, client sans téléphone...).")) return;
+    const { error } = await supabase.rpc("driver_set_status_v1", { p_order_id: id, p_new_status: "livree" });
+    if (error) { logSupabaseError("driver_set_status_v1_livree", error); const fallback = await supabase.rpc("driver_set_order_status", { p_order_id: id, p_status: "livree", p_latitude: null, p_longitude: null }); if (fallback.error) return alertUser(error.message, "error"); }
+    alertUser("Livraison validée (sans scan).", "success");
+    await driverRefreshOrders();
+    if (isAdmin) await adminRefreshOrders();
+};
+
+// ================================================================
+// ⚡ NOUVEAU : SCANNER QR CODE - Logique complète
+// ================================================================
+
+window.openQrScanner = async (orderId, expectedCode) => {
+    if (!currentDriver || !driverMode) return alertUser("Ouvre d'abord l'espace livreur.", "error");
+    qrScannerCurrentOrderId = orderId;
+    qrScannerProcessing = false;
+    qrScannerCurrentOrderCode = expectedCode || "";
+
+    const modal = $("qrScannerModal");
+    const video = $("scannerVideo");
+    const statusEl = $("scannerStatus");
+    const successOverlay = $("scannerSuccessOverlay");
+
+    if (!modal) return alertUser("Scanner indisponible.", "error");
+    if (successOverlay) successOverlay.classList.remove("show");
+    if (statusEl) { statusEl.textContent = "📷 Initialisation de la caméra…"; statusEl.className = ""; }
+    modal.classList.add("active");
+
+    // Vérifie le support getUserMedia
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        if (statusEl) { statusEl.textContent = "❌ Caméra non supportée. Utilise la saisie manuelle."; statusEl.className = "error"; }
+        return;
+    }
+
+    try {
+        qrScannerStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 }, height: { ideal: 720 } },
+            audio: false
+        });
+        video.srcObject = qrScannerStream;
+        await video.play();
+        if (statusEl) { statusEl.textContent = "📷 Placez le QR Code du client dans le cadre"; statusEl.className = ""; }
+        startQrScanLoop();
+    } catch (err) {
+        console.error("[Scanner]", err);
+        let msg = "❌ Impossible d'accéder à la caméra.";
+        if (err.name === "NotAllowedError") msg = "❌ Caméra refusée. Autorise l'accès dans les paramètres.";
+        else if (err.name === "NotFoundError") msg = "❌ Aucune caméra détectée. Utilise la saisie manuelle.";
+        if (statusEl) { statusEl.textContent = msg; statusEl.className = "error"; }
+    }
+};
+
+let qrScannerCurrentOrderCode = "";
+
+function startQrScanLoop() {
+    stopQrScanLoop();
+    const video = $("scannerVideo");
+    if (!video) return;
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+    const scan = () => {
+        if (!qrScannerStream || qrScannerProcessing) return;
+        if (video.readyState === video.HAVE_ENOUGH_DATA && video.videoWidth > 0) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            try {
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                if (typeof jsQR !== "undefined") {
+                    const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                        inversionAttempts: "dontInvert"
+                    });
+                    if (code && code.data) {
+                        handleQrScanned(code.data);
+                        return;
+                    }
+                }
+            } catch (e) {}
+        }
+        qrScannerAnimationFrame = requestAnimationFrame(scan);
+    };
+    qrScannerAnimationFrame = requestAnimationFrame(scan);
+}
+
+function stopQrScanLoop() {
+    if (qrScannerAnimationFrame) {
+        cancelAnimationFrame(qrScannerAnimationFrame);
+        qrScannerAnimationFrame = null;
+    }
+}
+
+async function handleQrScanned(scannedText) {
+    if (qrScannerProcessing) return;
+    qrScannerProcessing = true;
+    const statusEl = $("scannerStatus");
+    const successOverlay = $("scannerSuccessOverlay");
+
+    // Récupère le code attendu depuis la DB (plus sûr que la variable locale)
+    let expectedCode = qrScannerCurrentOrderCode;
+    try {
+        const { data: order, error } = await supabase.from("orders").select("code").eq("id", qrScannerCurrentOrderId).single();
+        if (!error && order) expectedCode = order.code;
+    } catch (e) {}
+
+    const scanned = String(scannedText || "").trim();
+    const expected = String(expectedCode || "").trim();
+
+    // Comparaison tolérante (insensible casse + espaces)
+    const match = scanned.toUpperCase() === expected.toUpperCase() || scanned.toUpperCase().includes(expected.toUpperCase()) || expected.toUpperCase().includes(scanned.toUpperCase());
+
+    if (match) {
+        // ✅ SUCCÈS
+        if (statusEl) { statusEl.textContent = "✅ QR Code validé ! Livraison en cours de validation…"; statusEl.className = "success"; }
+        if (successOverlay) successOverlay.classList.add("show");
+        playSuccessSound();
+        try { if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]); } catch (e) {}
+
+        // Stoppe la caméra
+        stopQrScannerCamera();
+
+        // Valide la livraison
+        await driverDeliverAfterScan(qrScannerCurrentOrderId);
+
+        // Ferme après 1.2s
+        setTimeout(() => {
+            closeQrScanner();
+        }, 1400);
+    } else {
+        // ❌ ÉCHEC
+        if (statusEl) {
+            statusEl.textContent = `❌ QR Code incorrect. Attendu : ${expected}. Scanné : ${scanned.substring(0, 20)}. Réessayez.`;
+            statusEl.className = "error";
+        }
+        vibrateError();
+        try { if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]); } catch (e) {}
+        alertUser(`❌ Mauvais QR Code. Ce n'est pas la bonne commande.`, "error");
+
+        // Reset après 2s
+        setTimeout(() => {
+            qrScannerProcessing = false;
+            if (statusEl) { statusEl.textContent = "📷 Placez le QR Code du client dans le cadre"; statusEl.className = ""; }
+        }, 2000);
+    }
+}
+
+function stopQrScannerCamera() {
+    stopQrScanLoop();
+    if (qrScannerStream) {
+        try { qrScannerStream.getTracks().forEach(t => t.stop()); } catch (e) {}
+        qrScannerStream = null;
+    }
+    const video = $("scannerVideo");
+    if (video) video.srcObject = null;
+}
+
+window.closeQrScanner = () => {
+    stopQrScannerCamera();
+    $("qrScannerModal")?.classList.remove("active");
+    qrScannerCurrentOrderId = null;
+    qrScannerCurrentOrderCode = "";
+    qrScannerProcessing = false;
+    const statusEl = $("scannerStatus");
+    if (statusEl) { statusEl.textContent = "📷 Placez le QR Code dans le cadre"; statusEl.className = ""; }
+    const successOverlay = $("scannerSuccessOverlay");
+    if (successOverlay) successOverlay.classList.remove("show");
+};
+
+window.scannerManualInput = () => {
+    const input = prompt("⌨️ Saisis le code de commande affiché sur le téléphone du client (ex: HDS-1234) :");
+    if (input && input.trim()) {
+        handleQrScanned(input.trim());
+    }
+};
+
+// ⚡ AJOUT : Mise à jour de la fonction driverDeliver (conservée pour compat)
+window.driverDeliver = async (id) => {
+    // Redirige vers le scanner au lieu de valider directement
+    const { data: order } = await supabase.from("orders").select("code").eq("id", id).single();
+    openQrScanner(id, order?.code || "");
+};
 
 window.driverUpdateLocation = () => { if (!navigator.geolocation) return alertUser("Géoloc indisponible.", "error"); const c = $("driverCoords"); if (c) c.textContent = "⏳..."; navigator.geolocation.getCurrentPosition(async pos => { const lat = pos.coords.latitude, lng = pos.coords.longitude; if (c) c.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`; await supabase.rpc("record_driver_location", { p_latitude: lat, p_longitude: lng }); try { const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fr`); const j = await r.json(); if ($("driverAddress")) $("driverAddress").textContent = j.display_name || "GPS"; } catch {} }, () => { if (c) c.textContent = "❌ GPS"; }, { enableHighAccuracy: true, timeout: 10000 }); };
 
@@ -2306,4 +2654,4 @@ renderCartItems();
 showSection("products");
 </script>
 </body>
-                                                                                                        </html>
+  </html>
