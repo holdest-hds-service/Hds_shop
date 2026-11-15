@@ -18,9 +18,8 @@
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js" defer></script>
 
 <style>
-/* === STYLES IDENTIQUES + AJOUTS POUR STATUT "ARRIVE" === */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--yellow:#FFD700;--gold:#FFB800;--green:#22C55E;--red:#EF4444;--blue:#3B82F6;--orange:#F97316;--whatsapp:#25D366;--bg:#0A0A0A;--card:#141414;--card-hover:#1C1C1C;--text:#FAFAFA;--text-dim:#A1A1AA;--border:rgba(255,255,255,0.08);--shadow-md:0 8px 24px rgba(0,0,0,0.4);--shadow-lg:0 20px 48px rgba(0,0,0,0.5);--r-sm:8px;--r-md:12px;--r-lg:18px;--r-xl:24px;--t-fast:150ms cubic-bezier(0.4,0,0.2,1);--t-base:250ms cubic-bezier(0.4,0,0.2,1)}
+:root{--yellow:#FFD700;--gold:#FFB800;--green:#22C55E;--red:#EF4444;--blue:#3B82F6;--orange:#F97316;--purple:#8B5CF6;--purple-dark:#6D28D9;--whatsapp:#25D366;--bg:#0A0A0A;--card:#141414;--card-hover:#1C1C1C;--text:#FAFAFA;--text-dim:#A1A1AA;--border:rgba(255,255,255,0.08);--shadow-md:0 8px 24px rgba(0,0,0,0.4);--shadow-lg:0 20px 48px rgba(0,0,0,0.5);--r-sm:8px;--r-md:12px;--r-lg:18px;--r-xl:24px;--t-fast:150ms cubic-bezier(0.4,0,0.2,1);--t-base:250ms cubic-bezier(0.4,0,0.2,1)}
 body.light-mode{--bg:#F4F5F7;--card:#FFFFFF;--card-hover:#FAFAFA;--text:#111827;--text-dim:#6B7280;--border:rgba(0,0,0,0.08)}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;justify-content:center;padding:10px;padding-bottom:calc(90px + env(safe-area-inset-bottom, 0px));transition:background var(--t-base),color var(--t-base);overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -169,6 +168,7 @@ input,textarea,select{font-family:inherit}
 .checkout-button.blue{background:var(--blue);color:white}
 .checkout-button.green{background:var(--green);color:white}
 .checkout-button.orange{background:var(--orange);color:white}
+.checkout-button.purple{background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:white}
 .alert-modal{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-100px);background:linear-gradient(135deg,var(--yellow),var(--gold));color:#000;padding:12px 20px;border-radius:var(--r-md);z-index:5000;display:flex;align-items:center;gap:9px;font-weight:700;box-shadow:var(--shadow-lg);font-size:13px;transition:transform var(--t-base);max-width:90vw}
 .alert-modal.visible{transform:translateX(-50%) translateY(0)}
 .alert-modal.error{background:linear-gradient(135deg,var(--red),#DC2626);color:white}
@@ -239,7 +239,7 @@ input,textarea,select{font-family:inherit}
 .btn-livree{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid var(--green)}
 .btn-annuler{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid var(--red)}
 .btn-appeler{background:var(--green);color:white}
-.btn-scanner{background:linear-gradient(135deg,#8B5CF6,#6D28D9);color:white;border:1px solid #8B5CF6;font-weight:900;box-shadow:0 4px 12px rgba(139,92,246,0.4)}
+.btn-scanner{background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:white;border:1px solid var(--purple);font-weight:900;box-shadow:0 4px 12px rgba(139,92,246,0.4)}
 .btn-sans-scan{background:rgba(161,161,170,0.15);color:var(--text-dim);border:1px solid var(--border);font-size:10px}
 .statut-chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:800}
 .statut-chip.nouvelle{background:rgba(249,115,22,0.2);color:var(--orange)}
@@ -333,18 +333,6 @@ input,textarea,select{font-family:inherit}
 .ahi-date{font-size:10px;color:var(--text-dim);font-family:monospace}
 .ahi-body{font-size:11px;color:var(--text-dim);line-height:1.5}
 .ahi-total{font-weight:900;color:var(--green);font-size:13px}
-.video-company-section{padding:0 16px 16px}
-.video-company-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.video-company-header i{color:var(--yellow);font-size:16px}
-.video-company-header h3{font-size:14px;font-weight:800}
-.video-grid{display:grid;grid-template-columns:1fr;gap:12px}
-@media (min-width:640px){.video-grid{grid-template-columns:repeat(2,1fr)}}
-.video-card{background:var(--card-hover);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
-.video-frame-wrap{position:relative;width:100%;padding-top:56.25%;background:#000;overflow:hidden}
-.video-frame-wrap iframe,.video-frame-wrap video{position:absolute;top:0;left:0;width:100%;height:100%;border:none;object-fit:cover}
-.video-info{padding:10px 12px}
-.video-info h4{font-size:12.5px;font-weight:800;margin-bottom:3px}
-.video-info p{font-size:10.5px;color:var(--text-dim);line-height:1.4}
 #routeMapModal .modal{max-width:760px;padding:0;overflow:hidden;background:#0A0A0A}
 #routeMapModal .modal-body{padding:0;position:relative}
 #routeMap{width:100%;height:60vh;min-height:400px;background:#111;z-index:1}
@@ -376,7 +364,7 @@ input,textarea,select{font-family:inherit}
 .qr-client-box .qr-code-digits{background:rgba(0,0,0,0.3);padding:4px 10px;border-radius:20px;display:inline-block;margin-top:8px;font-family:monospace;font-weight:800;color:var(--yellow);font-size:12px;letter-spacing:1px}
 
 /* Scanner Livreur */
-#qrScannerModal .modal{max-width:520px;padding:0;background:#0A0A0A;border:2px solid var(--yellow)}
+#qrScannerModal .modal{max-width:520px;padding:0;background:#0A0A0A;border:2px solid var(--purple)}
 #scannerVideoWrap{position:relative;width:100%;aspect-ratio:1/1;background:#000;overflow:hidden}
 #scannerVideoWrap video{width:100%;height:100%;object-fit:cover;display:block}
 #scannerOverlay{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center}
@@ -394,23 +382,33 @@ input,textarea,select{font-family:inherit}
 #scannerActions{padding:12px 16px;display:flex;gap:8px;background:var(--card);border-top:1px solid var(--border)}
 #scannerActions button{flex:1;padding:12px;border-radius:var(--r-md);font-size:13px;font-weight:800}
 #scannerCancelBtn{background:var(--card-hover);color:var(--text);border:1px solid var(--border)}
-#scannerManualBtn{background:rgba(139,92,246,0.15);color:#8B5CF6;border:1px solid #8B5CF6}
-#scannerSuccessOverlay{position:absolute;inset:0;background:rgba(34,197,94,0.9);display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:white;font-weight:900;font-size:22px;z-index:100}
-#scannerSuccessOverlay.show{display:flex}
-#scannerSuccessOverlay i{font-size:72px}
+#scannerManualBtn{background:rgba(139,92,246,0.15);color:var(--purple);border:1px solid var(--purple)}
+#scannerSuccessOverlay{position:absolute;inset:0;background:rgba(34,197,94,0.95);display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:white;font-weight:900;font-size:22px;z-index:100;text-align:center;padding:20px}
+#scannerSuccessOverlay.show{display:flex;animation:successPop 0.4s ease}
+@keyframes successPop{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
+#scannerSuccessOverlay i{font-size:80px;animation:successCheck 0.6s ease}
+@keyframes successCheck{0%{transform:scale(0) rotate(-180deg)}100%{transform:scale(1) rotate(0)}}
+#scannerSuccessOverlay .success-title{font-size:24px;font-weight:900;letter-spacing:0.5px}
+#scannerSuccessOverlay .success-sub{font-size:14px;font-weight:600;opacity:0.95}
 
-/* NOUVEAU : Bouton "Je suis arrivé" */
+/* Bouton "Je suis arrivé" (orange) */
 .btn-arrive-big{background:linear-gradient(135deg,var(--orange),#DC2626);color:white;border:2px solid var(--orange);font-weight:900;padding:12px;border-radius:8px;font-size:13px;letter-spacing:0.5px;box-shadow:0 6px 20px rgba(249,115,22,0.5);animation:arrivePulse 1.5s infinite}
 .btn-arrive-big:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 8px 24px rgba(249,115,22,0.7)}
 
-/* NOUVEAU : Bannière "Livré 🎉" */
+/* Bouton caméra scanner (violet) */
+.btn-camera-scan{background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:white;border:2px solid #A78BFA;font-weight:900;padding:14px;border-radius:10px;font-size:14px;letter-spacing:0.5px;box-shadow:0 6px 20px rgba(139,92,246,0.6);display:flex;align-items:center;justify-content:center;gap:10px;width:100%;animation:cameraPulse 2s infinite;cursor:pointer}
+@keyframes cameraPulse{0%,100%{box-shadow:0 6px 20px rgba(139,92,246,0.6);transform:scale(1)}50%{box-shadow:0 10px 32px rgba(139,92,246,0.9);transform:scale(1.02)}}
+.btn-camera-scan i{font-size:22px}
+.btn-camera-scan:hover{filter:brightness(1.15)}
+
+/* Bannière "Livré 🎉" */
 .delivered-banner{background:linear-gradient(135deg,var(--green),#16A34A);border:2px solid #86efac;border-radius:var(--r-lg);padding:18px;margin:14px 0;text-align:center;color:white;box-shadow:0 0 32px rgba(34,197,94,0.5);animation:deliveredPulse 2s infinite}
 @keyframes deliveredPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
 .delivered-banner .delivered-title{font-size:18px;font-weight:900;margin-bottom:8px;letter-spacing:0.5px}
 .delivered-banner .delivered-sub{font-size:12.5px;font-weight:600;opacity:0.95;margin-bottom:12px}
 .delivered-banner .discount-code{background:rgba(0,0,0,0.3);padding:10px 16px;border-radius:10px;display:inline-block;font-family:monospace;font-weight:900;font-size:16px;letter-spacing:2px;color:var(--yellow);border:2px dashed var(--yellow)}
 
-/* NOUVEAU : Timer "Le livreur est là" */
+/* Bannière "Livreur arrivé" */
 .arrive-banner{background:linear-gradient(135deg,var(--orange),#DC2626);border:2px solid #fed7aa;border-radius:var(--r-lg);padding:16px;margin:14px 0;text-align:center;color:white;box-shadow:0 0 28px rgba(249,115,22,0.6);animation:arriveShake 0.6s ease}
 @keyframes arriveShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .arrive-banner .arrive-title{font-size:17px;font-weight:900;margin-bottom:6px;letter-spacing:0.5px}
@@ -562,7 +560,6 @@ input,textarea,select{font-family:inherit}
 <div style="flex:1;"><div class="tracker-status" id="orderStatus">Préparation</div><div style="font-weight:700;font-size:13px;" id="driverName">À assigner</div><div style="font-size:11px;color:var(--text-dim);" id="orderCode">#HDS-1234</div></div>
 </div>
 <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
-<!-- NOUVEAU : 6 ÉTAPES -->
 <div class="progress-steps">
 <div class="progress-step" id="step1"><div class="step-icon">1</div><span>Reçue</span></div>
 <div class="progress-step" id="step2"><div class="step-icon">2</div><span>Prépa</span></div>
@@ -577,13 +574,11 @@ input,textarea,select{font-family:inherit}
 </div>
 </div>
 
-<!-- Bannière "LIVREUR ARRIVÉ" (statut arrive) -->
 <div class="arrive-banner" id="arriveBanner" style="display:none;">
 <div class="arrive-title">🚨 VOTRE LIVREUR EST ARRIVÉ !</div>
 <div class="arrive-sub">Présentez votre QR Code au livreur</div>
 </div>
 
-<!-- Encadré QR Code client (statut route UNIQUEMENT) -->
 <div class="qr-client-box" id="clientQrBox" style="display:none;">
 <div class="qr-header"><i class="fas fa-qrcode"></i> Votre QR Code de livraison</div>
 <div class="qr-code-wrap"><canvas id="clientQrCanvas" width="200" height="200"></canvas></div>
@@ -592,7 +587,6 @@ input,textarea,select{font-family:inherit}
 <div class="qr-hint">📱 Présentez ce QR Code au livreur<br>Il le scannera pour valider</div>
 </div>
 
-<!-- Bannière "LIVRÉ 🎉" avec code réduction (statut livree) -->
 <div class="delivered-banner" id="deliveredBanner" style="display:none;">
 <div class="delivered-title">🎉 COMMANDE LIVRÉE !</div>
 <div class="delivered-sub">Merci de votre confiance ❤️</div>
@@ -645,7 +639,6 @@ input,textarea,select{font-family:inherit}
 </div>
 </aside>
 
-<!-- ==== MODALS ==== -->
 <div class="modal-overlay" id="cartModal"><div class="modal"><div class="modal-header"><div class="modal-title"><i class="fas fa-shopping-cart"></i> Panier</div><button class="modal-close" onclick="closeCart()">×</button></div><div class="modal-body"><div id="cartItems"></div><div class="cart-summary" id="cartSummary" style="display:none;"><div class="cart-summary-row"><span>Sous-total</span><span id="subtotal">0€</span></div><div class="cart-summary-row"><span>Réduction</span><span id="discount" style="color:var(--green);">0€</span></div><div class="cart-summary-row"><span>Livraison</span><span id="deliveryCost">À calculer</span></div></div><div class="cart-total" id="cartTotal" style="display:none;">Total: 0€</div><button class="checkout-button" onclick="checkout()" id="checkoutBtn" style="display:none;">🔒 Commander</button></div></div></div>
 
 <div class="modal-overlay" id="checkoutModal"><div class="modal"><div class="modal-header"><div class="modal-title"><i class="fas fa-lock"></i> Finaliser</div><button class="modal-close" onclick="closeCheckout()">×</button></div><div class="modal-body"><div class="info-box"><i class="fas fa-map-marker-alt"></i> <strong>Étape 1 :</strong> Adresse ou Me localiser</div><div class="form-group"><textarea class="form-textarea" id="orderAddress" placeholder="Adresse complète"></textarea><button type="button" class="location-button" style="margin-top:8px;padding:11px;" id="checkoutLocateBtn" onclick="locateForCheckout()"><i class="fas fa-location-dot"></i> 📍 Me localiser (GPS)</button><div id="checkoutLocationStatus" style="display:none;margin-top:10px;padding:10px;background:rgba(34,197,94,0.1);border-radius:var(--r-md);font-size:12px;"></div></div><div id="checkoutDetailsSection" style="display:none;"><div class="info-box"><i class="fas fa-user"></i> <strong>Étape 2 :</strong> Coordonnées</div><form id="orderForm" onsubmit="event.preventDefault();submitOrder();"><div class="form-row"><div class="form-group"><input type="text" class="form-input" id="orderFirstName" placeholder="Prénom"></div><div class="form-group"><input type="text" class="form-input" id="orderLastName" placeholder="Nom"></div></div><div class="form-group"><input type="tel" class="form-input" id="orderPhone" placeholder="Téléphone"></div><div class="radio-group"><label class="radio-option"><input type="radio" name="paiement" value="Espèces" checked><span>💵 Espèces</span></label><label class="radio-option"><input type="radio" name="paiement" value="Carte"><span>💳 Carte</span></label></div><button type="submit" class="checkout-button">✅ Confirmer</button></form></div></div></div></div>
@@ -724,7 +717,7 @@ input,textarea,select{font-family:inherit}
 
 <div class="modal-overlay" id="routeMapModal"><div class="modal wide"><div class="modal-header"><div class="modal-title"><i class="fas fa-route"></i> <span id="routeMapTitle">Itinéraire</span></div><button class="modal-close" onclick="closeRouteMap()">×</button></div><div class="modal-body"><div id="routeMapInfo">Chargement…</div><div style="position:relative;"><div class="route-status-badge"><span class="live-dot"></span> EN ROUTE</div><div class="route-floating-controls"><button onclick="recenterRouteMap()"><i class="fas fa-crosshairs"></i></button><button onclick="toggleFollowMode()" id="routeFollowBtn"><i class="fas fa-location-arrow"></i></button></div><div id="routeMap"></div></div><div class="route-map-actions"><button class="btn-navigate" onclick="openNativeNavigation()"><i class="fas fa-diamond-turn-right"></i> Naviguer</button><a id="routeMapGpsBtn" href="#" class="btn-gps" target="_blank"><i class="fas fa-map-marker-alt"></i> GPS</a><a id="routeMapCallBtn" href="#" class="btn-call"><i class="fas fa-phone"></i> Appeler</a><button class="btn-refresh" onclick="refreshRouteMap()"><i class="fas fa-sync-alt"></i> Actualiser</button></div></div></div></div>
 
-<div class="modal-overlay" id="qrScannerModal"><div class="modal"><div class="modal-header"><div class="modal-title"><i class="fas fa-camera" style="color:#8B5CF6;"></i> Scanner QR client</div><button class="modal-close" onclick="closeQrScanner()">×</button></div><div id="scannerVideoWrap"><video id="scannerVideo" playsinline autoplay muted></video><div id="scannerOverlay"><div id="scannerFrame"><div id="scannerLaser"></div><div class="corner-bl"></div><div class="corner-br"></div></div></div><div id="scannerSuccessOverlay"><i class="fas fa-check-circle"></i><div>Livraison validée !</div></div></div><div id="scannerStatus">📷 Placez le QR Code dans le cadre</div><div id="scannerActions"><button id="scannerCancelBtn" onclick="closeQrScanner()">Annuler</button><button id="scannerManualBtn" onclick="scannerManualInput()">⌨️ Saisir</button></div></div></div>
+<div class="modal-overlay" id="qrScannerModal"><div class="modal"><div class="modal-header"><div class="modal-title"><i class="fas fa-camera" style="color:var(--purple);"></i> Scanner QR client</div><button class="modal-close" onclick="closeQrScanner()">×</button></div><div id="scannerVideoWrap"><video id="scannerVideo" playsinline autoplay muted></video><div id="scannerOverlay"><div id="scannerFrame"><div id="scannerLaser"></div><div class="corner-bl"></div><div class="corner-br"></div></div></div><div id="scannerSuccessOverlay"><i class="fas fa-check-circle"></i><div class="success-title">✅ LIVRAISON VALIDÉE !</div><div class="success-sub">Merci pour votre livraison</div></div></div><div id="scannerStatus">📷 Placez le QR Code dans le cadre</div><div id="scannerActions"><button id="scannerCancelBtn" onclick="closeQrScanner()">Annuler</button><button id="scannerManualBtn" onclick="scannerManualInput()">⌨️ Saisir</button></div></div></div>
 
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
@@ -856,7 +849,6 @@ async function notifyNewOrder(order) {
     }
 }
 
-// ⚡ NOUVEAU : Notification "livreur est là"
 function notifyClientArrived(order) {
     playArriveSound();
     vibrateArrive();
@@ -882,7 +874,6 @@ function showClientArrivedBanner(order) {
     el._timer = setTimeout(() => { el.style.transform = "translateX(-50%) translateY(-150px)"; }, 15000);
 }
 
-// ⚡ NOUVEAU : Notification "commande livrée" + code réduction
 function notifyClientDelivered(order) {
     playSuccessSound();
     vibrateClientNotif();
@@ -913,7 +904,6 @@ function showClientDeliveredBanner(order) {
     el.style.transform = "translateX(-50%) translateY(0)";
 }
 
-// ⚡ NOUVEAU : Notification statut standard
 function notifyClientStatus(order, newStatus) {
     const labels = { nouvelle: "🆕 Commande reçue", preparation: "👨‍🍳 En préparation", route: "🚚 En route vers vous", livree: "✅ Livrée !", annulee: "❌ Commande annulée" };
     const messages = {
@@ -956,7 +946,6 @@ function handleClientStatusChange(order) {
     const newStatus = order.status;
     lastClientOrderStatus[order.id] = newStatus;
     if (!prevStatus || prevStatus === newStatus) return;
-    // ⚡ Statut spécial "arrive"
     if (newStatus === "arrive") {
         notifyClientArrived(order);
     } else if (newStatus === "livree") {
@@ -1297,7 +1286,6 @@ window.submitOrder = async () => {
 window.trackOrder = () => { $("confirmationModal")?.classList.remove("active"); showSection("tracking"); };
 window.closeConfirmation = () => $("confirmationModal")?.classList.remove("active");
 
-// ⚡ CHARGEMENT COMMANDES CLIENT — 6 ÉTAPES
 async function loadMyOrders() {
     if (!currentUser) { myOrders = []; return; }
     const { data, error } = await supabase.from("orders").select("id,code,status,total,created_at,distance,driver_name,address,client_name,client_phone,payment,items,user_id,driver_id").eq("user_id", currentUser.id).order("created_at", { ascending: false }).limit(30);
@@ -1318,7 +1306,6 @@ async function loadMyOrders() {
         if ($("driverName")) $("driverName").textContent = active.driver_name || "À assigner";
         if ($("driverInitial")) $("driverInitial").textContent = (active.driver_name || "?")[0];
 
-        // ⚡ NOUVEAU : Timeline 6 étapes
         const steps = {
             nouvelle: 1,
             preparation: 2,
@@ -1339,22 +1326,21 @@ async function loadMyOrders() {
             $("estimatedTime").textContent = eta;
         }
 
-        // QR Code UNIQUEMENT en "route"
+        // QR Code visible dès "route" ET "arrive"
         const qrBox = $("clientQrBox");
         if (qrBox) {
-            if (active.status === "route") { qrBox.style.display = "block"; await renderClientQrCode(active.code); }
+            if (active.status === "route" || active.status === "arrive") { qrBox.style.display = "block"; await renderClientQrCode(active.code); }
             else qrBox.style.display = "none";
         }
 
-        // Bannière "LIVREUR ARRIVÉ" uniquement en "arrive"
+        // Bannière "LIVREUR ARRIVÉ"
         const arriveBanner = $("arriveBanner");
         if (arriveBanner) arriveBanner.style.display = active.status === "arrive" ? "block" : "none";
 
-        // Bannière "LIVRÉ 🎉" en "livree"
+        // Bannière "LIVRÉ 🎉"
         const deliveredBanner = $("deliveredBanner");
         if (deliveredBanner) deliveredBanner.style.display = active.status === "livree" ? "block" : "none";
 
-        // ⚡ Si la commande est livrée, on cache le tracker et affiche la bannière
         if (active.status === "livree") {
             if ($("activeOrder")) $("activeOrder").style.display = "block";
         }
@@ -1674,7 +1660,12 @@ window.openDriverInterface = () => {
 window.closeDriverInterface = () => $("driverInterfaceModal")?.classList.remove("active");
 window.driverLogout = async () => { stopNotifLoop(); closeDriverInterface(); setDriverMode(false); alertUser("Tu as quitté l'espace livreur."); };
 
-// ⚡ NOUVEAU : driverRefreshOrders avec 6 étapes
+/* ═══════════════════════════════════════════════════════════════
+   FLUX LIVREUR :
+   - route   → bouton orange "📍 JE SUIS ARRIVÉ"
+   - arrive  → bouton VIOLET "📷 SCANNER LE QR CODE" (caméra)
+   - livree  → terminé
+   ═══════════════════════════════════════════════════════════════ */
 window.driverRefreshOrders = async () => {
     const list = $("driverOrdersList"); if (!list) return;
     if (!currentUser || !currentDriver || !driverMode) { list.innerHTML = '<div class="empty-state">Connecte-toi.</div>'; return; }
@@ -1689,19 +1680,23 @@ window.driverRefreshOrders = async () => {
     list.innerHTML = visibleOrders.map(order => {
         const assignedToMe = order.driver_id === currentDriver.id;
         let actions = "";
+        // 1. Acceptation
         if (order.driver_id === null && (order.status === "nouvelle" || order.status === "preparation")) {
-            actions = `<button class="btn-preparer" onclick="driverAccept(${Number(order.id)})">✅ Accepter</button>`;
-        } else if (order.status === "preparation" && assignedToMe) {
-            actions = `<button class="btn-route" onclick="driverStart(${Number(order.id)})">🚚 Démarrer</button>`;
-        } else if (order.status === "route" && assignedToMe) {
-            // ⚡ NOUVEAU : bouton "JE SUIS ARRIVÉ" (bleu) — PAS de bouton Livrée
+            actions = `<button class="btn-preparer" onclick="driverAccept(${Number(order.id)})" style="flex:1;padding:12px;font-size:12px;font-weight:900;">✅ ACCEPTER LA COURSE</button>`;
+        }
+        // 2. Démarrer
+        else if (order.status === "preparation" && assignedToMe) {
+            actions = `<button class="btn-route" onclick="driverStart(${Number(order.id)})" style="flex:1;padding:12px;font-size:12px;font-weight:900;">🚚 DÉMARRER</button>`;
+        }
+        // 3. En route → bouton "JE SUIS ARRIVÉ"
+        else if (order.status === "route" && assignedToMe) {
             actions = `<button class="btn-arrive-big" onclick="driverMarkArrived(${Number(order.id)})" style="flex:1;width:100%;">📍 JE SUIS ARRIVÉ</button>` +
                       `<button class="btn-route" style="background:var(--yellow);color:#000;border-color:var(--gold);flex:0 0 auto;min-width:50px;padding:8px;" onclick="driverShowRoute(${Number(order.id)})">🗺️</button>` +
                       `<a href="tel:${(order.client_phone || "").replace(/\s/g, "")}" class="btn-appeler" style="flex:0 0 auto;min-width:50px;padding:8px;">📞</a>`;
-        } else if (order.status === "arrive" && assignedToMe) {
-            // ⚡ NOUVEAU : bouton SCANNER QR (violet) + Sans scan (secours)
-            actions = `<button class="btn-scanner" onclick="openQrScanner(${Number(order.id)}, '${esc(order.code)}')" style="flex:2;padding:12px;font-size:13px;"><i class="fas fa-camera"></i> 📷 SCANNER LE QR</button>` +
-                      `<button class="btn-sans-scan" onclick="driverDeliverSansScan(${Number(order.id)})" title="Secours caméra HS" style="flex:0 0 auto;padding:8px;font-size:10px;">🛠️</button>`;
+        }
+        // 4. ARRIVÉ → bouton violet CAMÉRA "SCANNER LE QR CODE"
+        else if (order.status === "arrive" && assignedToMe) {
+            actions = `<button class="btn-camera-scan" onclick="openQrScanner(${Number(order.id)}, '${esc(order.code)}')"><i class="fas fa-camera"></i> 📷 SCANNER LE QR CODE</button>`;
         }
         return `<div class="order-card status-${esc(order.status)}"><div class="order-card-header"><span class="order-code">#${esc(order.code)}</span><span class="statut-chip ${esc(order.status)}">${labels[order.status] || order.status}</span></div><div class="order-body">👤 ${esc(order.client_name || "Client")} • 📞 ${esc(order.client_phone || "")}<br>📍 ${esc((order.address || "").substring(0, 100))}<br>💰 <strong>${money(order.total)}</strong> • 📏 ${esc(order.distance ?? 0)} km</div>${actions ? `<div class="order-actions">${actions}</div>` : ""}</div>`;
     }).join("");
@@ -1719,18 +1714,17 @@ window.driverStart = async (id) => {
     if (order) { closeDriverInterface(); await new Promise(r => setTimeout(r, 200)); openRouteMapWaze(order); }
 };
 
-// ⚡ NOUVEAU : driverMarkArrived
+/* 🔥 MARCHE ARRIVÉ : statut route → arrive */
 window.driverMarkArrived = async (id) => {
     if (!currentDriver || !driverMode) return;
-    if (!confirm("📍 Confirmer que vous êtes arrivé chez le client ?\n\nLe client va recevoir une notification.")) return;
+    if (!confirm("📍 Confirmer que vous êtes arrivé chez le client ?\n\nLe client va recevoir une notification avec son QR Code.")) return;
     const { error } = await supabase.rpc("driver_set_status_v1", { p_order_id: id, p_new_status: "arrive" });
     if (error) {
         logSupabaseError("driver_mark_arrived", error);
-        // Fallback direct
         const { error: fbErr } = await supabase.from("orders").update({ status: "arrive", updated_at: new Date().toISOString() }).eq("id", id);
         if (fbErr) return alertUser(fbErr.message, "error");
     }
-    alertUser("✅ Client notifié. Scannez le QR Code.", "success");
+    alertUser("✅ Client notifié. Scannez son QR Code.", "success");
     await driverRefreshOrders();
 };
 
@@ -1741,14 +1735,13 @@ async function driverDeliverAfterScan(id) {
         const { error: fbErr } = await supabase.from("orders").update({ status: "livree", delivered_at: new Date().toISOString(), updated_at: new Date().toISOString() }).eq("id", id);
         if (fbErr) return alertUser(fbErr.message, "error");
     }
-    alertUser("✅ Livraison validée !", "success");
     await driverRefreshOrders();
 }
 window.driverDeliverAfterScan = driverDeliverAfterScan;
 
 window.driverDeliverSansScan = async (id) => {
     if (!currentDriver || !driverMode) return;
-    if (!confirm("⚠️ Valider SANS scanner le QR Code ?\n\nÀ n'utiliser qu'en cas de force majeure (caméra HS, client sans téléphone).")) return;
+    if (!confirm("⚠️ Valider SANS scanner le QR Code ?\n\nÀ n'utiliser qu'en cas de force majeure.")) return;
     const { error } = await supabase.rpc("driver_set_status_v1", { p_order_id: id, p_new_status: "livree" });
     if (error) {
         const { error: fbErr } = await supabase.from("orders").update({ status: "livree", delivered_at: new Date().toISOString(), updated_at: new Date().toISOString() }).eq("id", id);
@@ -1758,7 +1751,7 @@ window.driverDeliverSansScan = async (id) => {
     await driverRefreshOrders();
 };
 
-// ⚡ SCANNER QR
+/* 🎥 SCANNER QR : caméra + jsQR */
 window.openQrScanner = async (orderId, expectedCode) => {
     if (!currentDriver || !driverMode) return;
     qrScannerCurrentOrderId = orderId;
@@ -1770,7 +1763,7 @@ window.openQrScanner = async (orderId, expectedCode) => {
     const successOverlay = $("scannerSuccessOverlay");
     if (!modal) return;
     if (successOverlay) successOverlay.classList.remove("show");
-    if (statusEl) { statusEl.textContent = "📷 Initialisation..."; statusEl.className = ""; }
+    if (statusEl) { statusEl.textContent = "📷 Initialisation caméra..."; statusEl.className = ""; }
     modal.classList.add("active");
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         if (statusEl) { statusEl.textContent = "❌ Caméra non supportée."; statusEl.className = "error"; }
@@ -1780,12 +1773,12 @@ window.openQrScanner = async (orderId, expectedCode) => {
         qrScannerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false });
         video.srcObject = qrScannerStream;
         await video.play();
-        if (statusEl) { statusEl.textContent = "📷 Placez le QR Code dans le cadre"; statusEl.className = ""; }
+        if (statusEl) { statusEl.textContent = "📷 Placez le QR Code du client dans le cadre"; statusEl.className = ""; }
         startQrScanLoop();
     } catch (err) {
         let msg = "❌ Caméra refusée.";
-        if (err.name === "NotAllowedError") msg = "❌ Autorise la caméra.";
-        else if (err.name === "NotFoundError") msg = "❌ Aucune caméra. Saisie manuelle.";
+        if (err.name === "NotAllowedError") msg = "❌ Autorise la caméra dans ton navigateur.";
+        else if (err.name === "NotFoundError") msg = "❌ Aucune caméra. Utilise ⌨️ Saisir.";
         if (statusEl) { statusEl.textContent = msg; statusEl.className = "error"; }
     }
 };
@@ -1827,15 +1820,16 @@ async function handleQrScanned(scannedText) {
     const expected = String(expectedCode || "").trim().toUpperCase();
     const match = scanned === expected || scanned.includes(expected) || expected.includes(scanned);
     if (match) {
+        // ✅ SUCCESS : affiche popup "LIVRAISON VALIDÉE"
         if (statusEl) { statusEl.textContent = "✅ QR Code validé !"; statusEl.className = "success"; }
         if (successOverlay) successOverlay.classList.add("show");
         playSuccessSound();
         try { if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]); } catch (e) {}
         stopQrScannerCamera();
         await driverDeliverAfterScan(qrScannerCurrentOrderId);
-        setTimeout(() => { closeQrScanner(); }, 1400);
+        setTimeout(() => { closeQrScanner(); }, 2000);
     } else {
-        if (statusEl) { statusEl.textContent = `❌ Mauvais QR. Attendu: ${expected}`; statusEl.className = "error"; }
+        if (statusEl) { statusEl.textContent = `❌ QR invalide. Attendu : ${expected}`; statusEl.className = "error"; }
         vibrateError();
         setTimeout(() => { qrScannerProcessing = false; if (statusEl) { statusEl.textContent = "📷 Placez le QR Code dans le cadre"; statusEl.className = ""; } }, 2000);
     }
@@ -1883,4 +1877,4 @@ renderCartItems();
 showSection("products");
 </script>
 </body>
-</html>
+    </html>
